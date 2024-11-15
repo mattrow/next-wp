@@ -1,64 +1,74 @@
-import Image from "next/image";
 import Link from "next/link";
-
 import { Post } from "@/lib/wordpress.d";
 import { cn } from "@/lib/utils";
+import { getFeaturedMediaById } from "@/lib/wordpress";
 
-import {
-  getFeaturedMediaById,
-  getAuthorById,
-  getCategoryById,
-} from "@/lib/wordpress";
+interface PostCardProps {
+  post: Post;
+  variant?: "default" | "home";
+}
 
-export default async function PostCard({ post }: { post: Post }) {
-  const media = await getFeaturedMediaById(post.featured_media);
-  const author = await getAuthorById(post.author);
+const PostCard = async ({ post, variant = "default" }: PostCardProps) => {
+  let media;
+  try {
+    media = await getFeaturedMediaById(post.featured_media);
+  } catch {
+    media = null;
+  }
+
   const date = new Date(post.date).toLocaleDateString("en-US", {
-    month: "long",
+    month: "short",
     day: "numeric",
     year: "numeric",
   });
-  const category = await getCategoryById(post.categories[0]);
 
   return (
     <Link
       href={`/posts/${post.slug}`}
       className={cn(
-        "border p-4 bg-accent/30 rounded-lg group flex justify-between flex-col not-prose gap-8",
-        "hover:bg-accent/75 transition-all"
+        "border-2 border-purple-500/50 p-2 rounded-lg group flex flex-col justify-between",
+        variant === "home" ? "bg-purple-500/10 w-72" : "bg-accent/30",
+        "hover:bg-purple-500/20 transition-all flex-shrink-0"
       )}
     >
-      <div className="flex flex-col gap-4">
-        <div className="h-48 w-full overflow-hidden relative rounded-md border flex items-center justify-center">
-          <Image
+      {/* Thumbnail */}
+      <div className="h-32 w-full overflow-hidden rounded-md mb-2 bg-gray-700">
+        {media ? (
+          <img
             className="h-full w-full object-cover"
             src={media.source_url}
             alt={post.title.rendered}
-            width={400}
-            height={200}
           />
-        </div>
-        <div
-          dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-          className="text-xl text-primary font-medium group-hover:underline decoration-muted-foreground underline-offset-4 decoration-dotted transition-all"
-        ></div>
-        <div
-          className="text-sm"
-          dangerouslySetInnerHTML={{
-            __html:
-              post.excerpt.rendered.split(" ").slice(0, 12).join(" ").trim() +
-              "...",
-          }}
-        ></div>
+        ) : (
+          <div className="h-full w-full flex items-center justify-center text-gray-500 text-xs">
+            No Image
+          </div>
+        )}
       </div>
 
-      <div className="flex flex-col gap-4">
-        <hr />
-        <div className="flex justify-between items-center text-xs">
-          <p>{category.name}</p>
-          <p>{date}</p>
-        </div>
-      </div>
+      {/* Title */}
+      <h3 className="text-md font-semibold mb-1 text-white line-clamp-2">
+        <span dangerouslySetInnerHTML={{ __html: post.title.rendered }}></span>
+      </h3>
+
+      {/* Excerpt */}
+      <p className="text-xs text-gray-300 mb-2 line-clamp-2">
+        <span
+          dangerouslySetInnerHTML={{
+            __html:
+              post.excerpt.rendered
+                .replace(/<[^>]+>/g, "")
+                .split(" ")
+                .slice(0, 12)
+                .join(" ") + "...",
+          }}
+        ></span>
+      </p>
+
+      {/* Publish Date */}
+      <p className="text-xs text-gray-500">{date}</p>
     </Link>
   );
-}
+};
+
+export default PostCard;

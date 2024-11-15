@@ -153,3 +153,12 @@
   border-width: 10px 0 10px 35px;
   border-color: transparent transparent transparent #ffffff;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

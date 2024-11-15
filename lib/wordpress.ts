@@ -196,3 +196,10 @@ export async function getFeaturedMediaById(id: number): Promise<FeaturedMedia> {
   const featuredMedia: FeaturedMedia = await response.json();
   return featuredMedia;
 }
+
+export async function getRecentPosts(perPage: number): Promise<Post[]> {
+  const url = getUrl("/wp-json/wp/v2/posts", { per_page: perPage });
+  const response = await fetch(url);
+  const posts: Post[] = await response.json();
+  return posts;
+}
