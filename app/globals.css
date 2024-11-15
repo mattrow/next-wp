@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --background: 216 12% 8%;
+    --foreground: 0 0% 98%;
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -36,7 +36,7 @@
   }
 
   .dark {
-    --background: 0 0% 3.9%;
+    --background: 216 12% 8%;
     --foreground: 0 0% 98%;
 
     --card: 0 0% 3.9%;
@@ -129,4 +129,26 @@
     filter: blur(0px);
     opacity: 1;
   }
+}
+
+.speech-bubble {
+  position: relative;
+  background: #d3d3d3;
+  border-radius: 0.4em;
+  padding: 10px;
+  color: #000;
+  width: 220px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -20px; /* Adjust as needed */
+  left: 50px;    /* Adjust as needed */
+  width: 0;
+  height: 0;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #d3d3d3 transparent transparent transparent;
 }
