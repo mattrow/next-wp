@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { MobileNav } from "@/components/nav/mobile-nav";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Main } from "@/components/craft";
-import { mainMenu, contentMenu } from "@/menu.config";
+import { mainMenu, contentMenu, socialLinks } from "@/menu.config";
 import { Section, Container } from "@/components/craft";
 import Balancer from "react-wrap-balancer";
 
@@ -21,7 +21,19 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
+import { Heart, MessageCircle, Mail, Twitter, Youtube, Linkedin } from "lucide-react";
 import Nav from "@/components/Nav";
+import { SocialIcon } from "@/components/Nav";
+import {
+  TwitterIcon,
+  YoutubeIcon,
+  LinkedinIcon,
+  DiscordIcon,
+  RedditIcon,
+  MailIcon,
+} from "@/components/Nav";
+
+
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -63,60 +75,115 @@ export default function RootLayout({
     </html>
   );
 }
+
+
 const Footer = () => {
   return (
-    <footer>
+    <footer className="bg-gray-900/20 border-t border-gray-800 mt-20">
       <Section>
-        <Container className="grid md:grid-cols-[1.5fr_0.5fr_0.5fr] gap-12">
-          <div className="flex flex-col gap-6 not-prose">
-            <Link href="/">
-              <h3 className="sr-only">brijr/components</h3>
+        <Container className="py-12">
+          {/* Top Section */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            {/* Logo and Description */}
+            <div className="col-span-1 md:col-span-2">
               <Image
-                src={Logo}
-                alt="Logo"
-                width={120}
-                height={27.27}
-                className="dark:invert hover:opacity-75 transition-all"
-              ></Image>
-            </Link>
-            <p>
-              <Balancer>{metadata.description}</Balancer>
-            </p>
+                src={SiteLogo}
+                alt="Best AI Girlfriends"
+                width={300}
+                height={45}
+                className="mb-4 opacity-70 hover:opacity-100 transition-opacity filter grayscale"
+              />
+              <p className="text-gray-400 max-w-md">
+                Your trusted source for finding and reviewing the best AI companion experiences. 
+                We help you discover meaningful connections in the digital age.
+              </p>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h3 className="text-purple-500 font-semibold mb-4">Quick Links</h3>
+              <ul className="space-y-2">
+                {Object.entries(mainMenu).map(([key, href]) => (
+                  <li key={key}>
+                    <Link 
+                      href={href}
+                      className="text-gray-400 hover:text-purple-500 transition-colors"
+                    >
+                      {key}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Resources */}
+            <div>
+              <h3 className="text-purple-500 font-semibold mb-4">Resources</h3>
+              <ul className="space-y-2">
+                {Object.entries(contentMenu).map(([key, href]) => (
+                  <li key={key}>
+                    <Link 
+                      href={href}
+                      className="text-gray-400 hover:text-purple-500 transition-colors capitalize"
+                    >
+                      {key}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="flex flex-col gap-2 text-sm">
-            <h5 className="font-medium text-base">Website</h5>
-            {Object.entries(mainMenu).map(([key, href]) => (
-              <Link
-                className="hover:underline underline-offset-4"
-                key={href}
-                href={href}
-              >
-                {key.charAt(0).toUpperCase() + key.slice(1)}
-              </Link>
-            ))}
+
+          {/* Bottom Section */}
+          <div className="pt-8 border-t border-gray-800">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              {/* Social Links */}
+              <div className="flex items-center space-x-3">
+                <SocialIcon
+                  icon={TwitterIcon}
+                  href={socialLinks.x}
+                  label="Follow on X (Twitter)"
+                />
+                <SocialIcon
+                  icon={YoutubeIcon}
+                  href={socialLinks.youtube}
+                  label="Subscribe on YouTube"
+                />
+                <SocialIcon
+                  icon={LinkedinIcon}
+                  href={socialLinks.linkedin}
+                  label="Connect on LinkedIn"
+                />
+                <SocialIcon
+                  icon={DiscordIcon}
+                  href={socialLinks.discord}
+                  label="Join our Discord"
+                />
+                <SocialIcon
+                  icon={RedditIcon}
+                  href={socialLinks.reddit}
+                  label="Join our Subreddit"
+                />
+                <SocialIcon
+                  icon={MailIcon}
+                  href={socialLinks.email}
+                  label="Send us an email"
+                />
+              </div>
+
+              {/* Copyright */}
+              <div className="flex items-center gap-2 text-gray-400">
+                <span>© 2024</span>
+                <Link href="/" className="hover:text-purple-500 transition-colors flex items-center gap-1">
+                  <Heart size={16} className="text-purple-500" />
+                  Best AI Girlfriends
+                </Link>
+                <span>All rights reserved.</span>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col gap-2 text-sm">
-            <h5 className="font-medium text-base">Blog</h5>
-            {Object.entries(contentMenu).map(([key, href]) => (
-              <Link
-                className="hover:underline underline-offset-4"
-                key={href}
-                href={href}
-              >
-                {key.charAt(0).toUpperCase() + key.slice(1)}
-              </Link>
-            ))}
-          </div>
-        </Container>
-        <Container className="border-t not-prose flex flex-col md:flex-row md:gap-2 gap-6 justify-between md:items-center">
-          <ThemeToggle />
-          <p className="text-muted-foreground">
-            © <a href="https://9d8.dev">9d8</a>. All rights reserved.
-            2024-present.
-          </p>
         </Container>
       </Section>
     </footer>
   );
 };
-

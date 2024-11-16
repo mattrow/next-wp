@@ -1,10 +1,9 @@
 // components/Nav.tsx
 "use client";
 
-import { Heart, Search, Twitter, Youtube, Linkedin, MessageCircle, Mail } from "lucide-react";
+import { Heart, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { mainMenu, socialLinks } from "@/menu.config";
 import { cn } from "@/lib/utils";
 
@@ -18,13 +17,13 @@ type NavProps = {
   id?: string;
 };
 
-const SocialIcon = ({ 
-  icon: Icon, 
-  href, 
-  label 
-}: { 
-  icon: React.ElementType; 
-  href: string; 
+export const SocialIcon = ({
+  icon: Icon,
+  href,
+  label,
+}: {
+  icon: React.ElementType;
+  href: string;
   label: string;
 }) => (
   <Link
@@ -32,15 +31,15 @@ const SocialIcon = ({
     className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-purple-500 transition-colors duration-200"
     aria-label={label}
   >
-    <Icon 
-      className="w-2 h-2 text-white" 
+    <Icon
+      className="w-5 h-5 text-white"
       strokeWidth={0}
       fill="currentColor"
     />
   </Link>
 );
 
-const DiscordIcon = () => (
+export const DiscordIcon = () => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="22" 
@@ -52,7 +51,7 @@ const DiscordIcon = () => (
   </svg>
 );
 
-const RedditIcon = () => (
+export const RedditIcon = () => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="22" 
@@ -65,7 +64,7 @@ const RedditIcon = () => (
   </svg>
 );
 
-const TwitterIcon = () => (
+export const TwitterIcon = () => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="20" 
@@ -77,7 +76,7 @@ const TwitterIcon = () => (
   </svg>
 );
 
-const YoutubeIcon = () => (
+export const YoutubeIcon = () => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="22" 
@@ -89,7 +88,7 @@ const YoutubeIcon = () => (
   </svg>
 );
 
-const LinkedinIcon = () => (
+export const LinkedinIcon = () => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="20" 
@@ -101,7 +100,7 @@ const LinkedinIcon = () => (
   </svg>
 );
 
-const MailIcon = () => (
+export const MailIcon = () => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="20" 
