@@ -6,9 +6,10 @@ export const mainMenu = {
 };
 
 export const contentMenu = {
-  categories: "/posts/categories",
-  tags: "/posts/tags",
-  authors: "/posts/authors",
+  categories: "/blog/categories",
+  tags: "/blog/tags",
+  Reviews: "/reviews",
+  authors: "/blog/authors",
 };
 
 // Define social media links

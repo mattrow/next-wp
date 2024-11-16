@@ -203,3 +203,16 @@ export async function getRecentPosts(perPage: number): Promise<Post[]> {
   const posts: Post[] = await response.json();
   return posts;
 }
+
+export async function getAffiliateLinkBySlug(slug: string): Promise<string | null> {
+  const url = getUrl('/wp-json/wp/v2/posts', { slug });
+  const response = await fetch(url);
+  const posts = await response.json();
+
+  if (posts && posts.length > 0) {
+    const post = posts[0];
+    return post.affiliate_url || null;
+  } else {
+    return null;
+  }
+}

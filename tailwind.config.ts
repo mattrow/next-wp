@@ -8,6 +8,8 @@ const config = {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
+    "./blog/**/*.{ts,tsx}",
+    "./reviews/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -56,6 +58,9 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+      },
+      scale: {
+        '103': '1.03',
       },
       borderRadius: {
         lg: "var(--radius)",

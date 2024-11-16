@@ -17,8 +17,9 @@ const VideoCard = ({ video }: VideoCardProps) => {
       href={`https://www.youtube.com/watch?v=${video.id}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="border-2 border-purple-500/50 p-2 rounded-lg group flex flex-col justify-between
-                bg-purple-500/10 w-72 hover:bg-purple-500/20 transition-all flex-shrink-0"
+      className={`border-2 border-purple-500/50 p-2 rounded-lg group flex flex-col justify-between
+                    bg-purple-500/10 w-72 hover:bg-purple-500/20 transition-all flex-shrink-0
+                    transform transition-transform duration-300 hover:scale-105`}
     >
       {/* Thumbnail */}
       <div className="h-32 w-full overflow-hidden rounded-md mb-2 bg-gray-700">

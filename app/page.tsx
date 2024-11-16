@@ -173,7 +173,7 @@
                   <path d="M13.7813 2.96764C12.5708 4.10058 12.6174 6.11247 12.6174 6.11247C12.6174 6.11247 14.6267 6.28752 15.8372 5.15458C17.0477 4.02165 17.001 2.00975 17.001 2.00975C17.001 2.00975 14.9918 1.83471 13.7813 2.96764Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
                 </svg>
                 
-                <h1 className="sm:text-5xl text-2xl font-black text-center text-white-400 bg-clip-text px-2">
+                <h1 className="sm:text-5xl text-2xl font-black text-center text-white bg-clip-text px-2">
                   Featured AI Girlfriends
                 </h1>
                 
@@ -195,7 +195,12 @@
                   return (
                     <div
                       key={app.rank}
-                      className={`relative flex flex-col md:flex-row gap-6 p-4 rounded-xl bg-gradient-to-r ${app.gradient} bg-gray-900/50 border-2 ${app.border} hover:bg-gray-900/70 transition-all`}
+                      className={`
+                        relative flex flex-col md:flex-row gap-6 p-4 rounded-xl 
+                        bg-gradient-to-r ${app.gradient} bg-gray-900/50 border-2 ${app.border}
+                        hover:bg-gray-900/70 transition-all
+                        transform transition-transform duration-300 hover:scale-103
+                      `}
                     >
                       {/* Rank Badge */}
                       <div
@@ -208,7 +213,7 @@
   
                       {/* Left Column - App Name and Image */}
                       <div className="w-full md:w-1/4 flex flex-col justify-center">
-                        <h2 className="text-3xl font-bold mt-0 mb-4 pl-6 sm:pl-10 leading-none">
+                        <h2 className="text-3xl font-bold text-white mt-0 mb-4 pl-6 sm:pl-10 leading-none">
                           {app.name}
                         </h2>
                         <div className="relative aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800 group">
@@ -322,17 +327,17 @@
             </div>
 
             {/* New Latest Blog Posts Section */}
-            <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16 not-prose">
-              <div className="relative flex items-center justify-center mb-8">
+            <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16 not-prose overflow-visible">
+              <div className="relative flex items-center justify-center overflow-visible mb-8">
               
-                <h1 className="sm:text-5xl text-2xl font-black text-center text-white-400 bg-clip-text px-2">
+                <h1 className="sm:text-5xl text-2xl font-black text-center text-white bg-clip-text px-2">
                   Latest Blog Posts
                 </h1>
                 
                
               </div>
 
-              <Slider>
+              <Slider >
                 {recentPosts.map((post) => (
                   <PostCard key={post.id} post={post} variant="home" />
                 ))}
@@ -344,7 +349,7 @@
               <div className="relative flex items-center justify-center mb-8">
                
                 
-                <h1 className="sm:text-5xl text-2xl font-black text-center text-white-400 bg-clip-text px-2">
+                <h1 className="sm:text-5xl text-2xl font-black text-center text-white bg-clip-text px-2">
                   Latest Videos
                 </h1>
                 

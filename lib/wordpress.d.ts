@@ -42,6 +42,7 @@ export type Post = {
   meta: any[];
   categories: number[];
   tags: number[];
+  affiliate_url?: string;
 };
 
 export type Category = {
