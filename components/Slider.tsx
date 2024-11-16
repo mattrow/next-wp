@@ -38,7 +38,7 @@ const Slider = ({ children }: SliderProps) => {
       </button>
       <div
         ref={sliderRef}
-        className="overflow-x-scroll flex space-x-4 scrollbar-hide px-8"
+        className="overflow-x-scroll flex space-x-4 scrollbar-hide px-2 sm:px-8"
       >
         {children}
       </div>

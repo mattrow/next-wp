@@ -23,6 +23,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Heart, MessageCircle, Mail, Twitter, Youtube, Linkedin } from "lucide-react";
 import Nav from "@/components/Nav";
+import NavMobile from "@/components/NavMobile";
 import { SocialIcon } from "@/components/Nav";
 import {
   TwitterIcon,
@@ -66,9 +67,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Nav />
-          <Main>{children}</Main>
-          <Footer />
+          <div className="sm:hidden">
+            <NavMobile className="mx-4"/>
+          </div>
+          <div className="hidden sm:block">
+            <Nav className="mx-4"/>
+          </div>
+          <Main className="mx-4">{children}</Main>
+          <Footer/>
         </ThemeProvider>
         <Analytics />
       </body>
@@ -79,7 +85,7 @@ export default function RootLayout({
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900/20 border-t border-gray-800 mt-20">
+    <footer className="bg-gray-900/20 border-t border-gray-800 px-4 mt-20">
       <Section>
         <Container className="py-12">
           {/* Top Section */}

@@ -173,7 +173,7 @@
                   <path d="M13.7813 2.96764C12.5708 4.10058 12.6174 6.11247 12.6174 6.11247C12.6174 6.11247 14.6267 6.28752 15.8372 5.15458C17.0477 4.02165 17.001 2.00975 17.001 2.00975C17.001 2.00975 14.9918 1.83471 13.7813 2.96764Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
                 </svg>
                 
-                <h1 className="text-5xl font-black text-center text-white-400 bg-clip-text px-2">
+                <h1 className="sm:text-5xl text-2xl font-black text-center text-white-400 bg-clip-text px-2">
                   Featured AI Girlfriends
                 </h1>
                 
@@ -199,7 +199,7 @@
                     >
                       {/* Rank Badge */}
                       <div
-                        className={`absolute -top-4 -left-4 w-16 h-16 rounded-2xl bg-gradient-to-br ${
+                        className={`absolute -top-4 -left-4 w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br ${
                           rankColors[app.rank as keyof typeof rankColors]
                         } flex items-center justify-center text-white font-bold text-3xl  shadow-xl [text-shadow:_1_2px_5_rgb(0_0_0_/_40%)]`}
                       >
@@ -208,7 +208,7 @@
   
                       {/* Left Column - App Name and Image */}
                       <div className="w-full md:w-1/4 flex flex-col justify-center">
-                        <h2 className="text-3xl font-bold mt-0 mb-4 pl-10 leading-none">
+                        <h2 className="text-3xl font-bold mt-0 mb-4 pl-6 sm:pl-10 leading-none">
                           {app.name}
                         </h2>
                         <div className="relative aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800 group">
@@ -233,7 +233,8 @@
                         </p>
   
                         {/* Features and Score */}
-                        <div className="flex space-x-4 mt-4">
+                        {/* For sm and larger screens, show all four rectangles */}
+                        <div className="hidden sm:flex space-x-4 mt-4">
                           {/* Feature Rectangles */}
                           {featureList.map((feature) => (
                             <div
@@ -273,11 +274,31 @@
                             </div>
                           </div>
                         </div>
+  
+                        {/* For mobile screens, show only the Overall Score rectangle */}
+                        <div className="flex sm:hidden mt-4">
+                          {/* Overall Score Rectangle */}
+                          <div className="flex-1 rounded-lg p-3 bg-purple-500/20 border-2 border-purple-400 sm:bg-gradient-to-br sm:from-purple-500 sm:to-purple-700">
+                            <div className="flex flex-row sm:flex-col items-center justify-between">
+                              {/* Solid Star Icon and Label */}
+                              <div className="flex items-center">
+                                <StarIcon className="w-6 h-6 text-white sm:mb-2" />
+                                <span className="sm:text-sm text-lg pl-2 sm:pl-0 text-white font-semibold">
+                                  Overall
+                                </span>
+                              </div>
+                              {/* Overall Score */}
+                              <span className="sm:mt-2 mt-0 text-2xl sm:text-lg font-extrabold text-white">
+                                {app.overall}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
   
                       {/* Right Column - Buttons */}
                       <div className="w-full md:w-1/4 flex flex-col justify-center items-center">
-                        <div className="w-full px-4 flex flex-col gap-2">
+                        <div className="w-full sm:px-4 px-0 flex flex-col gap-2">
                           <Link
                             href="#"
                             className="flex items-center font-bold justify-center gap-2 py-2 px-4 rounded-lg bg-purple-500 hover:bg-purple-600 text-white text-md transition-all transform hover:scale-105"
@@ -301,10 +322,10 @@
             </div>
 
             {/* New Latest Blog Posts Section */}
-            <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-16 not-prose">
+            <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16 not-prose">
               <div className="relative flex items-center justify-center mb-8">
               
-                <h1 className="text-5xl font-black text-center text-white-400 bg-clip-text px-2">
+                <h1 className="sm:text-5xl text-2xl font-black text-center text-white-400 bg-clip-text px-2">
                   Latest Blog Posts
                 </h1>
                 
@@ -319,11 +340,11 @@
             </div>
 
             {/* Latest Videos Section */}
-            <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-16 not-prose">
+            <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16 not-prose">
               <div className="relative flex items-center justify-center mb-8">
                
                 
-                <h1 className="text-5xl font-black text-center text-white-400 bg-clip-text px-2">
+                <h1 className="sm:text-5xl text-2xl font-black text-center text-white-400 bg-clip-text px-2">
                   Latest Videos
                 </h1>
                 
