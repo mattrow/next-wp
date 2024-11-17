@@ -26,10 +26,11 @@ const PostCard = async ({ post, variant = "default" }: PostCardProps) => {
     <Link
       href={`/blog/${post.slug}`}
       className={cn(
-        "border-2 border-purple-500/50 p-2 rounded-lg group flex flex-col justify-between",
+        "relative border-2 border-purple-500/50 p-2 rounded-lg group flex flex-col justify-between not-prose",
         variant === "home" ? "bg-purple-500/10 w-72" : "bg-accent/30",
-        "hover:bg-purple-500/20 transition-all flex-shrink-0",
-        "transform transition-transform duration-300 hover:scale-105"
+        "hover:bg-purple-500/20 transition-all",
+        "transform transition-transform duration-300 hover:scale-105",
+        "hover:z-10"
       )}
     >
       {/* Thumbnail */}

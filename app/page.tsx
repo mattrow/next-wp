@@ -327,25 +327,24 @@
             </div>
 
             {/* New Latest Blog Posts Section */}
-            <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16 not-prose overflow-visible">
-              <div className="relative flex items-center justify-center overflow-visible mb-8">
-              
+            <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16">
+              <div className="relative flex items-center justify-center mb-8">
                 <h1 className="sm:text-5xl text-2xl font-black text-center text-white bg-clip-text px-2">
                   Latest Blog Posts
                 </h1>
-                
-               
               </div>
 
-              <Slider >
-                {recentPosts.map((post) => (
-                  <PostCard key={post.id} post={post} variant="home" />
-                ))}
-              </Slider>
+              <div className="not-prose">
+                <Slider>
+                  {recentPosts.map((post) => (
+                    <PostCard key={post.id} post={post} variant="home" />
+                  ))}
+                </Slider>
+              </div>
             </div>
 
             {/* Latest Videos Section */}
-            <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16 not-prose">
+            <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16 overflow-visible">
               <div className="relative flex items-center justify-center mb-8">
                
                 
@@ -356,11 +355,13 @@
                
               </div>
 
-              <Slider>
-                {latestVideos.map((video) => (
-                  <VideoCard key={video.id} video={video} />
-                ))}
-              </Slider>
+              <div className="not-prose">
+                <Slider>
+                  {latestVideos.map((video) => (
+                    <VideoCard key={video.id} video={video} />
+                  ))}
+                </Slider>
+              </div>
             </div>
           </Container>
         </Section>

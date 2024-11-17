@@ -1,15 +1,13 @@
-// components/Nav.tsx
+// components/NavMobile.tsx
 "use client";
 
-import { Heart, Search } from "lucide-react";
+import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { mainMenu, socialLinks } from "@/menu.config";
 import { cn } from "@/lib/utils";
 
 // Import your images
 import SiteLogo from "@/public/SiteLogo.webp";
-import JessicaCarterWave from "@/public/JessicaCarterWave.webp";
 import { MobileNav } from "./nav/mobile-nav";
 
 type NavProps = {
@@ -18,22 +16,17 @@ type NavProps = {
   id?: string;
 };
 
-
-
 const Nav = ({ className, children, id }: NavProps) => {
   return (
     <nav
       className={cn(
-        "bg-background",
+        "sticky top-0 z-50 bg-background",
         "fade-in",
         className
       )}
       id={id}
     >
-      <div
-        id="nav-container"
-        className="mx-auto max-w-6xl py-6"
-      >
+      <div id="nav-container" className="mx-auto max-w-6xl py-6">
         {/* Main container with 3 columns */}
         <div className="flex flex-row justify-between items-stretch">
           {/* Left Column - Left aligned content */}
@@ -55,10 +48,8 @@ const Nav = ({ className, children, id }: NavProps) => {
                 className="h-auto w-[250px] sm:w-[400px]"
               />
             </Link>
-            
           </div>
 
-          
           {/* Right Column - Aligned to left and centered */}
           <div className="flex items-center justify-end flex-1">
             <MobileNav />

@@ -67,7 +67,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="sm:hidden">
+          <div className="sticky top-0 z-50 sm:hidden">
             <NavMobile className="mx-4"/>
           </div>
           <div className="hidden sm:block">
