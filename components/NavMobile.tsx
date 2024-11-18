@@ -26,7 +26,7 @@ const Nav = ({ className, children, id }: NavProps) => {
       )}
       id={id}
     >
-      <div id="nav-container" className="mx-auto max-w-6xl py-6">
+      <div id="nav-container" className="mx-auto max-w-6xl py-4">
         {/* Main container with 3 columns */}
         <div className="flex flex-row justify-between items-stretch">
           {/* Left Column - Left aligned content */}

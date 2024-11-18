@@ -11,7 +11,7 @@ export default function Footer({ slug }: { slug: string }) {
       <div className="flex justify-center">
         <Link
           href={`/link/${slug}`}
-          className="flex items-center justify-center bg-green-500 text-white rounded-md w-full mx-4 px-4 py-2"
+          className="flex items-center justify-center bg-purple-500 text-white rounded-md w-full mx-4 px-4 py-2 shimmer"
         >
           <Image
             alt="Site Favicon"
@@ -20,8 +20,8 @@ export default function Footer({ slug }: { slug: string }) {
             height={32}
             className="inline-block m-0 p-0"
           />
-          <span className="mx-2">candy.ai</span>
-          <ExternalLink size={20} />
+          <span className="mx-2 font-semibold text-xl text-white">candy.ai</span>
+          <ExternalLink size={24} className="text-white" />
         </Link>
       </div>
     </div>
