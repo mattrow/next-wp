@@ -1,11 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Section, Container } from "@/components/craft";
-import candy_aiwebsite from '@/public/candy_aiwebsite.png';
-import candy_ai from '@/public/candy_ai.png';
+import { notFound } from 'next/navigation';
 import { ArrowRight, Plus, Minus, ExternalLink } from 'lucide-react';
 import { FaYoutube } from 'react-icons/fa';
-
 
 // Import solid icons from Heroicons
 import {
@@ -18,33 +16,65 @@ import {
 // Import the necessary components
 import Footer from '@/components/Footer';
 
-// For demo purposes, we define a video URL
-const demoVideoUrl = "https://www.youtube.com/watch?v=NfqoUowoWac";
+type Post = {
+  title: { rendered: string };
+  content: { rendered: string };
+  acf: {
+    score_girls: number;
+    score_chat: number;
+    score_features: number;
+    website_url: string;
+    youtube_video_url: string;
+    website_screenshot: { url: string };
+    website_favicon: { url: string };
+    website_name: string;
+    pros: { text: string }[];
+    cons: { text: string }[];
+  };
+};
 
-export default function Page({ params }: { params: { slug: string } }) {
-  // Define the feature list
+async function getPost(slug: string): Promise<Post> {
+  const res = await fetch(`${process.env.WORDPRESS_API_URL}/wp/v2/posts?slug=${slug}&_embed`);
+  const posts = await res.json();
+  
+  if (!posts.length) {
+    notFound();
+  }
+  
+  return posts[0];
+}
+
+export default async function Page({ params }: { params: { slug: string } }) {
+  const post = await getPost(params.slug);
+  
+  // Calculate overall score
+  const scores = [
+    post.acf.score_girls,
+    post.acf.score_chat,
+    post.acf.score_features
+  ];
+  const overallScore = (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1);
+
   const featureList = [
     {
       name: "Girls",
       icon: HeartIcon,
-      score: 9.8,
+      score: post.acf.score_girls,
     },
     {
       name: "Chat",
       icon: ChatBubbleLeftRightIcon,
-      score: 9.1,
+      score: post.acf.score_chat,
     },
     {
       name: "Features",
       icon: Cog6ToothIcon,
-      score: 9.4,
+      score: post.acf.score_features,
     },
   ];
 
-  const overallScore = 9.6;
-
-  // Video URL (replace with actual data or state as needed)
-  const videoUrl = demoVideoUrl; // Set to null or undefined if no video is available
+  // Video URL (from ACF)
+  const videoUrl = post.acf.youtube_video_url; // Use the URL from ACF
 
   // Extract YouTube Video ID from the URL
   const getYouTubeVideoId = (url: string) => {
@@ -67,13 +97,15 @@ export default function Page({ params }: { params: { slug: string } }) {
               <div className="sm:col-span-1">
                 {/* Clickable wrapper for website image and button */}
                 <Link
-                  href={`/link/${params.slug}`}
+                  href={post.acf.website_url}
                   className="relative rounded-xl block overflow-hidden"
                 >
                   {/* Image */}
                   <Image
-                    src={candy_aiwebsite}
-                    alt="Candy.ai Website"
+                    src={post.acf.website_screenshot.url}
+                    alt={`${post.acf.website_name} Website`}
+                    width={800}
+                    height={600}
                     className="w-full h-auto my-0"
                     placeholder="blur"
                   />
@@ -81,7 +113,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                   <div className="flex items-center justify-center bg-purple-500 text-white w-full px-4 py-2 shimmer">
                     <Image
                       alt="Site Favicon"
-                      src={candy_ai}
+                      src={post.acf.website_favicon.url}
                       width={32}
                       height={32}
                       className="inline-block m-0 p-0"
@@ -133,14 +165,14 @@ export default function Page({ params }: { params: { slug: string } }) {
                   <div className="border border-green-500 bg-green-500/20 rounded-2xl p-1 flex items-center mb-2 sm:mb-0">
                     <Plus className="text-green-500 mr-2 ml-1" />
                     <p className="text-gray-300 font-semibold text-sm">
-                      Great user interface and easy to use.
+                      {post.acf.pros && post.acf.pros.length > 0 ? post.acf.pros[0].text : ''}
                     </p>
                   </div>
                   {/* Negatives */}
                   <div className="border border-red-500 bg-red-500/20 rounded-2xl p-1 flex items-center">
                     <Minus className="text-red-500 mr-2 ml-1" />
                     <p className="text-gray-300 font-semibold text-sm">
-                      Limited customization options.
+                      {post.acf.cons && post.acf.cons.length > 0 ? post.acf.cons[0].text : ''}
                     </p>
                   </div>
                 </div>
@@ -180,19 +212,16 @@ export default function Page({ params }: { params: { slug: string } }) {
 
                 {/* Title */}
                 <h1 className="not-prose text-center sm:text-left text-white text-3xl font-bold">
-                  Candy.ai
+                  {post.title.rendered}
                 </h1>
 
                 {/* Content */}
                 <div className="mt-8">
                   <h2 className="text-2xl font-bold mb-4">Overview</h2>
-                  <p className="text-gray-300">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Proin vel neque nec eros dictum aliquet. Donec at nisl at
-                    sapien vehicula convallis. Suspendisse potenti. Sed
-                    sollicitudin, ipsum eu gravida facilisis, justo nunc
-                    convallis ex, at luctus purus orci nec augue.
-                  </p>
+                  <div
+                    className="text-gray-300"
+                    dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+                  />
                 </div>
               </div>
             </div>
@@ -203,7 +232,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             {/* 26+ AI Girlfriends Section */}
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold">
-                26+ AI Girlfriends like Candy.ai
+                26+ AI Girlfriends like {post.acf.website_name}
               </h2>
               <Link
                 href="#"
@@ -224,7 +253,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 {/* Image */}
                 <div className="w-full h-40 relative">
                   <Image
-                    src={candy_aiwebsite}
+                    src={post.acf.website_screenshot.url}
                     alt="AI Girlfriend"
                     fill
                     className="object-cover"
@@ -233,7 +262,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 </div>
                 {/* Name */}
                 <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 px-2 py-1 rounded">
-                  <span className="text-white font-bold">AI Girlfriend Name</span>
+                  <span className="text-white font-bold">{post.acf.website_name}</span>
                 </div>
               </div>
               {/* Repeat for other cards */}
