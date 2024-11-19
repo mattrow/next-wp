@@ -43,6 +43,22 @@ export type Post = {
   categories: number[];
   tags: number[];
   affiliate_url?: string;
+  acf: {
+    score_girls: number;
+    score_chat: number;
+    score_features: number;
+    website_url: string;
+    youtube_video_url: string;
+    website_screenshot: {
+      url: string;
+    };
+    website_favicon: {
+      url: string;
+    };
+    website_name: string;
+    pros: { text: string }[];
+    cons: { text: string }[];
+  };
 };
 
 export type Category = {
