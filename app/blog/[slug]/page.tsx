@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils";
 
 import Link from "next/link";
 import Balancer from "react-wrap-balancer";
+import { notFound } from 'next/navigation';
+import { Post } from '@/lib/wordpress.d';
 
 export async function generateMetadata({
   params,
@@ -19,6 +21,11 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
+
+  if (!post) {
+    notFound();
+  }
+
   return {
     title: post.title.rendered,
     description: post.excerpt.rendered,
@@ -27,6 +34,11 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const post = await getPostBySlug(params.slug);
+
+  if (!post) {
+    notFound();
+  }
+
   const featuredMedia = await getFeaturedMediaById(post.featured_media);
   const author = await getAuthorById(post.author);
   const date = new Date(post.date).toLocaleDateString("en-US", {

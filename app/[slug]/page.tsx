@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Section, Container } from "@/components/craft";
@@ -15,27 +17,28 @@ import {
 
 // Import the necessary components
 import Footer from '@/components/Footer';
+import { Post } from '@/lib/wordpress.d';
 
-type Post = {
-  title: { rendered: string };
-  content: { rendered: string };
-  acf: {
-    score_girls: number;
-    score_chat: number;
-    score_features: number;
-    website_url: string;
-    youtube_video_url: string;
-    website_screenshot: { url: string };
-    website_favicon: { url: string };
-    website_name: string;
-    pros: { text: string }[];
-    cons: { text: string }[];
-  };
-};
+// type Post = {
+//   title: { rendered: string };
+//   content: { rendered: string };
+//   acf: {
+//     score_girls: number;
+//     score_chat: number;
+//     score_features: number;
+//     website_url: string;
+//     youtube_video_url: string;
+//     website_screenshot: { url: string };
+//     website_favicon: { url: string };
+//     website_name: string;
+//     pros: { text: string }[];
+//     cons: { text: string }[];
+//   };
+// };
 
 async function getPost(slug: string): Promise<Post> {
   const res = await fetch(
-    `${process.env.WORDPRESS_API_URL}/wp/v2/reviews?slug=${slug}&_embed`
+    `${process.env.WORDPRESS_API_URL}/wp/v2/review?slug=${slug}&_embed`
   );
 
   if (!res.ok) {
@@ -283,4 +286,31 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <Footer slug={params.slug} />
     </>
   );
+}
+
+export async function generateStaticParams() {
+  const posts: Post[] = [];
+  let page = 1;
+  let totalPages = 1;
+
+  do {
+    const res = await fetch(
+      `${process.env.WORDPRESS_API_URL}/wp/v2/review?per_page=100&page=${page}`
+    );
+
+    if (!res.ok) {
+      console.error('Failed to fetch posts:', await res.text());
+      break;
+    }
+
+    const data: Post[] = await res.json();
+    posts.push(...data);
+
+    totalPages = parseInt(res.headers.get('X-WP-TotalPages') || '1', 10);
+    page++;
+  } while (page <= totalPages);
+
+  return posts.map((post: Post) => ({
+    slug: post.slug,
+  }));
 }

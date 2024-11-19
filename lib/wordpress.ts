@@ -3,6 +3,7 @@
 // Types are imported from `wp.d.ts`
 
 import querystring from 'query-string'
+import { notFound } from 'next/navigation';
 
 import {
   Post,
@@ -45,12 +46,18 @@ export async function getPostById(id: number): Promise<Post> {
 
 export async function getPostBySlug(
   slug: string,
-  postType: string = 'posts'
-): Promise<Post> {
+  postType: string = 'post'
+): Promise<Post | null> {
   const url = getUrl(`/wp-json/wp/v2/${postType}`, { slug });
   const response = await fetch(url);
-  const post: Post[] = await response.json();
-  return post[0];
+
+  if (!response.ok) {
+    console.error('Failed to fetch post:', await response.text());
+    return null;
+  }
+
+  const posts: Post[] = await response.json();
+  return posts.length > 0 ? posts[0] : null;
 }
 
 export async function getAllCategories(): Promise<Category[]> {
@@ -218,4 +225,17 @@ export async function getAffiliateLinkBySlug(slug: string): Promise<string | nul
   } else {
     return null;
   }
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const post = await getPostBySlug(params.slug);
+
+  if (!post) {
+    notFound(); // This will trigger a 404 page
+  }
+
+  return {
+    title: post.title.rendered,
+    description: post.excerpt.rendered,
+  };
 }
