@@ -34,17 +34,24 @@ type Post = {
 };
 
 async function getPost(slug: string): Promise<Post> {
-    const res = await fetch(
-      `${process.env.WORDPRESS_API_URL}/wp/v2/reviews?slug=${slug}&_embed`
-    );
-    const posts = await res.json();
+  const res = await fetch(
+    `${process.env.WORDPRESS_API_URL}/wp/v2/reviews?slug=${slug}&_embed`
+  );
 
-    if (!posts.length) {
-      notFound();
-    }
-
-    return posts[0];
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error('Failed to fetch post:', errorText);
+    throw new Error('Failed to fetch post');
   }
+
+  const posts = await res.json();
+
+  if (!posts.length) {
+    notFound();
+  }
+
+  return posts[0];
+}
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
