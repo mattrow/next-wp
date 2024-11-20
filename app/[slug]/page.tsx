@@ -115,7 +115,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               <div className="sm:col-span-1">
                 {/* Clickable wrapper for website image and button */}
                 <Link
-                  href={post.acf.website_url}
+                  href={`/link/${params.slug}`}
                   className="relative rounded-xl block overflow-hidden border-4 border-purple-500"
                 >
                   {/* Image */}
@@ -124,7 +124,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     alt={`${post.acf.website_name} Website`}
                     width={800}
                     height={600}
-                    className="w-full h-64 object-cover my-0"
+                    className="w-full sm:h-64 h-48 object-cover my-0"
                   />
                   {/* Button */}
                   <div className="flex items-center justify-center bg-purple-500 text-white w-full px-4 py-2 shimmer">
@@ -239,7 +239,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     className="relative rounded-xl block overflow-hidden mb-6 border-4 border-white"
                   >
                     {/* Video Thumbnail */}
-                    <div className="relative w-full h-64">
+                    <div className="relative w-full sm:h-64 h-48">
                       <Image
                         src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
                         alt="YouTube Video Thumbnail"

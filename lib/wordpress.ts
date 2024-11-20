@@ -221,7 +221,7 @@ export async function getAffiliateLinkBySlug(slug: string): Promise<string | nul
 
   if (posts && posts.length > 0) {
     const post = posts[0];
-    return post.affiliate_url || null;
+    return post.acf.website_url || null;
   } else {
     return null;
   }

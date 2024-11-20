@@ -39,6 +39,7 @@
   
   const apps = [
     {
+      slug: 'replika',
       rank: 1,
       name: "Replika",
       image: "https://example.com/replika.jpg",
@@ -56,6 +57,7 @@
       border: "border-amber-500/50",
     },
     {
+      slug: 'character-ai',
       rank: 2,
       name: "Character AI",
       image: "https://example.com/character.jpg",
@@ -72,6 +74,7 @@
       border: "border-gray-500/50"
     },
     {
+      slug: 'romantic-ai',
       rank: 3,
       name: "Romantic AI",
       image: "https://example.com/romantic.jpg",
@@ -88,6 +91,7 @@
       border: "border-amber-700/50"
     },
     {
+      slug: 'anima',
       rank: 4,
       name: "Anima",
       image: "https://example.com/anima.jpg",
@@ -104,6 +108,7 @@
       border: "border-purple-500/50"
     },
     {
+      slug: 'eva-ai',
       rank: 5,
       name: "EVA AI",
       image: "https://example.com/eva.jpg",
@@ -305,14 +310,14 @@
                       <div className="w-full md:w-1/4 flex flex-col justify-center items-center">
                         <div className="w-full sm:px-4 px-0 flex flex-col gap-2">
                           <Link
-                            href="#"
+                            href={`/link/${app.slug}`}
                             className="flex items-center font-bold justify-center gap-2 py-2 px-4 rounded-lg bg-purple-500 hover:bg-purple-600 text-white text-md transition-all transform hover:scale-105"
                           >
                             Visit Site
                             <ArrowRightCircleIcon className="w-6 h-6" />
                           </Link>
                           <Link
-                            href="#"
+                            href={`/${app.slug}`}
                             className="flex items-center font-bold justify-center gap-2 py-2 px-4 rounded-lg bg-gray-200 hover:bg-gray-100 text-purple-500 text-md transition-all transform hover:scale-105"
                           >
                             Read Review
