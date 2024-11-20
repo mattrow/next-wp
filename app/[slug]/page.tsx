@@ -18,6 +18,7 @@ import {
 // Import the necessary components
 import Footer from '@/components/Footer';
 import { Post } from '@/lib/wordpress.d';
+import AiGirlfriendGrid from '@/components/AiGirlfriendGrid';
 
 
 async function getPost(slug: string): Promise<Post> {
@@ -107,7 +108,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 {/* Clickable wrapper for website image and button */}
                 <Link
                   href={post.acf.website_url}
-                  className="relative rounded-xl block overflow-hidden"
+                  className="relative rounded-xl block overflow-hidden border-4 border-purple-500"
                 >
                   {/* Image */}
                   <Image
@@ -170,30 +171,51 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 {/* Positives and Negatives */}
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 sm:gap-4">
                   {/* Positives */}
-                  <div className="border border-green-500 bg-green-500/20 rounded-2xl p-2 flex items-start mb-2 sm:mb-0">
-                    <Plus className="text-green-500 mr-2 mt-1" />
-                    <ul className="text-gray-300 font-semibold text-sm list-disc list-inside">
-                      {post.acf.pros && post.acf.pros.length > 0 ? (
-                        post.acf.pros.map((proItem, index) => (
-                          <li key={index}>{proItem.pros}</li>
-                        ))
-                      ) : (
-                        <li>No pros available.</li>
-                      )}
-                    </ul>
+                  <div className="mb-2 sm:mb-0">
+                    {post.acf.pros && post.acf.pros.length > 0 ? (
+                      post.acf.pros.map((proItem, index) => (
+                        <div
+                          key={index}
+                          className="border border-green-500 bg-green-500/20 rounded-2xl p-2 flex items-center mb-2"
+                        >
+                          <Plus className="text-green-500 mr-2 flex-shrink-0" />
+                          <span className="text-gray-300 font-semibold text-sm">
+                            {proItem.pros}
+                          </span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="border border-green-500 bg-green-500/20 rounded-2xl p-2 flex items-center mb-2">
+                        <Plus className="text-green-500 mr-2 flex-shrink-0" />
+                        <span className="text-gray-300 font-semibold text-sm">
+                          No pros available.
+                        </span>
+                      </div>
+                    )}
                   </div>
+
                   {/* Negatives */}
-                  <div className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-start">
-                    <Minus className="text-red-500 mr-2 mt-1" />
-                    <ul className="text-gray-300 font-semibold text-sm list-disc list-inside">
-                      {post.acf.cons && post.acf.cons.length > 0 ? (
-                        post.acf.cons.map((conItem, index) => (
-                          <li key={index}>{conItem.cons}</li>
-                        ))
-                      ) : (
-                        <li>No cons available.</li>
-                      )}
-                    </ul>
+                  <div>
+                    {post.acf.cons && post.acf.cons.length > 0 ? (
+                      post.acf.cons.map((conItem, index) => (
+                        <div
+                          key={index}
+                          className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-center mb-2"
+                        >
+                          <Minus className="text-red-500 mr-2 flex-shrink-0" />
+                          <span className="text-gray-300 font-semibold text-sm">
+                            {conItem.cons}
+                          </span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-center mb-2">
+                        <Minus className="text-red-500 mr-2 flex-shrink-0" />
+                        <span className="text-gray-300 font-semibold text-sm">
+                          No cons available.
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -206,7 +228,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     href={videoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative rounded-xl block overflow-hidden mb-6"
+                    className="relative rounded-xl block overflow-hidden mb-6 border-4 border-white"
                   >
                     {/* Video Thumbnail */}
                     <div className="relative w-full h-64">
@@ -247,47 +269,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
             </div>
           </div>
 
-          {/* Wrap the '26+ AI Girlfriends' section */}
-          <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-4 sm:p-8 not-prose mt-8">
-            {/* 26+ AI Girlfriends Section */}
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold">
-                26+ AI Girlfriends like {post.acf.website_name}
-              </h2>
-              <Link
-                href="#"
-                className="flex items-center bg-purple-500 text-white py-2 px-4 rounded-lg"
-              >
-                <ArrowRight />
-              </Link>
-            </div>
-
-            {/* Grid of Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
-              {/* Card Example */}
-              <div className="relative bg-gray-900 rounded-lg overflow-hidden">
-                {/* Number */}
-                <div className="absolute top-2 left-2 bg-black bg-opacity-50 rounded-full w-8 h-8 flex items-center justify-center">
-                  <span className="text-white font-bold">1</span>
-                </div>
-                {/* Image */}
-                <div className="w-full h-40 relative">
-                  <Image
-                    src={post.acf.website_screenshot.url}
-                    alt="AI Girlfriend"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                {/* Name */}
-                <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 px-2 py-1 rounded">
-                  <span className="text-white font-bold">{post.acf.website_name}</span>
-                </div>
-              </div>
-              {/* Repeat for other cards */}
-              {/* ... */}
-            </div>
-          </div>
+          {/* Replace the AI Girlfriends section with the new component */}
+          <AiGirlfriendGrid 
+            websiteName={post.acf.website_name}
+            websiteScreenshot={post.acf.website_screenshot}
+          />
         </Container>
       </Section>
       <Footer slug={params.slug} />
