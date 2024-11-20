@@ -215,8 +215,15 @@ export async function getRecentPosts(perPage: number): Promise<Post[]> {
 }
 
 export async function getAffiliateLinkBySlug(slug: string): Promise<string | null> {
-  const url = getUrl('/wp-json/wp/v2/posts', { slug });
+  const url = getUrl('/wp-json/wp/v2/review', { slug });
   const response = await fetch(url);
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('Failed to fetch post:', errorText);
+    return null;
+  }
+
   const posts = await response.json();
 
   if (posts && posts.length > 0) {
