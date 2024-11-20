@@ -12,10 +12,16 @@ export async function GET(
   const affiliateUrl = await getAffiliateLinkBySlug(slug);
 
   if (!affiliateUrl) {
-    // If no affiliate URL is found, return a 404 Not Found response
-    return NextResponse.redirect('/', { status: 404 });
+    // Return a 404 Not Found response
+    return new Response('Not Found', { status: 404 });
   }
 
-  // Perform a server-side redirect to the affiliate URL with a 301 status code
-  return NextResponse.redirect(affiliateUrl, { status: 301 });
+  // Ensure the affiliate URL includes the protocol
+  let redirectUrl = affiliateUrl;
+  if (!/^https?:\/\//i.test(affiliateUrl)) {
+    redirectUrl = 'https://' + affiliateUrl;
+  }
+
+  // Redirect using the valid URL
+  return NextResponse.redirect(redirectUrl, { status: 301 });
 } 
