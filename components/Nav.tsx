@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 // Import your images
 import SiteLogo from "@/public/SiteLogo.webp";
-import JessicaCarterWave from "@/public/JessicaCarterWave.webp";
+import JessicaCarterWave from "@/public/JessWaveCropped.png";
 
 type NavProps = {
   className?: string;
@@ -209,7 +209,7 @@ const Nav = ({ className, children, id }: NavProps) => {
               alt="Character Waving"
               width={200}
               height={200}
-              className="h-auto"
+              className="h-auto pt-2"
             />
           </div>
         </div>
