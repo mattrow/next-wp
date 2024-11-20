@@ -19,6 +19,8 @@ import {
 import Footer from '@/components/Footer';
 import { Post } from '@/lib/wordpress.d';
 import AiGirlfriendGrid from '@/components/AiGirlfriendGrid';
+import { getAllReviews } from '@/lib/wordpress';
+import { Review } from '@/lib/wordpress.d';
 
 
 async function getPost(slug: string): Promise<Post> {
@@ -44,6 +46,26 @@ async function getPost(slug: string): Promise<Post> {
 export default async function Page({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
   
+  // Fetch all reviews
+  const allReviews: Review[] = await getAllReviews();
+
+  // Calculate total score for each review
+  const reviewsWithTotalScore = allReviews.map(review => {
+    const scoreGirls = Number(review.acf.score_girls || 0);
+    const scoreChat = Number(review.acf.score_chat || 0);
+    const scoreFeatures = Number(review.acf.score_features || 0);
+
+    const totalScore = (scoreGirls + scoreChat + scoreFeatures) / 3;
+
+    return {
+      ...review,
+      totalScore,
+    };
+  });
+
+  // Sort reviews by totalScore in descending order
+  const sortedReviews = reviewsWithTotalScore.sort((a, b) => b.totalScore - a.totalScore);
+
   // Extract the scores and ensure they are numbers
   const scoreGirls = Number(post.acf.score_girls);
   const scoreChat = Number(post.acf.score_chat);
@@ -276,14 +298,16 @@ export default async function Page({ params }: { params: { slug: string } }) {
               </div>
             </div>
           </div>
-
-          {/* Replace the AI Girlfriends section with the new component */}
-          <AiGirlfriendGrid 
-            websiteName={post.acf.website_name}
-            websiteScreenshot={post.acf.website_screenshot}
-          />
         </Container>
       </Section>
+
+      {/* AiGirlfriendGrid Component Underneath Content */}
+      <Section>
+        <Container>
+          <AiGirlfriendGrid reviews={sortedReviews} />
+        </Container>
+      </Section>
+
       <Footer
         slug={params.slug}
         websiteUrl={post.acf.website_url}

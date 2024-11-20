@@ -12,6 +12,7 @@ import {
   Page,
   Author,
   FeaturedMedia,
+  Review,
 } from "./wordpress.d";
 
 // WordPress Config
@@ -46,7 +47,7 @@ export async function getPostById(id: number): Promise<Post> {
 
 export async function getPostBySlug(
   slug: string,
-  postType: string = 'post'
+  postType: string = 'posts'
 ): Promise<Post | null> {
   const url = getUrl(`/wp-json/wp/v2/${postType}`, { slug });
   const response = await fetch(url);
@@ -245,4 +246,30 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title: post.title.rendered,
     description: post.excerpt.rendered,
   };
+}
+
+export async function getAllReviews(): Promise<Review[]> {  
+  const url = getUrl("/wp-json/wp/v2/review", { per_page: 100, _embed: true });
+  const response = await fetch(url);
+  
+  if (!response.ok) {
+    console.error('Failed to fetch reviews:', await response.text());
+    return [];
+  }
+
+  const reviews: Review[] = await response.json();
+  return reviews;
+}
+
+export async function getReviews(): Promise<Review[]> {  
+  const url = getUrl("/wp-json/wp/v2/review", { per_page: 100, _embed: true });
+  const response = await fetch(url);
+  
+  if (!response.ok) {
+    console.error('Failed to fetch reviews:', await response.text());
+    return [];
+  }
+
+  const reviews: Review[] = await response.json();
+  return reviews;
 }

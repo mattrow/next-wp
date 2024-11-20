@@ -1,21 +1,32 @@
+import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ExternalLink, BookOpen } from 'lucide-react';
+import { Review } from '@/lib/wordpress.d';
 
 interface AiGirlfriendGridProps {
-  websiteName: string;
-  websiteScreenshot: {
-    url: string;
-  };
+  reviews: (Review & { totalScore: number })[];
+  variant?: 'sidebar' | 'full';
 }
 
-export default function AiGirlfriendGrid({ websiteName, websiteScreenshot }: AiGirlfriendGridProps) {
+export default function AiGirlfriendGrid({ reviews, variant = 'full' }: AiGirlfriendGridProps) {
+  const gridClasses = clsx('grid gap-4 mt-6', {
+    'grid-cols-2 sm:grid-cols-4 mt-8': variant === 'full',
+    'grid-cols-2 lg:grid-cols-1 mx-auto': variant === 'sidebar',
+  });
+
   return (
-    <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-4 sm:p-8 not-prose mt-8">
-      {/* 26+ AI Girlfriends Section */}
+    <div className={clsx(
+      'bg-gray-800/50 border-2 border-gray-700 rounded-xl p-4 sm:p-8 not-prose',
+      {
+        'max-w-[280px] mx-auto mt-0': variant === 'sidebar',
+        'mt-8': variant === 'full',
+      }
+    )}>
+      {/* Header Section */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">
-          26+ AI Girlfriends like {websiteName}
+        <h2 className="text-lg font-bold">
+          Best AI Girlfriends 2024
         </h2>
         <Link
           href="#"
@@ -26,25 +37,60 @@ export default function AiGirlfriendGrid({ websiteName, websiteScreenshot }: AiG
       </div>
 
       {/* Grid of Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6">
-        {/* Card Example */}
-        <div className="relative bg-gray-900 rounded-lg overflow-hidden">
-          <div className="absolute top-2 left-2 bg-black bg-opacity-50 rounded-full w-8 h-8 flex items-center justify-center">
-            <span className="text-white font-bold">1</span>
+      <div className={gridClasses}>
+        {reviews.map((review, index) => (
+          <div
+            key={review.id}
+            className="relative bg-gray-900 rounded-lg overflow-hidden group"
+          >
+            {/* Website Screenshot */}
+            <div className="w-full h-40 relative">
+              {review.acf.website_screenshot?.url ? (
+                <Image
+                  src={review.acf.website_screenshot.url}
+                  alt={review.acf.website_name || 'AI Girlfriend'}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                  <span className="text-white">No Image</span>
+                </div>
+              )}
+            </div>
+
+            {/* Hover Buttons */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/50">
+              <Link 
+                href={`/link/${review.slug}`}
+                className="w-40 bg-purple-500 text-white py-1.5 text-sm text-center rounded font-medium hover:bg-purple-600 transition-colors flex items-center justify-center gap-1"
+              >
+                <ExternalLink size={16} />
+                Visit Website
+              </Link>
+              <Link 
+                href={`/${review.slug}`}
+                className="w-40 bg-white text-gray-900 py-1.5 text-sm text-center rounded font-medium hover:bg-gray-100 transition-colors flex items-center justify-center gap-1"
+              >
+                <BookOpen size={16} />
+                Read Review
+              </Link>
+            </div>
+
+            {/* Website Name */}
+            <div className="absolute bottom-2 left-2 bg-purple-500 px-2 rounded">
+              <span className="text-white font-bold">
+                {review.acf.website_name}
+              </span>
+            </div>
+            {/* Rank Number */}
+            <div className="absolute bottom-2 right-2 bg-white rounded w-7 h-7 flex items-center justify-center">
+              <span className="text-black font-bold">
+                {index + 1}
+              </span>
+            </div>
           </div>
-          <div className="w-full h-40 relative">
-            <Image
-              src={websiteScreenshot.url}
-              alt="AI Girlfriend"
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 px-2 py-1 rounded">
-            <span className="text-white font-bold">{websiteName}</span>
-          </div>
-        </div>
-        {/* Additional cards would go here */}
+        ))}
       </div>
     </div>
   );

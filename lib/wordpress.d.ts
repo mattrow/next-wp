@@ -254,3 +254,22 @@ type FilterBarProps = {
   selectedTag?: string;
   selectedCategory?: string;
 };
+
+export type Review = Post & {
+  acf: {
+    score_girls: number;
+    score_chat: number;
+    score_features: number;
+    website_url: string;
+    youtube_video_url: string;
+    website_screenshot: {
+      url: string;
+    };
+    website_favicon: {
+      url: string;
+    };
+    website_name: string;
+    pros: { pros: string }[]; // Array of objects with 'pros' property
+    cons: { cons: string }[]; // Array of objects with 'cons' property
+  };
+};
