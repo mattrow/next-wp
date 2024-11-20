@@ -56,8 +56,8 @@ export type Post = {
       url: string;
     };
     website_name: string;
-    pros: { text: string }[];
-    cons: { text: string }[];
+    pros: { pros: string }[]; // Array of objects with 'pros' property
+    cons: { cons: string }[]; // Array of objects with 'cons' property
   };
 };
 

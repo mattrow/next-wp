@@ -19,22 +19,6 @@ import {
 import Footer from '@/components/Footer';
 import { Post } from '@/lib/wordpress.d';
 
-// type Post = {
-//   title: { rendered: string };
-//   content: { rendered: string };
-//   acf: {
-//     score_girls: number;
-//     score_chat: number;
-//     score_features: number;
-//     website_url: string;
-//     youtube_video_url: string;
-//     website_screenshot: { url: string };
-//     website_favicon: { url: string };
-//     website_name: string;
-//     pros: { text: string }[];
-//     cons: { text: string }[];
-//   };
-// };
 
 async function getPost(slug: string): Promise<Post> {
   const res = await fetch(
@@ -59,13 +43,26 @@ async function getPost(slug: string): Promise<Post> {
 export default async function Page({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
   
-  // Calculate overall score
-  const scores = [
-    post.acf.score_girls,
-    post.acf.score_chat,
-    post.acf.score_features
-  ];
-  const overallScore = (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1);
+  // Extract the scores and ensure they are numbers
+  const scoreGirls = Number(post.acf.score_girls);
+  const scoreChat = Number(post.acf.score_chat);
+  const scoreFeatures = Number(post.acf.score_features);
+
+  // Check if any score is NaN
+  if (isNaN(scoreGirls) || isNaN(scoreChat) || isNaN(scoreFeatures)) {
+    console.error('One or more scores are not valid numbers:', {
+      scoreGirls,
+      scoreChat,
+      scoreFeatures,
+    });
+  }
+
+  const scores = [scoreGirls, scoreChat, scoreFeatures];
+
+  // Calculate the average score
+  const overallScore = (
+    scores.reduce((a, b) => a + b, 0) / scores.length
+  ).toFixed(1);
 
   const featureList = [
     {
@@ -118,8 +115,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     alt={`${post.acf.website_name} Website`}
                     width={800}
                     height={600}
-                    className="w-full h-auto my-0"
-                    placeholder="blur"
+                    className="w-full h-64 object-cover my-0"
                   />
                   {/* Button */}
                   <div className="flex items-center justify-center bg-purple-500 text-white w-full px-4 py-2 shimmer">
@@ -164,7 +160,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     <span className="text-xs text-white font-semibold">
                       Overall
                     </span>
-                    {/* Overall Score */}
+                    {/* Display the Overall Score */}
                     <span className="mt-1 text-xl font-bold text-white">
                       {overallScore}
                     </span>
@@ -174,18 +170,30 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 {/* Positives and Negatives */}
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 sm:gap-4">
                   {/* Positives */}
-                  <div className="border border-green-500 bg-green-500/20 rounded-2xl p-1 flex items-center mb-2 sm:mb-0">
-                    <Plus className="text-green-500 mr-2 ml-1" />
-                    <p className="text-gray-300 font-semibold text-sm">
-                      {post.acf.pros && post.acf.pros.length > 0 ? post.acf.pros[0].text : ''}
-                    </p>
+                  <div className="border border-green-500 bg-green-500/20 rounded-2xl p-2 flex items-start mb-2 sm:mb-0">
+                    <Plus className="text-green-500 mr-2 mt-1" />
+                    <ul className="text-gray-300 font-semibold text-sm list-disc list-inside">
+                      {post.acf.pros && post.acf.pros.length > 0 ? (
+                        post.acf.pros.map((proItem, index) => (
+                          <li key={index}>{proItem.pros}</li>
+                        ))
+                      ) : (
+                        <li>No pros available.</li>
+                      )}
+                    </ul>
                   </div>
                   {/* Negatives */}
-                  <div className="border border-red-500 bg-red-500/20 rounded-2xl p-1 flex items-center">
-                    <Minus className="text-red-500 mr-2 ml-1" />
-                    <p className="text-gray-300 font-semibold text-sm">
-                      {post.acf.cons && post.acf.cons.length > 0 ? post.acf.cons[0].text : ''}
-                    </p>
+                  <div className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-start">
+                    <Minus className="text-red-500 mr-2 mt-1" />
+                    <ul className="text-gray-300 font-semibold text-sm list-disc list-inside">
+                      {post.acf.cons && post.acf.cons.length > 0 ? (
+                        post.acf.cons.map((conItem, index) => (
+                          <li key={index}>{conItem.cons}</li>
+                        ))
+                      ) : (
+                        <li>No cons available.</li>
+                      )}
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -201,7 +209,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     className="relative rounded-xl block overflow-hidden mb-6"
                   >
                     {/* Video Thumbnail */}
-                    <div className="relative w-full h-0 pb-[56.25%]">
+                    <div className="relative w-full h-64">
                       <Image
                         src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
                         alt="YouTube Video Thumbnail"
@@ -269,7 +277,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     alt="AI Girlfriend"
                     fill
                     className="object-cover"
-                    placeholder="blur"
                   />
                 </div>
                 {/* Name */}
