@@ -95,6 +95,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   const videoId = videoUrl ? getYouTubeVideoId(videoUrl) : null;
 
+  // Debugging console logs
+  console.log('post.acf.website_favicon:', post.acf.website_favicon);
+  console.log('post.acf.website_favicon.url:', post.acf.website_favicon.url);
+  console.log('post.acf.website_url:', post.acf.website_url);
+
+  // Ensure website favicon URL exists
+  const websiteFaviconUrl = post.acf.website_favicon?.url || '';
+
   return (
     <>
       <Section>
@@ -276,7 +284,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
           />
         </Container>
       </Section>
-      <Footer slug={params.slug} />
+      <Footer
+        slug={params.slug}
+        websiteUrl={post.acf.website_url}
+        websiteFavicon={websiteFaviconUrl}
+      />
     </>
   );
 }

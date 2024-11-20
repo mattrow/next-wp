@@ -14,10 +14,10 @@ export const contentMenu = {
 
 // Define social media links
 export const socialLinks = {
-  x: "https://x.com/yourusername",
-  youtube: "https://youtube.com/@yourchannel",
-  linkedin: "https://linkedin.com/in/yourprofile",
-  discord: "https://discord.gg/yourinvite",
-  reddit: "https://reddit.com/r/yoursubreddit",
-  email: "mailto:your@email.com"
+  x: "https://x.com/BestAIGFs",
+  youtube: "https://www.youtube.com/@BestAIGirlfriends",
+  linkedin: "https://www.linkedin.com/in/jessica-carter-801b51338/",
+  discord: "https://discord.gg/nYyxnxvE",
+  reddit: "https://www.reddit.com/r/bestaigfs/",
+  email: "jess@bestaigirlfriends.com"
 };

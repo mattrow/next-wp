@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['img.youtube.com'],
+    domains: ['img.youtube.com', 'aigirlfriendblog.com'],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: process.env.WORDPRESS_HOSTNAME,
+        hostname: "aigirlfriendblog.com",
         port: "",
         pathname: "/**",
       },
