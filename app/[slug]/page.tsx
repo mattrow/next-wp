@@ -139,11 +139,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
             {/* Grid container for responsive layout */}
             <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-8">
               {/* Left Column */}
-              <div className="sm:col-span-1">
+              <div className="sm:col-span-1 not-prose">
                 {/* Clickable wrapper for website image and button */}
                 <Link
                   href={`/link/${params.slug}`}
-                  className="relative rounded-xl block overflow-hidden border-4 border-purple-500"
+                  className="relative rounded-xl block overflow-hidden border-4 border-purple-500 hover:scale-105 transition-all duration-300"
                 >
                   {/* Image */}
                   <Image
@@ -212,10 +212,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     href={videoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative rounded-xl block overflow-hidden mb-6 border-4 border-white"
+                    className="relative rounded-xl block overflow-hidden mb-6 border-4 border-white hover:scale-105 transition-all duration-300"
                   >
                     {/* Video Thumbnail */}
-                    <div className="relative w-full sm:h-64 h-48">
+                    <div className="relative w-full sm:h-64 h-48 not-prose">
                       <Image
                         src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
                         alt="YouTube Video Thumbnail"
