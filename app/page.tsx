@@ -39,91 +39,91 @@
   
   const apps = [
     {
-      slug: 'replika',
+      slug: 'candy-ai',
       rank: 1,
-      name: "Replika",
-      image: "https://example.com/replika.jpg",
+      name: "Candy AI",
+      image: "https://aigirlfriendblog.com/wp-content/uploads/2024/11/Screenshot-2024-11-17-at-15.09.33.png",
       description:
         "The most advanced AI companion with deep emotional intelligence and natural conversations.",
       categories: {
-        personality: 9.5,
-        features: 9.0,
-        customization: 9.8,
+        girls: 10,
+        chat: 9,
+        features: 8.5,
       },
-      overall: 9.4,
+      overall: 9.2,
       accent: "from-yellow-500 to-amber-600",
       icon: StarIcon,
       gradient: "from-amber-500/20 via-transparent to-transparent",
-      border: "border-amber-500/50",
-    },
-    {
-      slug: 'character-ai',
-      rank: 2,
-      name: "Character AI",
-      image: "https://example.com/character.jpg",
-      description: "Create and interact with AI characters from any universe or your imagination.",
-      categories: {
-        personality: 9.2,
-        features: 8.8,
-        customization: 9.0
-      },
-      overall: 9.0,
-      accent: "from-gray-300 to-gray-400",
-      icon: TrophyIcon,
-      gradient: "from-gray-500/20 via-transparent to-transparent",
-      border: "border-gray-500/50"
-    },
-    {
-      slug: 'romantic-ai',
-      rank: 3,
-      name: "Romantic AI",
-      image: "https://example.com/romantic.jpg",
-      description: "Focused on romantic connections with sophisticated emotional understanding.",
-      categories: {
-        personality: 8.8,
-        features: 8.5,
-        customization: 8.7
-      },
-      overall: 8.7,
-      accent: "from-amber-600 to-yellow-700",
-      icon: Medal,
-      gradient: "from-amber-700/20 via-transparent to-transparent",
-      border: "border-amber-700/50"
-    },
-    {
-      slug: 'anima',
-      rank: 4,
-      name: "Anima",
-      image: "https://example.com/anima.jpg",
-      description: "AI companion focused on meaningful conversations and emotional support.",
-      categories: {
-        personality: 8.5,
-        features: 8.3,
-        customization: 8.4
-      },
-      overall: 8.4,
-      accent: "from-purple-500 to-purple-600",
-      icon: Star,
-      gradient: "from-purple-500/20 via-transparent to-transparent",
-      border: "border-purple-500/50"
-    },
-    {
-      slug: 'eva-ai',
-      rank: 5,
-      name: "EVA AI",
-      image: "https://example.com/eva.jpg",
-      description: "Modern AI companion with focus on personal growth and emotional connection.",
-      categories: {
-        personality: 8.2,
-        features: 8.0,
-        customization: 8.3
-      },
-      overall: 8.2,
-      accent: "from-purple-500 to-purple-600",
-      icon: Award,
-      gradient: "from-purple-500/20 via-transparent to-transparent",
-      border: "border-purple-500/50"
-    }
+      border: "border-amber-500/50",}
+    // },
+    // {
+    //   slug: 'character-ai',
+    //   rank: 2,
+    //   name: "Character AI",
+    //   image: "https://example.com/character.jpg",
+    //   description: "Create and interact with AI characters from any universe or your imagination.",
+    //   categories: {
+    //     personality: 9.2,
+    //     features: 8.8,
+    //     customization: 9.0
+    //   },
+    //   overall: 9.0,
+    //   accent: "from-gray-300 to-gray-400",
+    //   icon: TrophyIcon,
+    //   gradient: "from-gray-500/20 via-transparent to-transparent",
+    //   border: "border-gray-500/50"
+    // },
+    // {
+    //   slug: 'romantic-ai',
+    //   rank: 3,
+    //   name: "Romantic AI",
+    //   image: "https://example.com/romantic.jpg",
+    //   description: "Focused on romantic connections with sophisticated emotional understanding.",
+    //   categories: {
+    //     personality: 8.8,
+    //     features: 8.5,
+    //     customization: 8.7
+    //   },
+    //   overall: 8.7,
+    //   accent: "from-amber-600 to-yellow-700",
+    //   icon: Medal,
+    //   gradient: "from-amber-700/20 via-transparent to-transparent",
+    //   border: "border-amber-700/50"
+    // },
+    // {
+    //   slug: 'anima',
+    //   rank: 4,
+    //   name: "Anima",
+    //   image: "https://example.com/anima.jpg",
+    //   description: "AI companion focused on meaningful conversations and emotional support.",
+    //   categories: {
+    //     personality: 8.5,
+    //     features: 8.3,
+    //     customization: 8.4
+    //   },
+    //   overall: 8.4,
+    //   accent: "from-purple-500 to-purple-600",
+    //   icon: Star,
+    //   gradient: "from-purple-500/20 via-transparent to-transparent",
+    //   border: "border-purple-500/50"
+    // },
+    // {
+    //   slug: 'eva-ai',
+    //   rank: 5,
+    //   name: "EVA AI",
+    //   image: "https://example.com/eva.jpg",
+    //   description: "Modern AI companion with focus on personal growth and emotional connection.",
+    //   categories: {
+    //     personality: 8.2,
+    //     features: 8.0,
+    //     customization: 8.3
+    //   },
+    //   overall: 8.2,
+    //   accent: "from-purple-500 to-purple-600",
+    //   icon: Award,
+    //   gradient: "from-purple-500/20 via-transparent to-transparent",
+    //   border: "border-purple-500/50"
+    // }
   ];
   
   const rankColors = {
@@ -136,19 +136,19 @@
   
   const featureList = [
     {
-      name: "Personality",
+      name: "Girls",
       icon: HeartIcon,
-      scoreKey: "personality",
+      scoreKey: "girls",
+    },
+    {
+      name: "Chat",
+      icon: ChatBubbleLeftRightIcon,
+      scoreKey: "chat",
     },
     {
       name: "Features",
-      icon: ChatBubbleLeftRightIcon,
-      scoreKey: "features",
-    },
-    {
-      name: "Customization",
       icon: Cog6ToothIcon,
-      scoreKey: "customization",
+      scoreKey: "features",
     },
   ];
  
@@ -328,44 +328,88 @@
                     </div>
                   );
                 })}
+
+                {/* New Card with Patreon Link */}
+                <div className="relative flex flex-col md:flex-row gap-6 p-4 rounded-xl bg-gray-900/50 border-2 border-gray-700 hover:bg-gray-900/70 transition-all transform duration-300 hover:scale-103">
+                  {/* Left Column - Placeholder Image or Icon */}
+                  <div className="w-full md:w-1/4 flex flex-col justify-center items-center">
+                    {/* Placeholder Icon */}
+                    <div className="relative aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8l-4 4-4-4M12 16v-8" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Middle Column - Centered Message */}
+                  <div className="w-full md:w-1/2 flex flex-col justify-center items-center">
+                    <h2 className="text-2xl font-bold text-white mt-0 mb-4 text-center">
+                      More reviews coming soon!
+                    </h2>
+                    <p className="text-gray-300 text-sm mb-4 text-center">
+                      Vote on which website I will review next on Patreon.
+                    </p>
+                  </div>
+
+                  {/* Right Column - Patreon Button */}
+                  <div className="w-full md:w-1/4 flex flex-col justify-center items-center">
+                    <a
+                      href="https://www.patreon.com/bestaigirlfriends" // Replace with your actual Patreon link
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center font-bold justify-center gap-2 py-2 px-4 rounded-lg bg-orange-500 hover:bg-orange-600 text-white transition-all transform hover:scale-105"
+                    >
+                      <span className="text-center">Choose the next review</span>
+                      <HeartIcon className="w-6 h-6 text-white" />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* New Latest Blog Posts Section */}
             <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16">
               <div className="relative flex items-center justify-center mb-8">
-                <h1 className="sm:text-5xl text-2xl font-black text-center text-white bg-clip-text px-2">
+                <h1 className="sm:text-5xl text-2xl font-black not-prose text-center text-white bg-clip-text px-2">
                   Latest Blog Posts
                 </h1>
               </div>
 
               <div className="not-prose">
-                <Slider>
-                  {recentPosts.map((post) => (
-                    <PostCard key={post.id} post={post} variant="home" />
-                  ))}
-                </Slider>
+                {recentPosts && recentPosts.length > 0 ? (
+                  <Slider>
+                    {recentPosts.map((post) => (
+                      <PostCard key={post.id} post={post} variant="home" />
+                    ))}
+                  </Slider>
+                ) : (
+                  <div className="text-center text-gray-400 py-8">
+                    Blog posts coming soon.
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Latest Videos Section */}
             <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16 overflow-visible">
               <div className="relative flex items-center justify-center mb-8">
-               
-                
-                <h1 className="sm:text-5xl text-2xl font-black text-center text-white bg-clip-text px-2">
+                <h1 className="sm:text-5xl text-2xl font-black not-prose text-center text-white bg-clip-text px-2">
                   Latest Videos
                 </h1>
-                
-               
               </div>
 
               <div className="not-prose">
-                <Slider>
-                  {latestVideos.map((video) => (
-                    <VideoCard key={video.id} video={video} />
-                  ))}
-                </Slider>
+                {latestVideos && latestVideos.length > 0 ? (
+                  <Slider>
+                    {latestVideos.map((video) => (
+                      <VideoCard key={video.id} video={video} />
+                    ))}
+                  </Slider>
+                ) : (
+                  <div className="text-center text-gray-400 py-8">
+                    Videos coming soon.
+                  </div>
+                )}
               </div>
             </div>
           </Container>
