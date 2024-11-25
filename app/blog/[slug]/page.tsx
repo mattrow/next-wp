@@ -57,9 +57,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
     <Section>
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-          <div className="lg:col-span-3 gap-4 mr-4">
-            <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-4 sm:p-8 not-prose">
-              <h1>
+          <div className="lg:col-span-3 gap-4 mr-4 blogsection">
+            <article className="prose lg:prose-xl mx-auto bg-gray-800/50 border-2 border-gray-700 rounded-xl p-4 sm:p-8 not-prose">
+              <h1 className="mb-4 text-3xl text-white font-bold">
                 <Balancer>
                   <span
                     dangerouslySetInnerHTML={{ __html: post.title.rendered }}
@@ -67,32 +67,44 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 </Balancer>
               </h1>
 
-              <div className="flex justify-between items-center gap-4 text-sm mb-4">
-                <h5>
-                  Published {date} by{" "}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm text-gray-300 mb-6">
+                <div>
+                  Published on {date} by{' '}
                   {author.name && (
-                    <span>
-                      <a href={`/posts/?author=${author.id}`}>{author.name}</a>{" "}
-                    </span>
+                    <a
+                      href={`/posts/?author=${author.id}`}
+                      className="text-white hover:underline"
+                    >
+                      {author.name}
+                    </a>
                   )}
-                </h5>
-                <Link
-                  href={`/posts/?category=${category.id}`}
-                  className={cn(badgeVariants({ variant: "outline" }), "not-prose")}
-                >
-                  {category.name}
-                </Link>
+                </div>
+                <div className="mt-2 sm:mt-0">
+                  <Link
+                    href={`/posts/?category=${category.id}`}
+                    className={cn(
+                      badgeVariants({ variant: 'outline' }),
+                      'not-prose'
+                    )}
+                  >
+                    {category.name}
+                  </Link>
+                </div>
               </div>
-              <div className="h-96 my-12 md:h-[560px] overflow-hidden flex items-center justify-center border rounded-lg bg-accent/25">
-                {/* eslint-disable-next-line */}
+
+              {featuredMedia && (
                 <img
-                  className="w-full"
+                  className="w-full rounded-lg shadow-lg my-8"
                   src={featuredMedia.source_url}
                   alt={post.title.rendered}
                 />
-              </div>
-              <Article dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-            </div>
+              )}
+
+              <div
+                className="post-content text-white"
+                dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+              />
+            </article>
           </div>
 
           <div className="lg:col-span-1">
