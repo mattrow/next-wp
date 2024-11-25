@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+export const revalidate = false;
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -130,7 +131,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <Section>
         <Container>
           {/* Wrap the top section */}
-          <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-4 sm:p-8 not-prose">
+          <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-4 sm:p-8">
+            {/* Title at the top and centered */}
+            <h1 className="text-center text-white text-3xl font-bold not-prose mb-6">
+              {post.title.rendered}
+            </h1>
             {/* Grid container for responsive layout */}
             <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-8">
               {/* Left Column */}
@@ -197,11 +202,45 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     </span>
                   </div>
                 </div>
+              </div>
+
+              {/* Right Column */}
+              <div className="sm:col-span-1 mt-6 sm:mt-0">
+                {/* Conditional Rendering of Video Section */}
+                {videoId && (
+                  <Link
+                    href={videoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative rounded-xl block overflow-hidden mb-6 border-4 border-white"
+                  >
+                    {/* Video Thumbnail */}
+                    <div className="relative w-full sm:h-64 h-48">
+                      <Image
+                        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                        alt="YouTube Video Thumbnail"
+                        fill
+                        className="absolute top-0 left-0 w-full h-full object-cover"
+                      />
+                    </div>
+                    {/* Button */}
+                    <div className="flex items-center justify-center bg-white text-black w-full px-4 py-2">
+                      {/* YouTube Play Icon */}
+                      <FaYoutube size={22} color="#FF0000" />
+
+                      <span className="mx-2 font-semibold text-xl">
+                        Watch Review
+                      </span>
+                      <ExternalLink size={24} className="text-black" />
+                    </div>
+                  </Link>
+                )}
 
                 {/* Positives and Negatives */}
-                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 sm:gap-4">
+                <div className="mt-6">
+                  <h2 className="text-xl not-prose font-bold text-white mb-4">Pros & Cons</h2>
                   {/* Positives */}
-                  <div className="mb-2 sm:mb-0">
+                  <div className="mb-4">
                     {post.acf.pros && post.acf.pros.length > 0 ? (
                       post.acf.pros.map((proItem, index) => (
                         <div
@@ -249,53 +288,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* Right Column */}
-              <div className="sm:col-span-1 mt-6 sm:mt-0">
-                {/* Conditional Rendering of Video Section */}
-                {videoId && (
-                  <Link
-                    href={videoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative rounded-xl block overflow-hidden mb-6 border-4 border-white"
-                  >
-                    {/* Video Thumbnail */}
-                    <div className="relative w-full sm:h-64 h-48">
-                      <Image
-                        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-                        alt="YouTube Video Thumbnail"
-                        fill
-                        className="absolute top-0 left-0 w-full h-full object-cover"
-                      />
-                    </div>
-                    {/* Button */}
-                    <div className="flex items-center justify-center bg-white text-black w-full px-4 py-2">
-                      {/* YouTube Play Icon */}
-                      <FaYoutube size={22} color="#FF0000" />
-
-                      <span className="mx-2 font-semibold text-xl">
-                        Watch Review
-                      </span>
-                      <ExternalLink size={24} className="text-black" />
-                    </div>
-                  </Link>
-                )}
-
-                {/* Title */}
-                <h1 className="not-prose text-center sm:text-left text-white text-3xl font-bold">
-                  {post.title.rendered}
-                </h1>
-
-                {/* Content */}
-                <div className="mt-8">
-                  <h2 className="text-2xl font-bold mb-4">Overview</h2>
-                  <div
-                    className="text-gray-300"
-                    dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-                  />
-                </div>
-              </div>
+            {/* Main Content spanning both columns */}
+            <div className="mt-8">
+              <div
+                className="prose dark:prose-invert max-w-none"
+                dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+              />
             </div>
           </div>
         </Container>
