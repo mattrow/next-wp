@@ -17,7 +17,7 @@ export const socialLinks = {
   x: "https://x.com/BestAIGFs",
   youtube: "https://www.youtube.com/@BestAIGirlfriends",
   linkedin: "https://www.linkedin.com/in/jessica-carter-801b51338/",
-  discord: "https://discord.gg/nYyxnxvE",
+  discord: "https://discord.gg/xJchvVhsR6",
   reddit: "https://www.reddit.com/r/bestaigfs/",
   email: "jess@bestaigirlfriends.com"
 };
