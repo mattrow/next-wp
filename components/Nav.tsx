@@ -165,7 +165,7 @@ const Nav = ({ className, children, id }: NavProps) => {
           <div className="flex flex-col justify-center items-end flex-1">
             {/* Speech bubble */}
             <div className="speech-bubble font-semibold mb-2">
-              <p>I&apos;m Jess! My mission is to find the best AI Girlfriends of 2024.</p>
+              <p>I&apos;m Jess! My mission is to find the best AI Girlfriends of 2025.</p>
             </div>
             {/* Social Icons */}
             <div className="flex space-x-3">
