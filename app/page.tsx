@@ -14,7 +14,7 @@
     Settings,
     ArrowRightCircle,
   } from "lucide-react";
-  
+  import Head from "next/head";
   // Import solid icons from Heroicons
   import {
     HeartIcon,
@@ -161,10 +161,42 @@
   
     return (
       <>
+            <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              name: "Best AI Girlfriends - Best AI Chat Sites",
+              description:
+                "Explore the best AI girlfriend sites and apps. Find reviews, rankings, and insights on the top virtual companions available.",
+              url: "https://bestaigirlfriends.com",
+              publisher: {
+                "@type": "Organization",
+                name: "Best AI Girlfriends",
+                url: "https://bestaigirlfriends.com",
+                logo: {
+                  "@type": "ImageObject",
+                  url: "https://aigirlfriendblog.com/wp-content/uploads/2025/01/websitethumb.jpg",
+                },
+              },
+            }),
+          }}
+        />
+      </Head>
         <Section>
           <Container>
             {/* Featured AI Girlfriends Section */}
             <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 not-prose">
+            <div className="text-center mb-8">
+              <h1 className="sm:text-5xl text-2xl font-black text-white">
+                Best AI Girlfriends - We review them all!
+              </h1>
+              <p className="text-gray-300 mt-4">
+                Welcome to Best AI Girlfriends, your ultimate resource for finding and exploring the top AI girlfriend apps and websites. Dive into detailed reviews, rankings, and insights to help you choose your perfect virtual companion.
+              </p>
+            </div>
               <div className="relative flex items-center justify-center mb-8">
                 {/* Left Laurel */}
                 <svg 
@@ -222,10 +254,13 @@
                           {app.name}
                         </h2>
                         <div className="relative aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800 group">
-                          <img
+                          <Image
                             src={app.image}
-                            alt={app.name}
-                            className="object-cover w-full h-full"
+                            alt={`${app.name} - Best AI Girlfriend Site Screenshot`}
+                            className="object-cover"
+                            width={500}
+                            height={281}
+                            priority={app.rank === 1}
                           />
                           <div className="absolute inset-0 bg-black/30 transition-opacity opacity-0 group-hover:opacity-100" />
                           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">

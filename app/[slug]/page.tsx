@@ -1,3 +1,5 @@
+import { Metadata } from "next";
+
 export const dynamic = 'force-dynamic';
 export const revalidate = false;
 
@@ -22,6 +24,9 @@ import { Post } from '@/lib/wordpress.d';
 import AiGirlfriendGrid from '@/components/AiGirlfriendGrid';
 import { getAllReviews } from '@/lib/wordpress';
 import { Review } from '@/lib/wordpress.d';
+import TableOfContents from '@/components/TableOfContents';
+import { JsonLd } from '@/components/JsonLd';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 
 async function getPost(slug: string): Promise<Post> {
@@ -126,17 +131,76 @@ export default async function Page({ params }: { params: { slug: string } }) {
   // Ensure website favicon URL exists
   const websiteFaviconUrl = post.acf.website_favicon?.url || '';
 
+  // Prepare JSON-LD data
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntity": {
+      "@type": "Review",
+      "name": post.title.rendered,
+      "author": {
+        "@type": "Person",
+        "name": "Jessica Carter"
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": overallScore,
+        "bestRating": "10",
+        "worstRating": "0"
+      },
+      "datePublished": post.date,
+      "dateModified": post.modified,
+      "reviewBody": post.content.rendered.replace(/<[^>]+>/g, ''),
+      "itemReviewed": {
+        "@type": "SoftwareApplication",
+        "name": post.acf.website_name,
+        "applicationCategory": "AI Girlfriend App",
+        "operatingSystem": "Web-based",
+      }
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Jessica Carter"
+    },
+    "headline": post.title.rendered,
+    "datePublished": post.date,
+    "dateModified": post.modified,
+    "image": post.acf.website_screenshot.url,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Best AI Girlfriends",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://aigirlfriendblog.com/wp-content/uploads/2025/01/websitethumb.jpg"
+      }
+    }
+  };
+
   return (
     <>
+      {/* Add JSON-LD structured data */}
+      <JsonLd data={jsonLd} />
+
       <Section>
         <Container>
-          {/* Wrap the top section */}
+          {/* Main Content Wrapper */}
           <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-4 sm:p-8">
-            {/* Title at the top and centered */}
-            <h1 className="text-center text-white text-3xl font-bold not-prose mb-6">
-              {post.title.rendered}
-            </h1>
-            {/* Grid container for responsive layout */}
+            {/* Title and Meta Information */}
+            <header className="mb-6">
+              <h1 className="text-center text-white text-3xl font-bold not-prose mb-3">
+                {post.title.rendered}
+              </h1>
+              <div className="flex justify-center items-center gap-4 text-sm text-gray-400">
+                <time dateTime={post.date}>
+                  Published: {new Date(post.date).toLocaleDateString()}
+                </time>
+                <time dateTime={post.modified}>
+                  Updated: {new Date(post.modified).toLocaleDateString()}
+                </time>
+              </div>
+            </header>
+
+            {/* Grid layout for main content */}
             <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-8">
               {/* Left Column */}
               <div className="sm:col-span-1 not-prose">
@@ -150,9 +214,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   {/* Image */}
                   <Image
                     src={post.acf.website_screenshot.url}
-                    alt={`${post.acf.website_name} Website`}
+                    alt={`${post.acf.website_name} website screenshot`}
                     width={800}
                     height={600}
+                    sizes="(max-width: 600px) 100vw, 600px"
+                    priority
                     className="w-full sm:h-64 h-48 object-cover my-0"
                   />
                   {/* Button */}
@@ -298,12 +364,52 @@ export default async function Page({ params }: { params: { slug: string } }) {
               </div>
             </div>
 
-            {/* Main Content spanning both columns */}
+            {/* Main Content Section */}
             <div className="mt-8">
-              <div
-                className="prose dark:prose-invert max-w-none"
-                dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-              />
+              {/* Table of Contents */}
+              <TableOfContents />
+
+              {/* Review Article */}
+              <article 
+                itemScope 
+                itemType="http://schema.org/Review"
+                className="review-content"
+              >
+                <meta itemProp="reviewRating" content={overallScore} />
+                <meta itemProp="author" content="Jessica Carter" />
+                <meta itemProp="datePublished" content={post.date} />
+                <meta itemProp="dateModified" content={post.modified} />
+                
+                <div
+                  className="prose dark:prose-invert max-w-none"
+                  itemProp="reviewBody"
+                  dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+                />
+              </article>
+
+              {/* Related Reviews Section */}
+              <div className="mt-12">
+                <h2 className="text-2xl font-bold text-white mb-6">Related Reviews</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {sortedReviews
+                    .filter(review => review.id !== post.id)
+                    .slice(0, 3)
+                    .map(review => (
+                      <Link
+                        key={review.id}
+                        href={`/${review.slug}`}
+                        className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 hover:bg-gray-700/50 transition-all"
+                      >
+                        <h3 className="text-lg font-semibold text-white mb-2">
+                          {review.title.rendered}
+                        </h3>
+                        <div className="text-sm text-gray-400">
+                          Rating: {((Number(review.acf.score_girls) + Number(review.acf.score_chat) + Number(review.acf.score_features)) / 3).toFixed(1)}/10
+                        </div>
+                      </Link>
+                    ))}
+                </div>
+              </div>
             </div>
           </div>
         </Container>
@@ -321,6 +427,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
         websiteUrl={post.acf.website_url}
         websiteFavicon={websiteFaviconUrl}
       />
+
+      <Breadcrumbs params={params} />
     </>
   );
 }
@@ -350,4 +458,68 @@ export async function generateStaticParams() {
   return posts.map((post: Post) => ({
     slug: post.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const post = await getPost(params.slug);
+
+  if (!post) {
+    notFound();
+  }
+
+  // Calculate the overall score
+  const scoreGirls = Number(post.acf.score_girls);
+  const scoreChat = Number(post.acf.score_chat);
+  const scoreFeatures = Number(post.acf.score_features);
+  const overallScore = ((scoreGirls + scoreChat + scoreFeatures) / 3).toFixed(1);
+
+  // Create a more SEO-friendly description
+  const cleanDescription = post.excerpt?.rendered 
+    ? post.excerpt.rendered.replace(/<[^>]+>/g, '').trim()
+    : `Read our in-depth review of ${post.acf.website_name}, including features, pros & cons, pricing, and user experiences. Discover how it ranks among the best AI girlfriend apps in ${new Date().getFullYear()}.`;
+
+  const metadata: Metadata = {
+    title: `${post.title.rendered} Review [${new Date().getFullYear()}] | BestAIGirlfriends.com`,
+    description: cleanDescription,
+    openGraph: {
+      title: `${post.title.rendered} Review [${new Date().getFullYear()}] - Rating: ${overallScore}/10`,
+      description: cleanDescription,
+      type: 'article',
+      publishedTime: post.date,
+      modifiedTime: post.modified,
+      authors: ['Jessica Carter'],
+      images: post.acf?.website_screenshot?.url ? [
+        {
+          url: post.acf.website_screenshot.url,
+          width: 1200,
+          height: 630,
+          alt: `${post.title.rendered} Screenshot and Review`,
+        },
+      ] : [],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${post.title.rendered} Review [${new Date().getFullYear()}] - Rating: ${overallScore}/10`,
+      description: cleanDescription,
+      images: post.acf?.website_screenshot?.url ? [post.acf.website_screenshot.url] : [],
+      creator: '@BestAIGFs',
+      site: '@BestAIGFs',
+    },
+    robots: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
+    alternates: {
+      canonical: `https://bestaigirlfriends.com/${params.slug}`,
+    },
+  };
+
+  return metadata;
 }

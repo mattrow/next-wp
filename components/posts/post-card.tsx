@@ -39,7 +39,7 @@ const PostCard = async ({ post, variant = "default" }: PostCardProps) => {
           <img
             className="h-full w-full object-cover"
             src={media.source_url}
-            alt={post.title.rendered}
+            alt={`${post.title.rendered} - AI Girlfriend Blog Post`}
           />
         ) : (
           <div className="h-full w-full flex items-center justify-center text-gray-500 text-xs">

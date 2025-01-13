@@ -42,9 +42,34 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "Best AI Girlfriends",
-  description: "Discover the best AI Girlfriend sites.",
-  metadataBase: new URL("https://yourdomain.com"),
+  title: "Best AI Girlfriends - Discover the Top AI Chat Sites and Apps",
+  description:
+    "Explore the best AI girlfriend sites and apps. Find reviews, rankings, and insights on the top virtual companions available.",
+  metadataBase: new URL("https://bestaigirlfriends.com"),
+  openGraph: {
+    title: "Best AI Girlfriends - Discover the Top AI Chat Sites and Apps",
+    description:
+      "Explore the best AI girlfriend sites and apps. Find reviews, rankings, and insights on the top virtual companions available.",
+    url: "https://bestaigirlfriends.com",
+    siteName: "Best AI Girlfriends",
+    images: [
+      {
+        url: "https://aigirlfriendblog.com/wp-content/uploads/2025/01/websitethumb.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Best AI Girlfriends",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Best AI Girlfriends - Top Virtual Companions",
+    description:
+      "Discover and compare the best AI girlfriend apps and websites.",
+    images: ["https://aigirlfriendblog.com/wp-content/uploads/2025/01/websitethumb.jpg"],
+  },
 };
 
 // Revalidate content every hour

@@ -3,5 +3,5 @@ type SiteConfig = {
 };
 
 export const siteConfig: SiteConfig = {
-  site_domain: "http://localhost:3000",
+  site_domain: "https://bestaigirlfriends.com",
 };
