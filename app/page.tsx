@@ -42,7 +42,7 @@
       slug: 'candy-ai',
       rank: 1,
       name: "Candy AI",
-      image: "https://aigirlfriendblog.com/wp-content/uploads/2024/11/Screenshot-2024-11-17-at-15.09.33.png",
+      image: "https://aigirlfriendblog.com/wp-content/uploads/2025/01/CandyAI-scaled.jpeg",
       description:
         "The most advanced AI companion with deep emotional intelligence and natural conversations.",
       categories: {
@@ -56,23 +56,23 @@
       gradient: "from-amber-500/20 via-transparent to-transparent",
       border: "border-amber-500/50",}
     // },
-    // {
-    //   slug: 'character-ai',
-    //   rank: 2,
-    //   name: "Character AI",
-    //   image: "https://example.com/character.jpg",
-    //   description: "Create and interact with AI characters from any universe or your imagination.",
-    //   categories: {
-    //     personality: 9.2,
-    //     features: 8.8,
-    //     customization: 9.0
-    //   },
-    //   overall: 9.0,
-    //   accent: "from-gray-300 to-gray-400",
-    //   icon: TrophyIcon,
-    //   gradient: "from-gray-500/20 via-transparent to-transparent",
-    //   border: "border-gray-500/50"
-    // },
+    ,{
+      slug: 'kindroid-ai',
+      rank: 2,
+      name: "Kindroid AI",
+      image: "https://aigirlfriendblog.com/wp-content/uploads/2025/01/Kindroid_-Your-Personal-AI.jpeg",
+      description: "Most advanced and unrestricted chatting models to fuel your roleplay fantasies.",
+      categories: {
+        girls: 9,
+        chat: 10,
+        features: 8.5
+      },
+      overall: 9.2,
+      accent: "from-gray-300 to-gray-400",
+      icon: TrophyIcon,
+      gradient: "from-gray-500/20 via-transparent to-transparent",
+      border: "border-gray-500/50"
+    },
     // {
     //   slug: 'romantic-ai',
     //   rank: 3,
@@ -311,6 +311,8 @@
                         <div className="w-full sm:px-4 px-0 flex flex-col gap-2">
                           <Link
                             href={`/link/${app.slug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="flex items-center font-bold justify-center gap-2 py-2 px-4 rounded-lg bg-purple-500 hover:bg-purple-600 text-white text-md transition-all transform hover:scale-105"
                           >
                             Visit Site

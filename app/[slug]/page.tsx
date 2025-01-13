@@ -143,6 +143,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 {/* Clickable wrapper for website image and button */}
                 <Link
                   href={`/link/${params.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="relative rounded-xl block overflow-hidden border-4 border-purple-500 hover:scale-105 transition-all duration-300"
                 >
                   {/* Image */}
@@ -222,6 +224,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         fill
                         className="absolute top-0 left-0 w-full h-full object-cover"
                       />
+                      {/* Play Button Overlay */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-16 h-16 bg-black/70 rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110">
+                          <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[24px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
+                        </div>
+                      </div>
                     </div>
                     {/* Button */}
                     <div className="flex items-center justify-center bg-white text-black w-full px-4 py-2">
