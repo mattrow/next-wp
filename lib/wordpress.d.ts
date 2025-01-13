@@ -48,6 +48,7 @@ export type Post = {
     score_chat: number;
     score_features: number;
     website_url: string;
+    website_base_url: string;
     youtube_video_url: string;
     website_screenshot: {
       url: string;

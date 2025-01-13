@@ -370,9 +370,19 @@ export default async function Page({ params }: { params: { slug: string } }) {
               <TableOfContents />
 
               {/* Review Article */}
-              <article className="review-content">
+              <article 
+                itemScope 
+                itemType="http://schema.org/Review"
+                className="review-content"
+              >
+                <meta itemProp="reviewRating" content={overallScore} />
+                <meta itemProp="author" content="Jessica Carter" />
+                <meta itemProp="datePublished" content={post.date} />
+                <meta itemProp="dateModified" content={post.modified} />
+                
                 <div
                   className="prose dark:prose-invert max-w-none"
+                  itemProp="reviewBody"
                   dangerouslySetInnerHTML={{ __html: post.content.rendered }}
                 />
               </article>
@@ -415,6 +425,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <Footer
         slug={params.slug}
         websiteUrl={post.acf.website_url}
+        websiteBaseUrl={post.acf.website_base_url}
         websiteFavicon={websiteFaviconUrl}
       />
 
