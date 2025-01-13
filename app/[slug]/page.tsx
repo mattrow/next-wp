@@ -370,19 +370,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
               <TableOfContents />
 
               {/* Review Article */}
-              <article 
-                itemScope 
-                itemType="http://schema.org/Review"
-                className="review-content"
-              >
-                <meta itemProp="reviewRating" content={overallScore} />
-                <meta itemProp="author" content="Jessica Carter" />
-                <meta itemProp="datePublished" content={post.date} />
-                <meta itemProp="dateModified" content={post.modified} />
-                
+              <article className="review-content">
                 <div
                   className="prose dark:prose-invert max-w-none"
-                  itemProp="reviewBody"
                   dangerouslySetInnerHTML={{ __html: post.content.rendered }}
                 />
               </article>
