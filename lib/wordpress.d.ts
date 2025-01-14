@@ -50,6 +50,7 @@ export type Post = {
     website_url: string;
     website_base_url: string;
     youtube_video_url: string;
+    short_description: string;
     website_screenshot: {
       url: string;
     };
@@ -262,6 +263,7 @@ export type Review = Post & {
     score_chat: number;
     score_features: number;
     website_url: string;
+    short_description: string;
     youtube_video_url: string;
     website_screenshot: {
       url: string;

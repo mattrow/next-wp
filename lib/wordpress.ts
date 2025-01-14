@@ -273,3 +273,20 @@ export async function getReviews(): Promise<Review[]> {
   const reviews: Review[] = await response.json();
   return reviews;
 }
+
+export async function getReviewBySlug(slug: string): Promise<Review | null> {
+  const url = getUrl("/wp-json/wp/v2/review", {
+    slug,
+    _embed: true,
+  });
+
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    console.error("Failed to fetch review:", await response.text());
+    return null;
+  }
+
+  const reviews = await response.json();
+  return reviews.length > 0 ? reviews[0] : null;
+}
