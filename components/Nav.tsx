@@ -21,13 +21,15 @@ export const SocialIcon = ({
   icon: Icon,
   href,
   label,
+  isEmail = false,
 }: {
   icon: React.ElementType;
   href: string;
   label: string;
+  isEmail?: boolean;
 }) => (
   <Link
-    href={href}
+    href={isEmail ? `mailto:${href}` : href}
     className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-purple-500 transition-colors duration-200"
     aria-label={label}
   >
@@ -198,6 +200,7 @@ const Nav = ({ className, children, id }: NavProps) => {
                 icon={MailIcon}
                 href={socialLinks.email}
                 label="Send us an email"
+                isEmail={true}
               />
             </div>
           </div>
