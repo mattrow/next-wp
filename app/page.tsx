@@ -195,9 +195,9 @@ const Home = async () => {
                 <path d="M13.7813 2.96764C12.5708 4.10058 12.6174 6.11247 12.6174 6.11247C12.6174 6.11247 14.6267 6.28752 15.8372 5.15458C17.0477 4.02165 17.001 2.00975 17.001 2.00975C17.001 2.00975 14.9918 1.83471 13.7813 2.96764Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
               </svg>
               
-              <h1 className="sm:text-5xl text-2xl font-black text-center text-white bg-clip-text px-2">
+              <h2 className="sm:text-5xl text-2xl font-black text-center text-white bg-clip-text px-2">
                 Featured AI Girlfriends
-              </h1>
+              </h2>
               
               {/* Right Laurel */}
               <svg 
@@ -392,9 +392,9 @@ const Home = async () => {
           {/* Latest Blog Posts Section */}
           <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16">
             <div className="relative flex items-center justify-center mb-8">
-              <h1 className="sm:text-5xl text-2xl font-black not-prose text-center text-white bg-clip-text px-2">
+              <h2 className="sm:text-5xl text-2xl font-black not-prose text-center text-white bg-clip-text px-2">
                 Latest Blog Posts
-              </h1>
+              </h2>
             </div>
 
             <div className="not-prose">
@@ -415,9 +415,9 @@ const Home = async () => {
           {/* Latest Videos Section */}
           <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16 overflow-visible">
             <div className="relative flex items-center justify-center mb-8">
-              <h1 className="sm:text-5xl text-2xl font-black not-prose text-center text-white bg-clip-text px-2">
+              <h2 className="sm:text-5xl text-2xl font-black not-prose text-center text-white bg-clip-text px-2">
                 Latest Videos
-              </h1>
+              </h2>
             </div>
 
             <div className="not-prose">
