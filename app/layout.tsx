@@ -46,6 +46,17 @@ export const metadata: Metadata = {
   description:
     "Explore the best AI girlfriend sites and apps. Find reviews, rankings, and insights on the top virtual companions available.",
   metadataBase: new URL("https://bestaigirlfriends.com"),
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    noimageindex: false,
+    noarchive: false,
+    nosnippet: false,
+  },
+  alternates: {
+    canonical: 'https://bestaigirlfriends.com',
+  },
   openGraph: {
     title: "Best AI Girlfriends - Discover the Top AI Chat Sites and Apps",
     description:
