@@ -36,7 +36,7 @@ import FeaturedGirlfriends from "@/components/FeaturedGirlfriends";
 
 const Home = async () => {
   // Define featured slugs in order of ranking
-  const featuredSlugs = ["candy-ai", "kindroid-ai"];
+  const featuredSlugs = ["candy-ai", "girlfriendgpt","kindroid-ai"];
 
   // Fetch the featured reviews
   const reviewsData = await Promise.all(
