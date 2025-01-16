@@ -1,3 +1,6 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from "next/link";
 import { Post } from "@/lib/wordpress.d";
 import { cn } from "@/lib/utils";
@@ -8,13 +11,29 @@ interface PostCardProps {
   variant?: "default" | "home";
 }
 
-const PostCard = async ({ post, variant = "default" }: PostCardProps) => {
-  let media;
-  try {
-    media = await getFeaturedMediaById(post.featured_media);
-  } catch {
-    media = null;
-  }
+const PostCard = ({ post, variant = "default" }: PostCardProps) => {
+  const [media, setMedia] = useState<any>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    (async () => {
+      try {
+        const mediaData = await getFeaturedMediaById(post.featured_media);
+        if (isMounted) {
+          setMedia(mediaData);
+        }
+      } catch {
+        if (isMounted) {
+          setMedia(null);
+        }
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [post.featured_media]);
 
   const date = new Date(post.date).toLocaleDateString("en-US", {
     month: "short",
