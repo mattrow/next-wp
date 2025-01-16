@@ -60,6 +60,10 @@ export type Post = {
     website_name: string;
     pros: { pros: string }[]; // Array of objects with 'pros' property
     cons: { cons: string }[]; // Array of objects with 'cons' property
+    faqs: {
+      question: string;
+      answer: string;
+    }[];
   };
 };
 
@@ -274,5 +278,14 @@ export type Review = Post & {
     website_name: string;
     pros: { pros: string }[]; // Array of objects with 'pros' property
     cons: { cons: string }[]; // Array of objects with 'cons' property
+    faqs: {
+      question: string;
+      answer: string;
+    }[] | {
+      faqs: {
+        question: string;
+        answer: string;
+      }[];
+    }; // Support both old and new structure
   };
 };

@@ -27,6 +27,7 @@ import { Review } from '@/lib/wordpress.d';
 import TableOfContents from '@/components/TableOfContents';
 import { JsonLd } from '@/components/JsonLd';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import FAQ from '@/components/FAQ';
 
 
 async function getPost(slug: string): Promise<Post> {
@@ -41,6 +42,9 @@ async function getPost(slug: string): Promise<Post> {
   }
 
   const posts = await res.json();
+  console.log('API Response for post:', posts[0]); // Debug log
+  console.log('ACF Data:', posts[0].acf); // Debug ACF data
+  console.log('FAQs Data:', posts[0].acf.faqs); // Debug FAQs specifically
 
   if (!posts.length) {
     notFound();
@@ -52,6 +56,10 @@ async function getPost(slug: string): Promise<Post> {
 export default async function Page({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
   
+  // Add debug logs for the post data
+  console.log('Post ACF in page:', post.acf);
+  console.log('FAQs in page:', post.acf.faqs);
+
   // Fetch all reviews
   const allReviews: Review[] = await getAllReviews();
 
@@ -386,6 +394,20 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   dangerouslySetInnerHTML={{ __html: post.content.rendered }}
                 />
               </article>
+
+              {/* FAQ Section */}
+              {post.acf.faqs && (
+                <>
+                  {console.log('Rendering FAQs section with data:', post.acf.faqs)}
+                  <FAQ 
+                    faqs={
+                      'faqs' in post.acf.faqs 
+                        ? (post.acf.faqs as { faqs: { question: string; answer: string; }[] }).faqs
+                        : post.acf.faqs as { question: string; answer: string; }[]
+                    } 
+                  />
+                </>
+              )}
 
               {/* Related Reviews Section */}
               <div className="mt-12">
