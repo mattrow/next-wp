@@ -63,7 +63,12 @@ export type Post = {
     faqs: {
       question: string;
       answer: string;
-    }[];
+    }[] | {
+      faqs: {
+        question: string;
+        answer: string;
+      }[];
+    };
   };
 };
 
@@ -261,31 +266,6 @@ type FilterBarProps = {
   selectedCategory?: string;
 };
 
-export type Review = Post & {
-  acf: {
-    score_girls: number;
-    score_chat: number;
-    score_features: number;
-    website_url: string;
-    short_description: string;
-    youtube_video_url: string;
-    website_screenshot: {
-      url: string;
-    };
-    website_favicon: {
-      url: string;
-    };
-    website_name: string;
-    pros: { pros: string }[]; // Array of objects with 'pros' property
-    cons: { cons: string }[]; // Array of objects with 'cons' property
-    faqs: {
-      question: string;
-      answer: string;
-    }[] | {
-      faqs: {
-        question: string;
-        answer: string;
-      }[];
-    }; // Support both old and new structure
-  };
-};
+export interface Review extends Post {
+  totalScore?: number;
+}
