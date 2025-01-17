@@ -28,14 +28,10 @@ export default function TableOfContents() {
   const scrollToHeading = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      // Get the header height - adjust this value based on your fixed header height
-      const headerHeight = 80; // Example: 80px header height
-      
-      // Calculate position
+      const headerHeight = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
 
-      // Smooth scroll to element
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth"
@@ -46,27 +42,29 @@ export default function TableOfContents() {
   if (headings.length === 0) return null;
 
   return (
-    <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-3 mb-4">
-      <div className="flex items-center gap-1.5 mb-2">
+    <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 mb-6">
+      <div className="flex items-center gap-1.5 mb-4">
         <Link className="w-3.5 h-3.5" />
-        <h2 className="text-base font-semibold text-white m-0">Contents</h2>
+        <h2 className="text-base font-semibold text-white m-0 not-prose">Contents</h2>
       </div>
-      <nav>
-        <ul className="space-y-1">
+      <nav className="overflow-x-auto">
+        <div className="flex flex-wrap gap-2">
           {headings.map((heading) => (
-            <li
+            <button
               key={heading.id}
-              style={{ marginLeft: `${(heading.level - 2) * 0.75}rem` }}
+              onClick={() => scrollToHeading(heading.id)}
+              className={`
+                px-4 py-2 rounded-lg text-sm font-medium
+                transition-all duration-200
+                ${heading.level === 2 
+                  ? 'bg-purple-500/20 border border-purple-500 text-purple-300 hover:bg-purple-500/30' 
+                  : 'bg-gray-700/20 border border-gray-600 text-gray-300 hover:bg-gray-700/30'}
+              `}
             >
-              <button
-                onClick={() => scrollToHeading(heading.id)}
-                className="text-purple-400 hover:text-purple-300 transition-colors text-xs text-left"
-              >
-                {heading.text}
-              </button>
-            </li>
+              {heading.text}
+            </button>
           ))}
-        </ul>
+        </div>
       </nav>
     </div>
   );

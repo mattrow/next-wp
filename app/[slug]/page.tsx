@@ -195,13 +195,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-4 sm:p-8">
             {/* Title and Meta Information */}
             <header className="mb-6">
-              <h1 className="text-center text-white text-3xl font-bold not-prose mb-3">
-                {post.title.rendered}
+              <h1 className="text-center text-white text-4xl font-bold not-prose mb-3">
+                {post.title.rendered} Review
               </h1>
               <div className="flex justify-center items-center gap-4 text-sm text-gray-400">
-                <time dateTime={post.date}>
-                  Published: {new Date(post.date).toLocaleDateString()}
-                </time>
+                <span>
+                  Author: Jess Carson
+                </span>
                 <time dateTime={post.modified}>
                   Updated: {new Date(post.modified).toLocaleDateString()}
                 </time>
@@ -246,36 +246,39 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 </Link>
 
                 {/* Feature Rectangles */}
-                <div className="grid grid-cols-4 gap-2 mt-6">
-                  {/* Features */}
-                  {featureList.map((feature) => (
-                    <div
-                      key={feature.name}
-                      className="flex flex-col items-center border border-purple-500 rounded-lg p-2 bg-purple-500/20"
-                    >
-                      {/* Icon and Feature Name */}
-                      <feature.icon className="w-5 h-5 text-white mb-1" />
+                <div className="mt-6">
+                  <h2 className="text-xl not-prose font-bold text-white mb-4 text-center">Scores</h2>
+                  <div className="grid grid-cols-4 gap-2">
+                    {/* Features */}
+                    {featureList.map((feature) => (
+                      <div
+                        key={feature.name}
+                        className="flex flex-col items-center border border-purple-500 rounded-lg p-2 bg-purple-500/20"
+                      >
+                        {/* Icon and Feature Name */}
+                        <feature.icon className="w-5 h-5 text-white mb-1" />
+                        <span className="text-xs text-white font-semibold">
+                          {feature.name}
+                        </span>
+                        {/* Individual Score */}
+                        <span className="mt-1 text-md font-bold text-white">
+                          {feature.score}
+                        </span>
+                      </div>
+                    ))}
+
+                    {/* Overall Score */}
+                    <div className="flex flex-col items-center rounded-lg p-2 bg-green-500">
+                      {/* Icon and Label */}
+                      <StarIcon className="w-5 h-5 text-white mb-1" />
                       <span className="text-xs text-white font-semibold">
-                        {feature.name}
+                        Overall
                       </span>
-                      {/* Individual Score */}
-                      <span className="mt-1 text-md font-bold text-white">
-                        {feature.score}
+                      {/* Display the Overall Score */}
+                      <span className="mt-1 text-xl font-bold text-white">
+                        {overallScore}
                       </span>
                     </div>
-                  ))}
-
-                  {/* Overall Score */}
-                  <div className="flex flex-col items-center rounded-lg p-2 bg-green-500">
-                    {/* Icon and Label */}
-                    <StarIcon className="w-5 h-5 text-white mb-1" />
-                    <span className="text-xs text-white font-semibold">
-                      Overall
-                    </span>
-                    {/* Display the Overall Score */}
-                    <span className="mt-1 text-xl font-bold text-white">
-                      {overallScore}
-                    </span>
                   </div>
                 </div>
               </div>
@@ -311,7 +314,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                       <FaYoutube size={22} color="#FF0000" />
 
                       <span className="mx-2 font-semibold text-xl">
-                        Watch Review
+                        Watch {post.acf.website_name} Review
                       </span>
                       <ExternalLink size={24} className="text-black" />
                     </div>
@@ -320,14 +323,15 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
                 {/* Positives and Negatives */}
                 <div className="mt-6">
-                  <h2 className="text-xl not-prose font-bold text-white mb-4">Pros & Cons</h2>
-                  {/* Positives */}
-                  <div className="mb-4">
-                    {post.acf.pros && post.acf.pros.length > 0 ? (
+                  <h2 className="text-xl not-prose font-bold text-white mb-4 text-center">Pros & Cons</h2>
+                  {/* Combined Pros and Cons Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {/* Pros */}
+                    {post.acf.pros && post.acf.pros.length > 0 && 
                       post.acf.pros.map((proItem, index) => (
                         <div
-                          key={index}
-                          className="border border-green-500 bg-green-500/20 rounded-2xl p-2 flex items-center mb-2"
+                          key={`pro-${index}`}
+                          className="border border-green-500 bg-green-500/20 rounded-2xl p-2 flex items-center"
                         >
                           <Plus className="text-green-500 mr-2 flex-shrink-0" />
                           <span className="text-gray-300 font-semibold text-sm">
@@ -335,23 +339,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
                           </span>
                         </div>
                       ))
-                    ) : (
-                      <div className="border border-green-500 bg-green-500/20 rounded-2xl p-2 flex items-center mb-2">
-                        <Plus className="text-green-500 mr-2 flex-shrink-0" />
-                        <span className="text-gray-300 font-semibold text-sm">
-                          No pros available.
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                    }
 
-                  {/* Negatives */}
-                  <div>
-                    {post.acf.cons && post.acf.cons.length > 0 ? (
+                    {/* Cons */}
+                    {post.acf.cons && post.acf.cons.length > 0 && 
                       post.acf.cons.map((conItem, index) => (
                         <div
-                          key={index}
-                          className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-center mb-2"
+                          key={`con-${index}`}
+                          className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-center"
                         >
                           <Minus className="text-red-500 mr-2 flex-shrink-0" />
                           <span className="text-gray-300 font-semibold text-sm">
@@ -359,13 +354,24 @@ export default async function Page({ params }: { params: { slug: string } }) {
                           </span>
                         </div>
                       ))
-                    ) : (
-                      <div className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-center mb-2">
-                        <Minus className="text-red-500 mr-2 flex-shrink-0" />
-                        <span className="text-gray-300 font-semibold text-sm">
-                          No cons available.
-                        </span>
-                      </div>
+                    }
+
+                    {/* Fallback if no pros or cons */}
+                    {(!post.acf.pros || post.acf.pros.length === 0) && (!post.acf.cons || post.acf.cons.length === 0) && (
+                      <>
+                        <div className="border border-green-500 bg-green-500/20 rounded-2xl p-2 flex items-center">
+                          <Plus className="text-green-500 mr-2 flex-shrink-0" />
+                          <span className="text-gray-300 font-semibold text-sm">
+                            No pros available.
+                          </span>
+                        </div>
+                        <div className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-center">
+                          <Minus className="text-red-500 mr-2 flex-shrink-0" />
+                          <span className="text-gray-300 font-semibold text-sm">
+                            No cons available.
+                          </span>
+                        </div>
+                      </>
                     )}
                   </div>
                 </div>
@@ -408,30 +414,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   />
                 </>
               )}
-
-              {/* Related Reviews Section */}
-              <div className="mt-12">
-                <h2 className="text-2xl font-bold text-white mb-6">Related Reviews</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {sortedReviews
-                    .filter(review => review.id !== post.id)
-                    .slice(0, 3)
-                    .map(review => (
-                      <Link
-                        key={review.id}
-                        href={`/${review.slug}`}
-                        className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 hover:bg-gray-700/50 transition-all"
-                      >
-                        <h3 className="text-lg font-semibold text-white mb-2">
-                          {review.title.rendered}
-                        </h3>
-                        <div className="text-sm text-gray-400">
-                          Rating: {((Number(review.acf.score_girls) + Number(review.acf.score_chat) + Number(review.acf.score_features)) / 3).toFixed(1)}/10
-                        </div>
-                      </Link>
-                    ))}
-                </div>
-              </div>
             </div>
           </div>
         </Container>
