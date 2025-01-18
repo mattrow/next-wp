@@ -546,12 +546,15 @@ export async function generateMetadata({
     ? post.excerpt.rendered.replace(/<[^>]+>/g, '').trim()
     : `Read our in-depth review of ${post.acf.website_name}, including features, pros & cons, pricing, and user experiences. Discover how it ranks among the best AI girlfriend apps in ${new Date().getFullYear()}.`;
 
+  const pageUrl = `https://bestaigirlfriends.com/${params.slug}`;
+
   const metadata: Metadata = {
     title: `${post.title.rendered} Review [${new Date().getFullYear()}] | BestAIGirlfriends.com`,
     description: cleanDescription,
     openGraph: {
       title: `${post.title.rendered} Review [${new Date().getFullYear()}] - Rating: ${overallScore}/10`,
       description: cleanDescription,
+      url: pageUrl,
       type: 'article',
       publishedTime: post.date,
       modifiedTime: post.modified,

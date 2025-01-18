@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     title: "Best AI Girlfriends - Discover the Top AI Chat Sites and Apps",
     description:
       "Explore the best AI girlfriend sites and apps. Find reviews, rankings, and insights on the top virtual companions available.",
-    url: "https://bestaigirlfriends.com",
+    url: new URL("https://bestaigirlfriends.com").toString(),
     siteName: "Best AI Girlfriends",
     images: [
       {
