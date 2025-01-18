@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { GradientButton } from '@/components/GradientButton';
+import styles from './styles.module.css';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = false;
@@ -45,9 +46,6 @@ async function getPost(slug: string): Promise<Post> {
   }
 
   const posts = await res.json();
-  console.log('API Response for post:', posts[0]); // Debug log
-  console.log('ACF Data:', posts[0].acf); // Debug ACF data
-  console.log('FAQs Data:', posts[0].acf.faqs); // Debug FAQs specifically
 
   if (!posts.length) {
     notFound();
@@ -59,10 +57,6 @@ async function getPost(slug: string): Promise<Post> {
 export default async function Page({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
   
-  // Add debug logs for the post data
-  console.log('Post ACF in page:', post.acf);
-  console.log('FAQs in page:', post.acf.faqs);
-
   // Fetch all reviews
   const allReviews: Review[] = await getAllReviews();
 
@@ -195,20 +189,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <Section className="relative z-10">
         <Container>
           {/* Main Content Wrapper */}
-          <div className="bg-gray-800/50 backdrop-blur-xl border-2 border-gray-700 rounded-xl p-4 sm:p-8 shadow-2xl relative overflow-hidden">
+          <div className={styles.mainWrapper}>
             {/* Purple gradient overlay - from top left */}
-            <div 
-              className="fixed top-0 left-0 w-screen h-screen bg-gradient-to-br from-purple-500/20 via-purple-400/5 to-transparent opacity-0 pointer-events-none transition-opacity duration-700" 
-              style={{ zIndex: -1 }}
-              id="purple-gradient"
-            />
+            <div className={styles.gradientOverlayPurple} id="purple-gradient" />
             
             {/* White gradient overlay - from top right */}
-            <div 
-              className="fixed top-0 right-0 w-screen h-screen bg-gradient-to-bl from-white/10 via-white/5 to-transparent opacity-0 pointer-events-none transition-opacity duration-700" 
-              style={{ zIndex: -1 }}
-              id="white-gradient"
-            />
+            <div className={styles.gradientOverlayWhite} id="white-gradient" />
 
             {/* Title and Meta Information */}
             <AnimatedSection delay={0}>
@@ -248,6 +234,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px"
                       priority
                       className="w-full sm:h-64 h-48 object-cover my-0"
+                      style={{
+                        aspectRatio: '4/3',
+                        objectFit: 'cover'
+                      }}
                       loading="eager"
                     />
                     {/* Button */}
@@ -258,6 +248,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         width={32}
                         height={32}
                         className="inline-block m-0 p-0"
+                        style={{
+                          aspectRatio: '1',
+                          objectFit: 'contain'
+                        }}
                       />
                       <span className="mx-2 font-semibold text-xl text-white">
                         Open Website
