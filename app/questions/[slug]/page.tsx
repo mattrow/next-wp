@@ -5,7 +5,7 @@ import { Review } from "@/lib/wordpress.d";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ExternalLink, Heart, ChevronDown } from "lucide-react";
+import { ExternalLink, Heart, ChevronDown, ArrowRight } from "lucide-react";
 import { FaYoutube } from "react-icons/fa";
 import FeaturedGirlfriends from "@/components/FeaturedGirlfriends";
 import {
@@ -155,9 +155,7 @@ export default async function QuestionPage({ params }: Props) {
             {/* Left Column */}
             <div className="sm:col-span-1 not-prose">
               <Link
-                href={`/link/${review.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/${review.slug}`}
                 className="relative rounded-xl block overflow-hidden border-4 border-purple-500 hover:scale-105 transition-all duration-300"
               >
                 <Image
@@ -178,9 +176,9 @@ export default async function QuestionPage({ params }: Props) {
                     className="inline-block m-0 p-0"
                   />
                   <span className="mx-2 font-semibold text-xl text-white">
-                    Open Website
+                    Read Full Review
                   </span>
-                  <ExternalLink size={24} className="text-white" />
+                  <ArrowRight className="w-5 h-5 text-white" />
                 </div>
               </Link>
 
@@ -213,78 +211,78 @@ export default async function QuestionPage({ params }: Props) {
               </div>
             </div>
 
-            {/* Right Column */}
+            {/* Right Column - Related Questions */}
             <div className="sm:col-span-1 mt-6 sm:mt-0">
-              {videoId && (
-                <Link
-                  href={videoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative rounded-xl block overflow-hidden mb-6 border-4 border-white hover:scale-105 transition-all duration-300"
-                >
-                  <div className="relative w-full sm:h-64 h-48 not-prose">
-                    <Image
-                      src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-                      alt="YouTube Video Thumbnail"
-                      fill
-                      className="absolute top-0 left-0 w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 bg-black/70 rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110">
-                        <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[24px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-center bg-white text-black w-full px-4 py-2">
-                    <FaYoutube size={22} color="#FF0000" />
-                    <span className="mx-2 font-semibold text-xl">
-                      Watch Review
-                    </span>
-                    <ExternalLink size={24} className="text-black" />
-                  </div>
-                </Link>
-              )}
-
-              {/* Pros and Cons */}
-              <div className="mt-6">
-                <h3 className="text-xl font-bold text-white mb-4">Pros & Cons</h3>
-                <div className="mb-4">
-                  {review.acf.pros?.map((proItem, index) => (
-                    <div
+              <h3 className="text-xl font-bold text-white mb-4">More Questions About {review.acf.website_name}</h3>
+              <div className="space-y-2">
+                {review.acf.faqs && (
+                  'faqs' in review.acf.faqs 
+                    ? (review.acf.faqs as { faqs: { question: string; answer: string; }[] }).faqs
+                    : review.acf.faqs as { question: string; answer: string; }[]
+                ).map((faq, index) => {
+                  const questionSlug = faq.question.toLowerCase()
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .replace(/\s+/g, '-');
+                  
+                  return (
+                    <Link
                       key={index}
-                      className="border border-green-500 bg-green-500/20 rounded-2xl p-2 flex items-center mb-2"
+                      href={`/questions/${questionSlug}`}
+                      className="block bg-gray-800/50 border border-gray-700 rounded-lg p-3 hover:border-purple-500 transition-colors"
                     >
-                      <Heart className="text-green-500 mr-2 flex-shrink-0" />
-                      <span className="text-gray-300 font-semibold text-sm">
-                        {proItem.pros}
+                      <span className="text-white hover:text-purple-400 transition-colors">
+                        {faq.question}
                       </span>
-                    </div>
-                  ))}
-                </div>
-
-                <div>
-                  {review.acf.cons?.map((conItem, index) => (
-                    <div
-                      key={index}
-                      className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-center mb-2"
-                    >
-                      <ChevronDown className="text-red-500 mr-2 flex-shrink-0" />
-                      <span className="text-gray-300 font-semibold text-sm">
-                        {conItem.cons}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Featured Girlfriends Section */}
-        <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-4 sm:p-8 mt-8">
-          <h2 className="text-3xl font-bold text-white mb-6 not-prose text-center">
-            Alternatives to {review.acf.website_name}
-          </h2>
+        {/* Related Links */}
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Link to Review */}
+          <Link
+            href={`/${review.slug}`}
+            className="group block bg-gray-800/50 border border-gray-700 rounded-xl p-4 hover:border-purple-500 transition-colors"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold text-white group-hover:text-purple-400">
+                  Read Full Review
+                </h3>
+                <p className="text-sm text-gray-400 mt-1">
+                  Get our complete analysis of {review.acf.website_name}
+                </p>
+              </div>
+              <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-purple-400 transition-transform duration-300 group-hover:translate-x-1" />
+            </div>
+          </Link>
+
+          {/* Link to Alternatives */}
+          <Link
+            href={`/${review.slug}/alternatives`}
+            className="group block bg-gray-800/50 border border-gray-700 rounded-xl p-4 hover:border-purple-500 transition-colors"
+          >
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold text-white group-hover:text-purple-400">
+                  Best Alternatives
+                </h3>
+                <p className="text-sm text-gray-400 mt-1">
+                  Discover similar apps to {review.acf.website_name}
+                </p>
+              </div>
+              <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-purple-400 transition-transform duration-300 group-hover:translate-x-1" />
+            </div>
+          </Link>
+        </div>
+
+        {/* Featured Reviews */}
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold text-white mb-6 text-center">Top Rated AI Girlfriends</h2>
           <FeaturedGirlfriends reviews={reviewsWithScore} />
         </div>
       </Container>

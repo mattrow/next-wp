@@ -2,16 +2,24 @@
 
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import Link from 'next/link';
 
 interface FAQProps {
   faqs: {
     question: string;
     answer: string;
   }[];
+  reviewSlug?: string;
 }
 
-export default function FAQ({ faqs }: FAQProps) {
+export default function FAQ({ faqs, reviewSlug }: FAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const getQuestionSlug = (question: string) => {
+    return question.toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-');
+  };
 
   return (
     <div className="mt-8">
@@ -32,13 +40,31 @@ export default function FAQ({ faqs }: FAQProps) {
             </button>
             <div 
               className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                openIndex === index ? 'max-h-96' : 'max-h-0'
+                openIndex === index ? 'max-h-[800px]' : 'max-h-0'
               }`}
             >
-              <div className="p-4 bg-gray-800/30 prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: faq.answer }} />
+              <div className="p-4 bg-gray-800/30">
+                <div className="prose dark:prose-invert max-w-none mb-4" dangerouslySetInnerHTML={{ __html: faq.answer }} />
+                <Link
+                  href={`/questions/${getQuestionSlug(faq.question)}`}
+                  className="text-purple-400 hover:text-purple-300 text-sm inline-flex items-center mt-2"
+                >
+                  Read full answer →
+                </Link>
+              </div>
             </div>
           </div>
         ))}
+      </div>
+      
+      {/* Link to all questions */}
+      <div className="mt-6 text-center">
+        <Link
+          href="/questions"
+          className="text-purple-400 hover:text-purple-300 inline-flex items-center"
+        >
+          View all FAQ questions →
+        </Link>
       </div>
     </div>
   );

@@ -223,7 +223,7 @@ const Footer = () => {
 
               {/* Copyright */}
               <div className="flex items-center gap-2 text-gray-400">
-                <span>© 2024</span>
+                <span>© 2025</span>
                 <Link href="/" className="hover:text-purple-500 transition-colors flex items-center gap-1">
                   <Heart size={16} className="text-purple-500" />
                   Best AI Girlfriends

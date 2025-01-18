@@ -26,7 +26,7 @@ export default function AiGirlfriendGrid({ reviews, variant = 'full' }: AiGirlfr
       {/* Header Section */}
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold">
-          Best AI Girlfriends 2024
+          Best AI Girlfriends 2025
         </h2>
         <Link
           href="#"

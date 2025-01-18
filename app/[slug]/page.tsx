@@ -488,7 +488,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
                       'faqs' in post.acf.faqs 
                         ? (post.acf.faqs as { faqs: { question: string; answer: string; }[] }).faqs
                         : post.acf.faqs as { question: string; answer: string; }[]
-                    } 
+                    }
+                    reviewSlug={params.slug}
                   />
                 </AnimatedSection>
               )}
@@ -514,6 +515,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <AnimatedSection delay={1200}>
         <Section>
           <Container>
+            <div className="text-center mb-8">
+              <h2 className="sm:text-4xl text-2xl font-black text-white">
+                Best AI Girlfriends 2025
+              </h2>
+              <p className="text-gray-300 mt-4">
+                Explore more AI companion reviews and find your perfect match
+              </p>
+            </div>
             <AiGirlfriendGrid reviews={sortedReviews} />
           </Container>
         </Section>
