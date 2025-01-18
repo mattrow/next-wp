@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   title: "Best AI Girlfriends - Discover the Top AI Chat Sites and Apps",
   description:
     "Explore the best AI girlfriend sites and apps. Find reviews, rankings, and insights on the top virtual companions available.",
-  metadataBase: new URL("https://bestaigirlfriends.com"),
+  metadataBase: new URL("https://www.bestaigirlfriends.com"),
   robots: {
     index: true,
     follow: true,
@@ -55,13 +55,13 @@ export const metadata: Metadata = {
     nosnippet: false,
   },
   alternates: {
-    canonical: 'https://bestaigirlfriends.com',
+    canonical: 'https://www.bestaigirlfriends.com',
   },
   openGraph: {
     title: "Best AI Girlfriends - Discover the Top AI Chat Sites and Apps",
     description:
       "Explore the best AI girlfriend sites and apps. Find reviews, rankings, and insights on the top virtual companions available.",
-    url: new URL("https://bestaigirlfriends.com").toString(),
+    url: new URL("https://www.bestaigirlfriends.com").toString(),
     siteName: "Best AI Girlfriends",
     images: [
       {

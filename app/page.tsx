@@ -68,11 +68,11 @@ const Home = async () => {
               name: "Best AI Girlfriends - Best AI Chat Sites",
               description:
                 "Explore the best AI girlfriend sites and apps. Find reviews, rankings, and insights on the top virtual companions available.",
-              url: "https://bestaigirlfriends.com",
+              url: "https://www.bestaigirlfriends.com",
               publisher: {
                 "@type": "Organization",
                 name: "Best AI Girlfriends",
-                url: "https://bestaigirlfriends.com",
+                url: "https://www.bestaigirlfriends.com",
                 logo: {
                   "@type": "ImageObject",
                   url: "https://aigirlfriendblog.com/wp-content/uploads/2025/01/websitethumb.jpg",
