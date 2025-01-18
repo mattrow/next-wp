@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { FloatingBackground } from '@/components/FloatingBackground';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { GradientButton } from '@/components/GradientButton';
 
@@ -191,9 +190,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
     <>
       {/* Add JSON-LD structured data */}
       <JsonLd data={jsonLd} />
-
-      {/* Add floating background */}
-      <FloatingBackground />
 
       <Section className="relative z-10">
         <Container>
@@ -432,6 +428,28 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 </article>
               </AnimatedSection>
 
+              {/* Free Trial CTA */}
+              <AnimatedSection delay={900}>
+                <div className="mt-12 mb-12 flex justify-center">
+                  <Link
+                    href={`/link/${params.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative inline-flex items-center gap-2 bg-gradient-to-br from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/20 shimmer"
+                  >
+                    <Image
+                      alt="Site Favicon"
+                      src={post.acf.website_favicon.url}
+                      width={24}
+                      height={24}
+                      className="inline-block m-0"
+                    />
+                    <span className="text-white">{post.acf.website_name} Free Trial</span>
+                    <ExternalLink className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 text-white" />
+                  </Link>
+                </div>
+              </AnimatedSection>
+
               {/* FAQ Section */}
               {post.acf.faqs && (
                 <AnimatedSection delay={1000}>
@@ -444,6 +462,19 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   />
                 </AnimatedSection>
               )}
+
+              {/* Alternatives CTA */}
+              <AnimatedSection delay={1100}>
+                <div className="mt-12 flex justify-center">
+                  <Link
+                    href={`/${params.slug}/alternatives`}
+                    className="group relative inline-flex items-center gap-2 bg-gradient-to-br from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/20"
+                  >
+                    <span>Best Alternatives to {post.acf.website_name}</span>
+                    <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </AnimatedSection>
             </div>
           </div>
         </Container>

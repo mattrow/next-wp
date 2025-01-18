@@ -231,6 +231,8 @@
   color: white;
   margin-top: 2rem;
   margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(168, 85, 247, 0.2);
 }
 
 .review-content h3 {
@@ -249,31 +251,141 @@
   margin-bottom: 0.5rem;
 }
 
+.review-content p {
+  margin-bottom: 1.25rem;
+  line-height: 1.8;
+  color: #e5e7eb;
+  font-size: 1.125rem;
+}
+
 .review-content img {
-  border-radius: 0.5rem;
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  border-radius: 0.75rem;
+  margin: 2rem auto;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 2px solid rgba(168, 85, 247, 0.2);
 }
 
 .review-content a {
   color: rgb(192, 132, 252);
-  transition-property: color;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(192, 132, 252, 0.3);
+  transition: all 0.2s ease;
 }
 
 .review-content a:hover {
   color: rgb(216, 180, 254);
+  text-decoration-color: rgba(216, 180, 254, 0.5);
 }
 
 .review-content ul {
-  list-style-type: disc;
-  list-style-position: inside;
-  margin-bottom: 1rem;
+  list-style-type: none;
+  margin: 1.5rem 0;
+  padding-left: 1.25rem;
+}
+
+.review-content ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #e5e7eb;
+}
+
+.review-content ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: rgb(192, 132, 252);
+  font-weight: bold;
 }
 
 .review-content ol {
-  list-style-type: decimal;
-  list-style-position: inside;
-  margin-bottom: 1rem;
+  list-style-type: none;
+  counter-reset: item;
+  margin: 1.5rem 0;
+  padding-left: 1.25rem;
+}
+
+.review-content ol li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #e5e7eb;
+  counter-increment: item;
+}
+
+.review-content ol li::before {
+  content: counter(item) ".";
+  position: absolute;
+  left: 0;
+  color: rgb(192, 132, 252);
+  font-weight: bold;
+}
+
+.review-content blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  border-left: 4px solid rgb(192, 132, 252);
+  background: rgba(168, 85, 247, 0.1);
+  border-radius: 0.5rem;
+  font-style: italic;
+  color: #e5e7eb;
+}
+
+.review-content blockquote p {
+  margin: 0;
+}
+
+.review-content pre {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  overflow-x: auto;
+}
+
+.review-content code {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.review-content table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.review-content th {
+  background: rgba(168, 85, 247, 0.1);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.review-content td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+  color: #e5e7eb;
+}
+
+.review-content tr:last-child td {
+  border-bottom: none;
+}
+
+.review-content hr {
+  margin: 2rem 0;
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, rgba(168, 85, 247, 0), rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0));
 }
