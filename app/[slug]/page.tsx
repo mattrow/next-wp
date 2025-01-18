@@ -4,6 +4,7 @@ import { GradientButton } from '@/components/GradientButton';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = false;
+export const runtime = 'edge';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -244,9 +245,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
                       alt={`${post.acf.website_name} website screenshot`}
                       width={800}
                       height={600}
-                      sizes="(max-width: 600px) 100vw, 600px"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px"
                       priority
                       className="w-full sm:h-64 h-48 object-cover my-0"
+                      loading="eager"
                     />
                     {/* Button */}
                     <div className="flex items-center justify-center bg-purple-500 text-white w-full px-4 py-2 shimmer">

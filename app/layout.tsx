@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Analytics } from "@vercel/analytics/react";
+import { Inter } from 'next/font/google';
 
 import "./globals.css";
 
@@ -32,6 +33,12 @@ import {
   RedditIcon,
   MailIcon,
 } from "@/components/Nav";
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "Best AI Girlfriends - Discover the Top AI Chat Sites and Apps",
@@ -84,13 +91,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable}`}>
       <body className="min-h-screen antialiased font-sans">
         <ThemeProvider
           attribute="class"

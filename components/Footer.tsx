@@ -31,6 +31,9 @@ export default function Footer({
               width={32}
               height={32}
               className="inline-block m-0 p-0"
+              priority
+              sizes="32px"
+              loading="eager"
             />
           ) : (
             <div className="w-8 h-8 bg-gray-500 rounded-full"></div>
