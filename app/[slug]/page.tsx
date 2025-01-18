@@ -148,23 +148,32 @@ export default async function Page({ params }: { params: { slug: string } }) {
     },
     "reviewRating": {
       "@type": "Rating",
-      "ratingValue": overallScore,
-      "bestRating": "10",
-      "worstRating": "0"
+      "ratingValue": Number(overallScore),
+      "bestRating": 10,
+      "worstRating": 0
+    },
+    "itemReviewed": {
+      "@type": "SoftwareApplication",
+      "name": post.acf.website_name,
+      "applicationCategory": "ChatApplication",
+      "operatingSystem": "Web-based",
+      "image": post.acf.website_screenshot.url,
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": Number(overallScore),
+        "bestRating": 10,
+        "worstRating": 0,
+        "ratingCount": 1
+      }
     },
     "datePublished": post.date,
     "dateModified": post.modified,
     "reviewBody": post.content.rendered.replace(/<[^>]+>/g, ''),
-    "itemReviewed": {
-      "@type": "SoftwareApplication",
-      "name": post.acf.website_name,
-      "applicationCategory": "AI Girlfriend App",
-      "operatingSystem": "Web-based",
-      "image": post.acf.website_screenshot.url
-    },
     "publisher": {
       "@type": "Organization",
       "name": "Best AI Girlfriends",
+      "@id": "https://bestaigirlfriends.com",
+      "url": "https://bestaigirlfriends.com",
       "logo": {
         "@type": "ImageObject",
         "url": "https://aigirlfriendblog.com/wp-content/uploads/2025/01/websitethumb.jpg"
@@ -402,8 +411,19 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   itemType="http://schema.org/Review"
                   className="review-content"
                 >
-                  <meta itemProp="reviewRating" content={overallScore} />
-                  <meta itemProp="author" content="Jessica Carson" />
+                  <div itemProp="itemReviewed" itemScope itemType="http://schema.org/SoftwareApplication">
+                    <meta itemProp="name" content={post.acf.website_name} />
+                    <meta itemProp="applicationCategory" content="ChatApplication" />
+                  </div>
+                  <div itemProp="reviewRating" itemScope itemType="http://schema.org/Rating">
+                    <meta itemProp="ratingValue" content={overallScore} />
+                    <meta itemProp="bestRating" content="10" />
+                    <meta itemProp="worstRating" content="0" />
+                  </div>
+                  <div itemProp="author" itemScope itemType="http://schema.org/Person">
+                    <meta itemProp="name" content="Jessica Carson" />
+                    <meta itemProp="url" content="https://bestaigirlfriends.com/about" />
+                  </div>
                   <meta itemProp="datePublished" content={post.date} />
                   <meta itemProp="dateModified" content={post.modified} />
                   
