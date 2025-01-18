@@ -55,13 +55,13 @@ export const metadata: Metadata = {
     nosnippet: false,
   },
   alternates: {
-    canonical: 'https://www.bestaigirlfriends.com',
+    canonical: 'https://www.bestaigirlfriends.com'
   },
   openGraph: {
     title: "Best AI Girlfriends - Discover the Top AI Chat Sites and Apps",
     description:
       "Explore the best AI girlfriend sites and apps. Find reviews, rankings, and insights on the top virtual companions available.",
-    url: new URL("https://www.bestaigirlfriends.com").toString(),
+    url: "https://www.bestaigirlfriends.com",
     siteName: "Best AI Girlfriends",
     images: [
       {
