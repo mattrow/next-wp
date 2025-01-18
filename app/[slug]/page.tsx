@@ -158,12 +158,20 @@ export default async function Page({ params }: { params: { slug: string } }) {
       "applicationCategory": "ChatApplication",
       "operatingSystem": "Web-based",
       "image": post.acf.website_screenshot.url,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/OnlineOnly",
+        "url": post.acf.website_url
+      },
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": Number(overallScore),
         "bestRating": 10,
         "worstRating": 0,
-        "ratingCount": 1
+        "ratingCount": 1,
+        "reviewCount": 1
       }
     },
     "datePublished": post.date,
@@ -414,6 +422,21 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   <div itemProp="itemReviewed" itemScope itemType="http://schema.org/SoftwareApplication">
                     <meta itemProp="name" content={post.acf.website_name} />
                     <meta itemProp="applicationCategory" content="ChatApplication" />
+                    <meta itemProp="operatingSystem" content="Web-based" />
+                    <meta itemProp="image" content={post.acf.website_screenshot.url} />
+                    <div itemProp="offers" itemScope itemType="http://schema.org/Offer">
+                      <meta itemProp="price" content="0" />
+                      <meta itemProp="priceCurrency" content="USD" />
+                      <meta itemProp="availability" content="https://schema.org/OnlineOnly" />
+                      <meta itemProp="url" content={post.acf.website_url} />
+                    </div>
+                    <div itemProp="aggregateRating" itemScope itemType="http://schema.org/AggregateRating">
+                      <meta itemProp="ratingValue" content={overallScore} />
+                      <meta itemProp="bestRating" content="10" />
+                      <meta itemProp="worstRating" content="0" />
+                      <meta itemProp="ratingCount" content="1" />
+                      <meta itemProp="reviewCount" content="1" />
+                    </div>
                   </div>
                   <div itemProp="reviewRating" itemScope itemType="http://schema.org/Rating">
                     <meta itemProp="ratingValue" content={overallScore} />
