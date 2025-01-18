@@ -559,7 +559,17 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const post = await getPost(params.slug);
+
+  if (!post) {
+    notFound();
+  }
+
+  const currentYear = new Date().getFullYear();
+
   return {
+    title: `${post.acf.website_name} Review [${currentYear}] - BestAIGirlfriends.com`,
+    description: `Detailed review of ${post.acf.website_name}. Learn about features, pricing, and user experience. Updated for ${currentYear} with latest features and pricing.`,
     alternates: {
       canonical: `https://www.bestaigirlfriends.com/${params.slug}`
     }
