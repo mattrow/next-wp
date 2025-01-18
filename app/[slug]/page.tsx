@@ -1,4 +1,7 @@
 import { Metadata } from "next";
+import { FloatingBackground } from '@/components/FloatingBackground';
+import { AnimatedSection } from '@/components/AnimatedSection';
+import { GradientButton } from '@/components/GradientButton';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = false;
@@ -189,71 +192,93 @@ export default async function Page({ params }: { params: { slug: string } }) {
       {/* Add JSON-LD structured data */}
       <JsonLd data={jsonLd} />
 
-      <Section>
+      {/* Add floating background */}
+      <FloatingBackground />
+
+      <Section className="relative z-10">
         <Container>
           {/* Main Content Wrapper */}
-          <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-4 sm:p-8">
+          <div className="bg-gray-800/50 backdrop-blur-xl border-2 border-gray-700 rounded-xl p-4 sm:p-8 shadow-2xl relative overflow-hidden">
+            {/* Purple gradient overlay - from top left */}
+            <div 
+              className="fixed top-0 left-0 w-screen h-screen bg-gradient-to-br from-purple-500/20 via-purple-400/5 to-transparent opacity-0 pointer-events-none transition-opacity duration-700" 
+              style={{ zIndex: -1 }}
+              id="purple-gradient"
+            />
+            
+            {/* White gradient overlay - from top right */}
+            <div 
+              className="fixed top-0 right-0 w-screen h-screen bg-gradient-to-bl from-white/10 via-white/5 to-transparent opacity-0 pointer-events-none transition-opacity duration-700" 
+              style={{ zIndex: -1 }}
+              id="white-gradient"
+            />
+
             {/* Title and Meta Information */}
-            <header className="mb-6">
-              <h1 className="text-center text-white text-4xl font-bold not-prose mb-3">
-                {post.title.rendered} Review
-              </h1>
-              <div className="flex justify-center items-center gap-4 text-sm text-gray-400">
-                <span>
-                  Author: Jess Carson
-                </span>
-                <time dateTime={post.modified}>
-                  Updated: {new Date(post.modified).toLocaleDateString()}
-                </time>
-              </div>
-            </header>
+            <AnimatedSection delay={0}>
+              <header className="mb-6 relative">
+                <h1 className="text-center text-white text-4xl font-bold not-prose mb-3">
+                  {post.title.rendered} Review
+                </h1>
+                <div className="flex justify-center items-center gap-4 text-sm text-gray-400">
+                  <span>
+                    Author: Jess Carson
+                  </span>
+                  <time dateTime={post.modified}>
+                    Updated: {new Date(post.modified).toLocaleDateString()}
+                  </time>
+                </div>
+              </header>
+            </AnimatedSection>
 
             {/* Grid layout for main content */}
             <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-8">
               {/* Left Column */}
-              <div className="sm:col-span-1 not-prose">
+              <AnimatedSection delay={200} className="sm:col-span-1 not-prose">
                 {/* Clickable wrapper for website image and button */}
-                <Link
-                  href={`/link/${params.slug}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative rounded-xl block overflow-hidden border-4 border-purple-500 hover:scale-105 transition-all duration-300"
-                >
-                  {/* Image */}
-                  <Image
-                    src={post.acf.website_screenshot.url}
-                    alt={`${post.acf.website_name} website screenshot`}
-                    width={800}
-                    height={600}
-                    sizes="(max-width: 600px) 100vw, 600px"
-                    priority
-                    className="w-full sm:h-64 h-48 object-cover my-0"
-                  />
-                  {/* Button */}
-                  <div className="flex items-center justify-center bg-purple-500 text-white w-full px-4 py-2 shimmer">
+                <GradientButton type="purple">
+                  <Link
+                    href={`/link/${params.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative rounded-xl block overflow-hidden border-4 border-purple-500 hover:scale-105 transition-all duration-300 pulse-border"
+                  >
+                    {/* Image */}
                     <Image
-                      alt="Site Favicon"
-                      src={post.acf.website_favicon.url}
-                      width={32}
-                      height={32}
-                      className="inline-block m-0 p-0"
+                      src={post.acf.website_screenshot.url}
+                      alt={`${post.acf.website_name} website screenshot`}
+                      width={800}
+                      height={600}
+                      sizes="(max-width: 600px) 100vw, 600px"
+                      priority
+                      className="w-full sm:h-64 h-48 object-cover my-0"
                     />
-                    <span className="mx-2 font-semibold text-xl text-white">
-                      Open Website
-                    </span>
-                    <ExternalLink size={24} className="text-white" />
-                  </div>
-                </Link>
+                    {/* Button */}
+                    <div className="flex items-center justify-center bg-purple-500 text-white w-full px-4 py-2 shimmer">
+                      <Image
+                        alt="Site Favicon"
+                        src={post.acf.website_favicon.url}
+                        width={32}
+                        height={32}
+                        className="inline-block m-0 p-0"
+                      />
+                      <span className="mx-2 font-semibold text-xl text-white">
+                        Open Website
+                      </span>
+                      <ExternalLink size={24} className="text-white" />
+                    </div>
+                  </Link>
+                </GradientButton>
 
                 {/* Feature Rectangles */}
                 <div className="mt-6">
                   <h2 className="text-xl not-prose font-bold text-white mb-4 text-center">Scores</h2>
                   <div className="grid grid-cols-4 gap-2">
                     {/* Features */}
-                    {featureList.map((feature) => (
+                    {featureList.map((feature, index) => (
                       <div
                         key={feature.name}
-                        className="flex flex-col items-center border border-purple-500 rounded-lg p-2 bg-purple-500/20"
+                        className="flex flex-col items-center border border-purple-500 rounded-lg p-2 bg-purple-500/20 transform hover:scale-105 transition-all duration-300 hover:bg-purple-500/30"
+                        style={{ transitionDelay: `${index * 100}ms` }}
                       >
                         {/* Icon and Feature Name */}
                         <feature.icon className="w-5 h-5 text-white mb-1" />
@@ -268,7 +293,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     ))}
 
                     {/* Overall Score */}
-                    <div className="flex flex-col items-center rounded-lg p-2 bg-green-500">
+                    <div className="flex flex-col items-center rounded-lg p-2 bg-green-500 transform hover:scale-105 transition-all duration-300 hover:bg-green-600">
                       {/* Icon and Label */}
                       <StarIcon className="w-5 h-5 text-white mb-1" />
                       <span className="text-xs text-white font-semibold">
@@ -281,44 +306,46 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </AnimatedSection>
 
               {/* Right Column */}
-              <div className="sm:col-span-1 mt-6 sm:mt-0">
+              <AnimatedSection delay={400} className="sm:col-span-1 mt-6 sm:mt-0">
                 {/* Conditional Rendering of Video Section */}
                 {videoId && (
-                  <Link
-                    href={videoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative rounded-xl block overflow-hidden mb-6 border-4 border-white hover:scale-105 transition-all duration-300"
-                  >
-                    {/* Video Thumbnail */}
-                    <div className="relative w-full sm:h-64 h-48 not-prose">
-                      <Image
-                        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-                        alt="YouTube Video Thumbnail"
-                        fill
-                        className="absolute top-0 left-0 w-full h-full object-cover"
-                      />
-                      {/* Play Button Overlay */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 bg-black/70 rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110">
-                          <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[24px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
+                  <GradientButton type="white">
+                    <Link
+                      href={videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative rounded-xl block overflow-hidden mb-6 border-4 border-white hover:scale-105 transition-all duration-300"
+                    >
+                      {/* Video Thumbnail */}
+                      <div className="relative w-full sm:h-64 h-48 not-prose">
+                        <Image
+                          src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                          alt="YouTube Video Thumbnail"
+                          fill
+                          className="absolute top-0 left-0 w-full h-full object-cover"
+                        />
+                        {/* Play Button Overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-16 h-16 bg-black/70 rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110">
+                            <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[24px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    {/* Button */}
-                    <div className="flex items-center justify-center bg-white text-black w-full px-4 py-2">
-                      {/* YouTube Play Icon */}
-                      <FaYoutube size={22} color="#FF0000" />
+                      {/* Button */}
+                      <div className="flex items-center justify-center bg-white text-black w-full px-4 py-2">
+                        {/* YouTube Play Icon */}
+                        <FaYoutube size={22} color="#FF0000" />
 
-                      <span className="mx-2 font-semibold text-xl">
-                        Watch {post.acf.website_name} Review
-                      </span>
-                      <ExternalLink size={24} className="text-black" />
-                    </div>
-                  </Link>
+                        <span className="mx-2 font-semibold text-xl">
+                          Watch {post.acf.website_name} Review
+                        </span>
+                        <ExternalLink size={24} className="text-black" />
+                      </div>
+                    </Link>
+                  </GradientButton>
                 )}
 
                 {/* Positives and Negatives */}
@@ -375,36 +402,39 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     )}
                   </div>
                 </div>
-              </div>
+              </AnimatedSection>
             </div>
 
             {/* Main Content Section */}
             <div className="mt-8">
               {/* Table of Contents */}
-              <TableOfContents />
+              <AnimatedSection delay={600}>
+                <TableOfContents />
+              </AnimatedSection>
 
               {/* Review Article */}
-              <article 
-                itemScope 
-                itemType="http://schema.org/Review"
-                className="review-content"
-              >
-                <meta itemProp="reviewRating" content={overallScore} />
-                <meta itemProp="author" content="Jessica Carter" />
-                <meta itemProp="datePublished" content={post.date} />
-                <meta itemProp="dateModified" content={post.modified} />
-                
-                <div
-                  className="prose dark:prose-invert max-w-none"
-                  itemProp="reviewBody"
-                  dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-                />
-              </article>
+              <AnimatedSection delay={800}>
+                <article 
+                  itemScope 
+                  itemType="http://schema.org/Review"
+                  className="review-content"
+                >
+                  <meta itemProp="reviewRating" content={overallScore} />
+                  <meta itemProp="author" content="Jessica Carter" />
+                  <meta itemProp="datePublished" content={post.date} />
+                  <meta itemProp="dateModified" content={post.modified} />
+                  
+                  <div
+                    className="prose dark:prose-invert max-w-none"
+                    itemProp="reviewBody"
+                    dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+                  />
+                </article>
+              </AnimatedSection>
 
               {/* FAQ Section */}
               {post.acf.faqs && (
-                <>
-                  {console.log('Rendering FAQs section with data:', post.acf.faqs)}
+                <AnimatedSection delay={1000}>
                   <FAQ 
                     faqs={
                       'faqs' in post.acf.faqs 
@@ -412,7 +442,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                         : post.acf.faqs as { question: string; answer: string; }[]
                     } 
                   />
-                </>
+                </AnimatedSection>
               )}
             </div>
           </div>
@@ -420,11 +450,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
       </Section>
 
       {/* AiGirlfriendGrid Component Underneath Content */}
-      <Section>
-        <Container>
-          <AiGirlfriendGrid reviews={sortedReviews} />
-        </Container>
-      </Section>
+      <AnimatedSection delay={1200}>
+        <Section>
+          <Container>
+            <AiGirlfriendGrid reviews={sortedReviews} />
+          </Container>
+        </Section>
+      </AnimatedSection>
 
       <Footer
         slug={params.slug}
