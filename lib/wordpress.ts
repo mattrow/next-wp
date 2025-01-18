@@ -16,13 +16,38 @@ import {
 } from "./wordpress.d";
 
 // WordPress Config
+const baseUrl = process.env.WORDPRESS_API_URL || 'https://aigirlfriendblog.com/wp-json';
 
-const baseUrl = process.env.WORDPRESS_URL;
+async function fetchWithErrorHandling(url: string) {
+  try {
+    const response = await fetch(url, {
+      next: { revalidate: 3600 }, // Cache for 1 hour
+      headers: {
+        'Origin': 'https://www.bestaigirlfriends.com'
+      }
+    });
+
+    if (!response.ok) {
+      console.error(`API Error: ${response.status} on ${url}`);
+      if (response.status === 403) {
+        console.error('Access forbidden - CORS or authentication issue');
+      }
+      return null;
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error(`Failed to fetch ${url}:`, error);
+    return null;
+  }
+}
 
 function getUrl(path: string, query?: Record<string, any>) {
-    const params = query ? querystring.stringify(query) : null
-  
-    return `${baseUrl}${path}${params ? `?${params}` : ""}`
+  if (path.startsWith('/wp-json')) {
+    path = path.substring(8); // Remove /wp-json prefix as it's in baseUrl
+  }
+  const params = query ? querystring.stringify(query) : null;
+  return `${baseUrl}${path}${params ? `?${params}` : ""}`;
 }
 
 // WordPress Functions
@@ -32,10 +57,9 @@ export async function getAllPosts(filterParams?: {
   tag?: string;
   category?: string;
 }): Promise<Post[]> {  
-  const url = getUrl("/wp-json/wp/v2/posts", { author: filterParams?.author, tags: filterParams?.tag, categories: filterParams?.category });
-  const response = await fetch(url);
-  const posts: Post[] = await response.json();
-  return posts;
+  const url = getUrl("/wp/v2/posts", { author: filterParams?.author, tags: filterParams?.tag, categories: filterParams?.category });
+  const posts = await fetchWithErrorHandling(url);
+  return posts || [];
 }
 
 export async function getPostById(id: number): Promise<Post> {
