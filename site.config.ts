@@ -3,5 +3,5 @@ type SiteConfig = {
 };
 
 export const siteConfig: SiteConfig = {
-  site_domain: "https://bestaigirlfriends.com",
+  site_domain: "https://www.bestaigirlfriends.com",
 };
