@@ -8,6 +8,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "All Authors",
     description: "Browse all authors on the site.",
+    alternates: {
+      canonical: 'https://www.bestaigirlfriends.com/blog/authors'
+    }
   };
 }
 

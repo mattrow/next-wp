@@ -16,6 +16,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title: `Best Alternatives to ${review.acf.website_name} [${new Date().getFullYear()}]`,
     description: `Discover the best alternatives to ${review.acf.website_name}. Compare features, pricing, and user experiences with other top AI companion apps.`,
+    alternates: {
+      canonical: `https://www.bestaigirlfriends.com/${params.slug}/alternatives`
+    }
   };
 }
 

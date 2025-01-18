@@ -558,69 +558,10 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
-  const post = await getPost(params.slug);
-
-  if (!post) {
-    notFound();
-  }
-
-  // Calculate the overall score
-  const scoreGirls = Number(post.acf.score_girls);
-  const scoreChat = Number(post.acf.score_chat);
-  const scoreFeatures = Number(post.acf.score_features);
-  const overallScore = ((scoreGirls + scoreChat + scoreFeatures) / 3).toFixed(1);
-
-  // Create a more SEO-friendly description
-  const cleanDescription = post.excerpt?.rendered 
-    ? post.excerpt.rendered.replace(/<[^>]+>/g, '').trim()
-    : `Read our in-depth review of ${post.acf.website_name}, including features, pros & cons, pricing, and user experiences. Discover how it ranks among the best AI girlfriend apps in ${new Date().getFullYear()}.`;
-
-  const pageUrl = `https://bestaigirlfriends.com/${params.slug}`;
-
-  const metadata: Metadata = {
-    title: `${post.title.rendered} Review [${new Date().getFullYear()}] | BestAIGirlfriends.com`,
-    description: cleanDescription,
-    openGraph: {
-      title: `${post.title.rendered} Review [${new Date().getFullYear()}] - Rating: ${overallScore}/10`,
-      description: cleanDescription,
-      url: pageUrl,
-      type: 'article',
-      publishedTime: post.date,
-      modifiedTime: post.modified,
-      authors: ['Jessica Carson'],
-      images: post.acf?.website_screenshot?.url ? [
-        {
-          url: post.acf.website_screenshot.url,
-          width: 1200,
-          height: 630,
-          alt: `${post.title.rendered} Screenshot and Review`,
-        },
-      ] : [],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${post.title.rendered} Review [${new Date().getFullYear()}] - Rating: ${overallScore}/10`,
-      description: cleanDescription,
-      images: post.acf?.website_screenshot?.url ? [post.acf.website_screenshot.url] : [],
-      creator: '@BestAIGFs',
-      site: '@BestAIGFs',
-    },
-    robots: {
-      index: true,
-      follow: true,
-      'max-snippet': -1,
-      'max-image-preview': 'large',
-      'max-video-preview': -1,
-    },
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  return {
     alternates: {
-      canonical: `https://bestaigirlfriends.com/${params.slug}`,
-    },
+      canonical: `https://www.bestaigirlfriends.com/${params.slug}`
+    }
   };
-
-  return metadata;
 }

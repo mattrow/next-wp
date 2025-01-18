@@ -6,6 +6,9 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Authors - Best AI Girlfriends",
   description: "Meet our team of expert reviewers and writers at Best AI Girlfriends.",
+  alternates: {
+    canonical: 'https://www.bestaigirlfriends.com/authors'
+  }
 };
 
 export default async function AuthorsPage() {

@@ -6,6 +6,9 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Tags - Best AI Girlfriends",
   description: "Browse all tags and topics covered in our AI girlfriend reviews and articles.",
+  alternates: {
+    canonical: 'https://www.bestaigirlfriends.com/tags'
+  }
 };
 
 export default async function TagsPage() {

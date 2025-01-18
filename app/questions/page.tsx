@@ -18,8 +18,11 @@ interface QuestionWithMeta {
 }
 
 export const metadata: Metadata = {
-  title: "AI Girlfriend Questions - Common Questions About AI Dating",
-  description: "Find answers to common questions about AI girlfriends, virtual dating, and AI relationships. Expert insights and detailed explanations from our reviews.",
+  title: "AI Girlfriend FAQs - Common Questions Answered",
+  description: "Find answers to frequently asked questions about AI girlfriends, virtual companions, and AI chat apps.",
+  alternates: {
+    canonical: 'https://www.bestaigirlfriends.com/questions'
+  }
 };
 
 export default async function QuestionsPage() {

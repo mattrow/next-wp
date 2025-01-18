@@ -6,6 +6,9 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Categories - Best AI Girlfriends",
   description: "Browse all categories of AI girlfriend reviews and articles.",
+  alternates: {
+    canonical: 'https://www.bestaigirlfriends.com/categories'
+  }
 };
 
 export default async function CategoriesPage() {

@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import {
   getAllPosts,
   getAllAuthors,
@@ -17,6 +18,14 @@ import {
 import { Section, Container } from "@/components/craft";
 import PostCard from "@/components/posts/post-card";
 import FilterPosts from "./filter";
+
+export const metadata: Metadata = {
+  title: "AI Girlfriend Blog - Latest News & Articles",
+  description: "Stay updated with the latest news, guides, and articles about AI girlfriends and virtual companions.",
+  alternates: {
+    canonical: 'https://www.bestaigirlfriends.com/blog'
+  }
+};
 
 export default async function Page({
   searchParams,

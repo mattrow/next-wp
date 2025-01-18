@@ -13,6 +13,9 @@ export async function generateMetadata({
   return {
     title: page.title.rendered,
     description: page.excerpt.rendered,
+    alternates: {
+      canonical: `https://www.bestaigirlfriends.com/reviews/${params.slug}`
+    }
   };
 }
 

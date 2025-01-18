@@ -72,6 +72,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${data.question.question} - AI Girlfriend FAQ`,
     description: data.question.answer.replace(/<[^>]+>/g, '').slice(0, 155) + "...",
+    alternates: {
+      canonical: `https://www.bestaigirlfriends.com/questions/${params.slug}`
+    }
   };
 }
 
