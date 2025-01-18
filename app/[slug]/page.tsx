@@ -139,38 +139,29 @@ export default async function Page({ params }: { params: { slug: string } }) {
   // Prepare JSON-LD data
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
-    "mainEntity": {
-      "@type": "Review",
-      "name": post.title.rendered,
-      "author": {
-        "@type": "Person",
-        "name": "Jessica Carter"
-      },
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": overallScore,
-        "bestRating": "10",
-        "worstRating": "0"
-      },
-      "datePublished": post.date,
-      "dateModified": post.modified,
-      "reviewBody": post.content.rendered.replace(/<[^>]+>/g, ''),
-      "itemReviewed": {
-        "@type": "SoftwareApplication",
-        "name": post.acf.website_name,
-        "applicationCategory": "AI Girlfriend App",
-        "operatingSystem": "Web-based",
-      }
-    },
+    "@type": "Review",
+    "name": `${post.title.rendered} Review`,
     "author": {
       "@type": "Person",
-      "name": "Jessica Carter"
+      "name": "Jessica Carson",
+      "url": "https://bestaigirlfriends.com/about"
     },
-    "headline": post.title.rendered,
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": overallScore,
+      "bestRating": "10",
+      "worstRating": "0"
+    },
     "datePublished": post.date,
     "dateModified": post.modified,
-    "image": post.acf.website_screenshot.url,
+    "reviewBody": post.content.rendered.replace(/<[^>]+>/g, ''),
+    "itemReviewed": {
+      "@type": "SoftwareApplication",
+      "name": post.acf.website_name,
+      "applicationCategory": "AI Girlfriend App",
+      "operatingSystem": "Web-based",
+      "image": post.acf.website_screenshot.url
+    },
     "publisher": {
       "@type": "Organization",
       "name": "Best AI Girlfriends",
@@ -412,7 +403,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   className="review-content"
                 >
                   <meta itemProp="reviewRating" content={overallScore} />
-                  <meta itemProp="author" content="Jessica Carter" />
+                  <meta itemProp="author" content="Jessica Carson" />
                   <meta itemProp="datePublished" content={post.date} />
                   <meta itemProp="dateModified" content={post.modified} />
                   
@@ -558,7 +549,7 @@ export async function generateMetadata({
       type: 'article',
       publishedTime: post.date,
       modifiedTime: post.modified,
-      authors: ['Jessica Carter'],
+      authors: ['Jessica Carson'],
       images: post.acf?.website_screenshot?.url ? [
         {
           url: post.acf.website_screenshot.url,
