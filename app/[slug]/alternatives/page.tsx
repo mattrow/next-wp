@@ -5,6 +5,9 @@ import ReviewSummary from '@/components/ReviewSummary';
 import FeaturedGirlfriends from '@/components/FeaturedGirlfriends';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import ReviewTopSection from '@/components/ReviewTopSection';
+import { AnimatedSection } from '@/components/AnimatedSection';
+import styles from '../styles.module.css';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const review = await getReviewBySlug(params.slug);
@@ -47,37 +50,39 @@ export default async function AlternativePage({ params }: { params: { slug: stri
     .slice(0, 5);
 
   return (
-    <Section>
+    <Section className="relative z-10">
       <Container>
-        {/* Main Content Wrapper */}
-        <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8">
-          {/* Title - Updated styling to match home page */}
-          <div className="text-center mb-8">
-            <h1 className="sm:text-5xl text-2xl font-black text-white mb-4 not-prose">
-              Best Alternatives to {review.acf.website_name}
-            </h1>
-            <p className="text-gray-300 mt-4 not-prose">
-              Looking for similar apps like {review.acf.website_name}? 
-              Explore our top recommended alternatives below.
-            </p>
-          </div>
+        <AnimatedSection delay={0}>
+          <div className={styles.mainWrapper}>
+            {/* Gradient overlays */}
+            <div className={styles.gradientOverlayPurple} id="purple-gradient" />
+            <div className={styles.gradientOverlayWhite} id="white-gradient" />
 
-          {/* Review Summary */}
-          <ReviewSummary review={review} />
+            {/* Title and Meta Information */}
+            <header className="mb-6 relative">
+              <h1 className="text-center text-white text-4xl font-bold not-prose mb-3">
+                Best Alternatives to {review.acf.website_name}
+              </h1>
+              <div className="text-center">
+                <p className="text-gray-400 text-lg">
+                  Looking for similar apps like {review.acf.website_name}? 
+                  Explore our top recommended alternatives below.
+                </p>
+              </div>
+            </header>
 
-          {/* Divider */}
-          <hr className="my-12 border-gray-700" />
+            {/* Use the ReviewTopSection here */}
+            <ReviewTopSection review={review} slug={params.slug} />
 
-          {/* Alternatives Section - Updated styling to match home page */}
-          <div className="mt-8">
-            <div className="relative flex items-center justify-center mb-8">
-              <h2 className="sm:text-5xl text-2xl font-black text-center text-white bg-clip-text not-prose px-2">
+            {/* Alternatives Section */}
+            <div className="mt-12">
+              <h2 className="text-3xl font-bold text-white text-cente not-prose mb-6">
                 Top Alternatives to {review.acf.website_name}
               </h2>
+              <FeaturedGirlfriends reviews={alternativeReviews} />
             </div>
-            <FeaturedGirlfriends reviews={alternativeReviews} />
           </div>
-        </div>
+        </AnimatedSection>
       </Container>
     </Section>
   );

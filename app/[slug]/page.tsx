@@ -32,6 +32,7 @@ import TableOfContents from '@/components/TableOfContents';
 import { JsonLd } from '@/components/JsonLd';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import FAQ from '@/components/FAQ';
+import ReviewTopSection from '@/components/ReviewTopSection';
 
 
 async function getPost(slug: string): Promise<Post> {
@@ -196,13 +197,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
       <Section className="relative z-10">
         <Container>
-          {/* Main Content Wrapper */}
           <AnimatedSection delay={0}>
             <div className={styles.mainWrapper}>
-              {/* Purple gradient overlay - from top left */}
+              {/* Gradient overlays */}
               <div className={styles.gradientOverlayPurple} id="purple-gradient" />
-              
-              {/* White gradient overlay - from top right */}
               <div className={styles.gradientOverlayWhite} id="white-gradient" />
 
               {/* Title and Meta Information */}
@@ -220,189 +218,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 </div>
               </header>
 
-              {/* Grid layout for main content */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-8">
-                {/* Left Column */}
-                <div className="sm:col-span-1 not-prose">
-                  {/* Clickable wrapper for website image and button */}
-                  <GradientButton type="purple">
-                    <Link
-                      href={`/link/${params.slug}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="relative rounded-xl block overflow-hidden border-4 border-purple-500 hover:scale-105 transition-all duration-300 pulse-border"
-                    >
-                      {/* Image */}
-                      <Image
-                        src={post.acf.website_screenshot.url}
-                        alt={`${post.acf.website_name} website screenshot`}
-                        width={800}
-                        height={600}
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px"
-                        priority
-                        className="w-full sm:h-64 h-48 object-cover my-0"
-                        style={{
-                          aspectRatio: '4/3',
-                          objectFit: 'cover'
-                        }}
-                        loading="eager"
-                      />
-                      {/* Button */}
-                      <div className="flex items-center justify-center bg-purple-500 text-white w-full px-4 py-2 shimmer">
-                        <Image
-                          alt="Site Favicon"
-                          src={post.acf.website_favicon.url}
-                          width={32}
-                          height={32}
-                          className="inline-block m-0 p-0"
-                          style={{
-                            aspectRatio: '1',
-                            objectFit: 'contain'
-                          }}
-                        />
-                        <span className="mx-2 font-semibold text-xl text-white">
-                          Open Website
-                        </span>
-                        <ExternalLink size={24} className="text-white" />
-                      </div>
-                    </Link>
-                  </GradientButton>
-
-                  {/* Feature Rectangles */}
-                  <div className="mt-6">
-                    <h2 className="text-xl not-prose font-bold text-white mb-4 text-center">Scores</h2>
-                    <div className="grid grid-cols-4 gap-2">
-                      {/* Features */}
-                      {featureList.map((feature, index) => (
-                        <div
-                          key={feature.name}
-                          className="flex flex-col items-center border border-purple-500 rounded-lg p-2 bg-purple-500/20 transform hover:scale-105 transition-all duration-300 hover:bg-purple-500/30"
-                          style={{ transitionDelay: `${index * 100}ms` }}
-                        >
-                          {/* Icon and Feature Name */}
-                          <feature.icon className="w-5 h-5 text-white mb-1" />
-                          <span className="text-xs text-white font-semibold">
-                            {feature.name}
-                          </span>
-                          {/* Individual Score */}
-                          <span className="mt-1 text-md font-bold text-white">
-                            {feature.score}
-                          </span>
-                        </div>
-                      ))}
-
-                      {/* Overall Score */}
-                      <div className="flex flex-col items-center rounded-lg p-2 bg-green-500 transform hover:scale-105 transition-all duration-300 hover:bg-green-600">
-                        {/* Icon and Label */}
-                        <StarIcon className="w-5 h-5 text-white mb-1" />
-                        <span className="text-xs text-white font-semibold">
-                          Overall
-                        </span>
-                        {/* Display the Overall Score */}
-                        <span className="mt-1 text-xl font-bold text-white">
-                          {overallScore}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Column */}
-                <div className="sm:col-span-1 mt-6 sm:mt-0">
-                  {/* Conditional Rendering of Video Section */}
-                  {videoId && (
-                    <GradientButton type="white">
-                      <Link
-                        href={videoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="relative rounded-xl block overflow-hidden mb-6 border-4 border-white hover:scale-105 transition-all duration-300"
-                      >
-                        {/* Video Thumbnail */}
-                        <div className="relative w-full sm:h-64 h-48 not-prose">
-                          <Image
-                            src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-                            alt="YouTube Video Thumbnail"
-                            fill
-                            className="absolute top-0 left-0 w-full h-full object-cover"
-                          />
-                          {/* Play Button Overlay */}
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-16 h-16 bg-black/70 rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110">
-                              <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[24px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
-                            </div>
-                          </div>
-                        </div>
-                        {/* Button */}
-                        <div className="flex items-center justify-center bg-white text-black w-full px-4 py-2">
-                          {/* YouTube Play Icon */}
-                          <FaYoutube size={22} color="#FF0000" />
-
-                          <span className="mx-2 font-semibold text-xl">
-                            Watch {post.acf.website_name} Review
-                          </span>
-                          <ExternalLink size={24} className="text-black" />
-                        </div>
-                      </Link>
-                    </GradientButton>
-                  )}
-
-                  {/* Positives and Negatives */}
-                  <div className="mt-6">
-                    <h2 className="text-xl not-prose font-bold text-white mb-4 text-center">Pros & Cons</h2>
-                    {/* Combined Pros and Cons Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {/* Pros */}
-                      {post.acf.pros && post.acf.pros.length > 0 && 
-                        post.acf.pros.map((proItem, index) => (
-                          <div
-                            key={`pro-${index}`}
-                            className="border border-green-500 bg-green-500/20 rounded-2xl p-2 flex items-center"
-                          >
-                            <Plus className="text-green-500 mr-2 flex-shrink-0" />
-                            <span className="text-gray-300 font-semibold text-sm">
-                              {proItem.pros}
-                            </span>
-                          </div>
-                        ))
-                      }
-
-                      {/* Cons */}
-                      {post.acf.cons && post.acf.cons.length > 0 && 
-                        post.acf.cons.map((conItem, index) => (
-                          <div
-                            key={`con-${index}`}
-                            className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-center"
-                          >
-                            <Minus className="text-red-500 mr-2 flex-shrink-0" />
-                            <span className="text-gray-300 font-semibold text-sm">
-                              {conItem.cons}
-                            </span>
-                          </div>
-                        ))
-                      }
-
-                      {/* Fallback if no pros or cons */}
-                      {(!post.acf.pros || post.acf.pros.length === 0) && (!post.acf.cons || post.acf.cons.length === 0) && (
-                        <>
-                          <div className="border border-green-500 bg-green-500/20 rounded-2xl p-2 flex items-center">
-                            <Plus className="text-green-500 mr-2 flex-shrink-0" />
-                            <span className="text-gray-300 font-semibold text-sm">
-                              No pros available.
-                            </span>
-                          </div>
-                          <div className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-center">
-                            <Minus className="text-red-500 mr-2 flex-shrink-0" />
-                            <span className="text-gray-300 font-semibold text-sm">
-                              No cons available.
-                            </span>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {/* Use the ReviewTopSection here */}
+              <ReviewTopSection review={post} slug={params.slug} />
 
               {/* Main Content Section */}
               <div className="mt-8">
