@@ -152,6 +152,9 @@ const Nav = ({ className, children, id }: NavProps) => {
                 width={400}
                 height={40}
                 className="h-auto"
+                priority
+                loading="eager"
+                sizes="(max-width: 640px) 250px, 400px"
               />
             </Link>
             {/* Search bar with modern styling */}

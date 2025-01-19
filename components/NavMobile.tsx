@@ -46,6 +46,9 @@ const Nav = ({ className, children, id }: NavProps) => {
                 width={400}
                 height={40}
                 className="h-auto w-[250px] sm:w-[400px]"
+                priority
+                loading="eager"
+                sizes="(max-width: 640px) 250px, 400px"
               />
             </Link>
           </div>
