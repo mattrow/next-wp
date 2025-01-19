@@ -72,7 +72,9 @@ export default function FeaturedGirlfriends({ reviews }: FeaturedGirlfriendsProp
                     alt={`${review.acf.website_name} screenshot`}
                     fill
                     className="object-cover rounded-t-xl md:rounded-l-xl md:rounded-tr-none"
-                    priority
+                    priority={index === 0}
+                    quality={90}
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
                   {/* Hover overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-300" />
@@ -89,8 +91,11 @@ export default function FeaturedGirlfriends({ reviews }: FeaturedGirlfriendsProp
                         <Image
                           src={review.acf.website_favicon.url}
                           alt={`${review.acf.website_name} icon`}
-                          fill
+                          width={32}
+                          height={32}
                           className="rounded-lg object-cover"
+                          priority={index === 0}
+                          quality={90}
                         />
                       </div>
                       <div className="min-w-0">
