@@ -7,6 +7,12 @@ export function useScrollAnimation() {
   const elementRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    // Immediately show content on mobile devices
+    if (typeof window !== 'undefined' && window.innerWidth < 640) {
+      setIsVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
