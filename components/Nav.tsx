@@ -17,29 +17,35 @@ type NavProps = {
   id?: string;
 };
 
-export const SocialIcon = ({
-  icon: Icon,
-  href,
-  label,
-  isEmail = false,
-}: {
+// Update the SocialIcon interface to include className
+export interface SocialIconProps {
   icon: React.ElementType;
   href: string;
   label: string;
   isEmail?: boolean;
-}) => (
-  <Link
-    href={isEmail ? `mailto:${href}` : href}
-    className="w-9 h-9 flex items-center justify-center rounded-xl bg-gray-800/30 backdrop-blur-sm border border-white/10 hover:bg-purple-500/20 hover:border-purple-500/50 transition-all duration-300"
-    aria-label={label}
-  >
-    <Icon
-      className="w-5 h-5 text-white/70 hover:text-white transition-colors"
-      strokeWidth={0}
-      fill="currentColor"
-    />
-  </Link>
-);
+  className?: string;
+}
+
+export const SocialIcon: React.FC<SocialIconProps> = ({ icon: Icon, href, label, isEmail, className }) => {
+  return (
+    <Link
+      href={isEmail ? `mailto:${href}` : href}
+      target={isEmail ? undefined : "_blank"}
+      rel="noopener noreferrer"
+      className={cn(
+        "w-9 h-9 flex items-center justify-center rounded-xl bg-gray-800/30 backdrop-blur-sm border border-white/10 hover:bg-purple-500/20 hover:border-purple-500/50 transition-all duration-300",
+        className
+      )}
+      aria-label={label}
+    >
+      <Icon
+        className="w-5 h-5 text-white/70 hover:text-white transition-colors"
+        strokeWidth={0}
+        fill="currentColor"
+      />
+    </Link>
+  );
+};
 
 export const DiscordIcon = () => (
   <svg 

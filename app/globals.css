@@ -226,29 +226,56 @@
 }
 
 .review-content h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
+  position: relative;
+  font-size: 1.75rem;
+  font-weight: 800;
   color: white;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid rgba(168, 85, 247, 0.2);
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(to right, white, rgb(216, 180, 254));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.review-content h2::after {
+  content: '';
+  position: absolute;
+  bottom: -0.75rem;
+  left: 0;
+  width: 3rem;
+  height: 2px;
+  background: linear-gradient(to right, rgb(168, 85, 247), transparent);
 }
 
 .review-content h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: white;
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
+  position: relative;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1.25rem;
+  background: linear-gradient(to right, rgb(216, 180, 254), rgb(192, 132, 252));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.review-content h3::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 2rem;
+  height: 2px;
+  background: linear-gradient(to right, rgb(168, 85, 247, 0.5), transparent);
 }
 
 .review-content h4 {
-  font-size: 1.125rem;
-  font-weight: 500;
-  color: white;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgb(216, 180, 254);
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .review-content p {
@@ -388,4 +415,27 @@
   border: 0;
   height: 1px;
   background: linear-gradient(to right, rgba(168, 85, 247, 0), rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0));
+}
+
+/* Add new styles for header badges */
+.review-content h2 .header-badge,
+.review-content h3 .header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  color: rgb(216, 180, 254);
+  margin-left: 1rem;
+  vertical-align: middle;
+  -webkit-text-fill-color: rgb(216, 180, 254);
+}
+
+/* Add subtle glow effect to headers on hover */
+.review-content h2:hover,
+.review-content h3:hover {
+  text-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/24/solid';
 import { ExternalLink, ArrowRight } from 'lucide-react';
@@ -24,28 +24,30 @@ const ActionButtons = ({ slug }: { slug: string }) => {
   };
 
   return (
-    <div className="flex flex-wrap gap-3">
-      <Link
+    <div className="flex flex-col sm:flex-row w-full gap-3">
+      <a
         href={`/link/${slug}`}
-        className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 border border-purple-400/30"
+        className="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 border border-purple-400/30 w-full sm:w-auto"
         onClick={handleClick}
       >
-        Try For Free
+        <span>Try For Free</span>
         <ExternalLink className="w-4 h-4" />
-      </Link>
-      <Link
+      </a>
+      <a
         href={`/${slug}`}
-        className="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 hover:scale-105 group border border-white/10 hover:border-purple-500/30"
+        className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 hover:scale-105 group border border-white/10 hover:border-purple-500/30 w-full sm:w-auto"
         onClick={handleClick}
       >
-        Read Review
+        <span>Read Review</span>
         <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-      </Link>
+      </a>
     </div>
   );
 };
 
 export default function FeaturedGirlfriends({ reviews }: FeaturedGirlfriendsProps) {
+  const router = useRouter();
+
   return (
     <div className="grid grid-cols-1 gap-6">
       {reviews.map((review, index) => {
@@ -56,10 +58,10 @@ export default function FeaturedGirlfriends({ reviews }: FeaturedGirlfriendsProp
         const overallScore = ((scoreGirls + scoreChat + scoreFeatures) / 3).toFixed(1);
 
         return (
-          <Link
+          <div
             key={review.id}
-            href={`/${review.slug}`}
-            className={`group relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-purple-500/10 to-purple-700/10 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/20 ${rankingIcons[index].color} border-l-4`}
+            onClick={() => router.push(`/${review.slug}`)}
+            className={`group relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-purple-500/10 to-purple-700/10 backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/20 ${rankingIcons[index].color} border-l-4 cursor-pointer`}
           >
             <div className="relative flex flex-col md:flex-row items-stretch">
               {/* Screenshot Section */}
@@ -113,7 +115,7 @@ export default function FeaturedGirlfriends({ reviews }: FeaturedGirlfriendsProp
                 <ActionButtons slug={review.slug} />
               </div>
             </div>
-          </Link>
+          </div>
         );
       })}
     </div>
