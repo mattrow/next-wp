@@ -57,49 +57,47 @@
        <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-8">
          {/* Left Column */}
          <div className="sm:col-span-1 not-prose">
-           {/* Clickable wrapper for website image and button */}
-           <GradientButton type="purple">
-             <Link
-               href={`/link/${slug}`}
-               target="_blank"
-               rel="noopener noreferrer"
-               className="relative rounded-xl block overflow-hidden border-4 border-purple-500 hover:scale-105 transition-all duration-300 pulse-border"
-             >
-               {/* Image */}
+           {/* Website Button */}
+           <Link
+             href={`/link/${slug}`}
+             target="_blank"
+             rel="noopener noreferrer"
+             className="relative rounded-xl block overflow-hidden border border-white/10 hover:scale-105 transition-all duration-300 group shadow-[0_0_30px_-5px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_-2px_rgba(168,85,247,0.5)]"
+           >
+             {/* Image */}
+             <Image
+               src={review.acf.website_screenshot.url}
+               alt={`${review.acf.website_name} website screenshot`}
+               width={800}
+               height={600}
+               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px"
+               priority
+               className="w-full sm:h-64 h-48 object-cover my-0"
+               style={{
+                 aspectRatio: '4/3',
+                 objectFit: 'cover'
+               }}
+               loading="eager"
+             />
+             {/* Button */}
+             <div className="flex items-center justify-center bg-gray-900/40 backdrop-blur-2xl border-t border-white/10 text-white w-full px-4 py-3 group-hover:bg-purple-500/80 transition-all duration-300">
                <Image
-                 src={review.acf.website_screenshot.url}
-                 alt={`${review.acf.website_name} website screenshot`}
-                 width={800}
-                 height={600}
-                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 800px"
-                 priority
-                 className="w-full sm:h-64 h-48 object-cover my-0"
+                 alt="Site Favicon"
+                 src={review.acf.website_favicon.url}
+                 width={32}
+                 height={32}
+                 className="inline-block m-0 p-0"
                  style={{
-                   aspectRatio: '4/3',
-                   objectFit: 'cover'
+                   aspectRatio: '1',
+                   objectFit: 'contain'
                  }}
-                 loading="eager"
                />
-               {/* Button */}
-               <div className="flex items-center justify-center bg-purple-500 text-white w-full px-4 py-2 shimmer">
-                 <Image
-                   alt="Site Favicon"
-                   src={review.acf.website_favicon.url}
-                   width={32}
-                   height={32}
-                   className="inline-block m-0 p-0"
-                   style={{
-                     aspectRatio: '1',
-                     objectFit: 'contain'
-                   }}
-                 />
-                 <span className="mx-2 font-semibold text-xl text-white">
-                   Open Website
-                 </span>
-                 <ExternalLink size={24} className="text-white" />
-               </div>
-             </Link>
-           </GradientButton>
+               <span className="mx-2 font-bold text-xl text-white underline decoration-2 underline-offset-4 decoration-white/30 group-hover:decoration-white/80">
+                 Open Website
+               </span>
+               <ExternalLink size={24} className="text-white/90 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+             </div>
+           </Link>
 
            {/* Feature Rectangles */}
            <div className="mt-6">
@@ -142,42 +140,38 @@
 
          {/* Right Column */}
          <div className="sm:col-span-1 mt-6 sm:mt-0">
-           {/* Conditional Rendering of Video Section */}
+           {/* Video Button */}
            {videoId && (
-             <GradientButton type="white">
-               <Link
-                 href={videoUrl}
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 className="relative rounded-xl block overflow-hidden mb-6 border-4 border-white hover:scale-105 transition-all duration-300"
-               >
-                 {/* Video Thumbnail */}
-                 <div className="relative w-full sm:h-64 h-48 not-prose">
-                   <Image
-                     src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-                     alt="YouTube Video Thumbnail"
-                     fill
-                     className="absolute top-0 left-0 w-full h-full object-cover"
-                   />
-                   {/* Play Button Overlay */}
-                   <div className="absolute inset-0 flex items-center justify-center">
-                     <div className="w-16 h-16 bg-black/70 rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110">
-                       <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[24px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
-                     </div>
+             <Link
+               href={videoUrl}
+               target="_blank"
+               rel="noopener noreferrer"
+               className="relative rounded-xl block overflow-hidden mb-6 border border-white/10 hover:scale-105 transition-all duration-300 group"
+             >
+               {/* Video Thumbnail */}
+               <div className="relative w-full sm:h-64 h-48 not-prose">
+                 <Image
+                   src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                   alt="YouTube Video Thumbnail"
+                   fill
+                   className="absolute top-0 left-0 w-full h-full object-cover"
+                 />
+                 {/* Play Button Overlay */}
+                 <div className="absolute inset-0 flex items-center justify-center">
+                   <div className="w-16 h-16 bg-gray-900/40 backdrop-blur-2xl border border-white/10 rounded-full flex items-center justify-center transition-transform duration-300 hover:scale-110">
+                     <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[24px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
                    </div>
                  </div>
-                 {/* Button */}
-                 <div className="flex items-center justify-center bg-white text-black w-full px-4 py-2">
-                   {/* YouTube Play Icon */}
-                   <FaYoutube size={22} color="#FF0000" />
-
-                   <span className="mx-2 font-semibold text-xl">
-                     Watch {review.acf.website_name} Review
-                   </span>
-                   <ExternalLink size={24} className="text-black" />
-                 </div>
-               </Link>
-             </GradientButton>
+               </div>
+               {/* Button */}
+               <div className="flex items-center justify-center bg-gray-900/40 backdrop-blur-2xl border-t border-white/10 text-white w-full px-4 py-3 group-hover:bg-red-500/80 transition-all duration-300">
+                 <FaYoutube size={22} className="text-red-500 group-hover:text-white transition-colors" />
+                 <span className="mx-2 font-bold text-xl text-white">
+                   Watch {review.acf.website_name} Review
+                 </span>
+                 <ExternalLink size={24} className="text-white/90 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+               </div>
+             </Link>
            )}
 
            {/* Positives and Negatives */}
@@ -190,7 +184,7 @@
                  review.acf.pros.map((proItem, index) => (
                    <div
                      key={`pro-${index}`}
-                     className="border border-green-500 bg-green-500/20 rounded-2xl p-2 flex items-center"
+                     className="border border-green-500 bg-green-500/20 rounded-lg p-2 flex items-center"
                    >
                      <Plus className="text-green-500 mr-2 flex-shrink-0" />
                      <span className="text-gray-300 font-semibold text-sm">
@@ -205,7 +199,7 @@
                  review.acf.cons.map((conItem, index) => (
                    <div
                      key={`con-${index}`}
-                     className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-center"
+                     className="border border-red-500 bg-red-500/20 rounded-lg p-2 flex items-center"
                    >
                      <Minus className="text-red-500 mr-2 flex-shrink-0" />
                      <span className="text-gray-300 font-semibold text-sm">
@@ -218,13 +212,13 @@
                {/* Fallback if no pros or cons */}
                {(!review.acf.pros || review.acf.pros.length === 0) && (!review.acf.cons || review.acf.cons.length === 0) && (
                  <>
-                   <div className="border border-green-500 bg-green-500/20 rounded-2xl p-2 flex items-center">
+                   <div className="border border-green-500 bg-green-500/20 rounded-lg p-2 flex items-center">
                      <Plus className="text-green-500 mr-2 flex-shrink-0" />
                      <span className="text-gray-300 font-semibold text-sm">
                        No pros available.
                      </span>
                    </div>
-                   <div className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-center">
+                   <div className="border border-red-500 bg-red-500/20 rounded-lg p-2 flex items-center">
                      <Minus className="text-red-500 mr-2 flex-shrink-0" />
                      <span className="text-gray-300 font-semibold text-sm">
                        No cons available.

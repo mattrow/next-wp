@@ -104,7 +104,12 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
-      <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
+      <body className={cn("min-h-screen bg-background font-sans antialiased relative", inter.variable)}>
+        {/* Modern gradient mesh background */}
+        <div className="fixed inset-0 -z-10 h-full w-full bg-gray-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]" />
+        <div className="fixed inset-0 -z-10 h-full w-full bg-[radial-gradient(circle_at_0%_0%,rgba(147,51,234,0.1),transparent_40%)]" />
+        <div className="fixed inset-0 -z-10 h-full w-full bg-[radial-gradient(circle_at_100%_100%,rgba(79,70,229,0.1),transparent_40%)]" />
+        
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

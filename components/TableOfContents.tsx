@@ -71,10 +71,10 @@ export default function TableOfContents() {
   if (headings.length === 0) return null;
 
   return (
-    <div className="bg-gray-800/50 border border-gray-700 rounded-lg p-4 mb-6 transform hover:scale-[1.02] transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10">
-      <div className="flex items-center gap-1.5 mb-4">
-        <Link className="w-3.5 h-3.5 text-purple-400" />
-        <h2 className="text-base font-semibold text-white m-0 not-prose">Contents</h2>
+    <div className="bg-gray-900/40 backdrop-blur-2xl border border-white/10 rounded-xl p-6 mb-6 transition-all duration-300 hover:bg-gray-900/50">
+      <div className="flex items-center gap-2 mb-6">
+        <Link className="w-4 h-4 text-purple-500" />
+        <h2 className="text-lg font-bold text-white m-0 not-prose">Quick Navigation</h2>
       </div>
       <nav className="overflow-x-auto">
         <div className="flex flex-wrap gap-2">
@@ -83,16 +83,32 @@ export default function TableOfContents() {
               key={heading.id}
               onClick={() => scrollToHeading(heading.id)}
               className={`
-                relative px-4 py-2 rounded-lg text-sm font-medium
+                relative px-4 py-2 rounded-xl text-sm font-medium
                 transition-all duration-300 group
                 ${heading.id === activeId 
-                  ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/20' 
-                  : 'bg-gray-700/20 border border-gray-600 text-gray-300 hover:bg-gray-700/30'}
+                  ? 'bg-purple-500/80 backdrop-blur-xl text-white border border-purple-500/50' 
+                  : 'bg-gray-900/40 backdrop-blur-xl border border-white/10 text-white/70 hover:text-white hover:bg-gray-900/60'}
               `}
             >
-              {heading.text}
+              {/* Button content */}
+              <div className="relative flex items-center gap-2">
+                <span className="relative z-10">{heading.text}</span>
+                {/* Level indicator - more indentation for deeper levels */}
+                <div 
+                  className={`absolute left-0 w-[2px] h-full bg-purple-500/30
+                    ${heading.level === 2 ? 'opacity-0' : 
+                      heading.level === 3 ? 'opacity-30' : 'opacity-60'}`
+                  }
+                />
+              </div>
+              
               {/* Hover effect */}
-              <span className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/0 via-purple-500/10 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className={`
+                absolute inset-0 rounded-xl transition-opacity duration-300
+                ${heading.id === activeId
+                  ? 'bg-gradient-to-r from-purple-500/20 via-purple-500/10 to-transparent'
+                  : 'bg-gradient-to-r from-white/5 via-white/2 to-transparent opacity-0 group-hover:opacity-100'}
+              `} />
             </button>
           ))}
         </div>

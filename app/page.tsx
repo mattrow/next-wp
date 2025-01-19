@@ -85,7 +85,7 @@ const Home = async () => {
       <Section>
         <Container>
           {/* Featured AI Girlfriends Section */}
-          <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 not-prose">
+          <div className="bg-gray-900/40 backdrop-blur-2xl border border-white/10 rounded-xl p-6 sm:p-8 not-prose">
             <div className="text-center mb-8">
               <h1 className="sm:text-5xl text-2xl font-black text-white">
                 Best AI Girlfriends - We review them all!
@@ -105,31 +105,8 @@ const Home = async () => {
             <FeaturedGirlfriends reviews={featuredReviews} />
           </div>
 
-          {/* Latest Blog Posts Section */}
-          <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16">
-            <div className="relative flex items-center justify-center mb-8">
-              <h2 className="sm:text-5xl text-2xl font-black not-prose text-center text-white bg-clip-text px-2">
-                Latest Blog Posts
-              </h2>
-            </div>
-
-            <div className="not-prose">
-              {recentPosts && recentPosts.length > 0 ? (
-                <Slider>
-                  {recentPosts.map((post) => (
-                    <PostCard key={post.id} post={post} variant="home" />
-                  ))}
-                </Slider>
-              ) : (
-                <div className="text-center text-gray-400 py-8">
-                  Blog posts coming soon.
-                </div>
-              )}
-            </div>
-          </div>
-
           {/* Latest Videos Section */}
-          <div className="bg-gray-800/50 border-2 border-gray-700 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16 overflow-visible">
+          <div className="bg-gray-900/40 backdrop-blur-2xl border border-white/10 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16 overflow-visible">
             <div className="relative flex items-center justify-center mb-8">
               <h2 className="sm:text-5xl text-2xl font-black not-prose text-center text-white bg-clip-text px-2">
                 Latest Videos
@@ -146,6 +123,29 @@ const Home = async () => {
               ) : (
                 <div className="text-center text-gray-400 py-8">
                   Videos coming soon.
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Latest Blog Posts Section */}
+          <div className="bg-gray-900/40 backdrop-blur-2xl border border-white/10 rounded-xl p-6 sm:p-8 mt-8 sm:mt-16">
+            <div className="relative flex items-center justify-center mb-8">
+              <h2 className="sm:text-5xl text-2xl font-black not-prose text-center text-white bg-clip-text px-2">
+                Latest Blog Posts
+              </h2>
+            </div>
+
+            <div className="not-prose">
+              {recentPosts && recentPosts.length > 0 ? (
+                <Slider>
+                  {recentPosts.map((post) => (
+                    <PostCard key={post.id} post={post} variant="home" />
+                  ))}
+                </Slider>
+              ) : (
+                <div className="text-center text-gray-400 py-8">
+                  Blog posts coming soon.
                 </div>
               )}
             </div>

@@ -30,11 +30,11 @@ export const SocialIcon = ({
 }) => (
   <Link
     href={isEmail ? `mailto:${href}` : href}
-    className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-800 hover:bg-purple-500 transition-colors duration-200"
+    className="w-9 h-9 flex items-center justify-center rounded-xl bg-gray-800/30 backdrop-blur-sm border border-white/10 hover:bg-purple-500/20 hover:border-purple-500/50 transition-all duration-300"
     aria-label={label}
   >
     <Icon
-      className="w-5 h-5 text-white"
+      className="w-5 h-5 text-white/70 hover:text-white transition-colors"
       strokeWidth={0}
       fill="currentColor"
     />
@@ -118,7 +118,6 @@ const Nav = ({ className, children, id }: NavProps) => {
   return (
     <nav
       className={cn(
-        "bg-background",
         "fade-in",
         className
       )}
@@ -131,7 +130,7 @@ const Nav = ({ className, children, id }: NavProps) => {
         {/* Main container with 3 columns */}
         <div className="flex flex-row justify-between items-stretch">
           {/* Left Column - Left aligned content */}
-          <div className="flex flex-col justify-center items-start flex-[2]">
+          <div className="flex flex-col justify-center items-start flex-[2] py-4">
             <Link
               className="hover:opacity-75 transition-all flex gap-2 items-center"
               href="/"
@@ -149,15 +148,15 @@ const Nav = ({ className, children, id }: NavProps) => {
                 className="h-auto"
               />
             </Link>
-            {/* Search bar */}
+            {/* Search bar with modern styling */}
             <div className="relative mt-2 w-full max-w-md">
               <input
                 type="text"
                 placeholder="Search AI Girlfriends..."
-                className="p-2 pl-3 pr-10 w-full rounded-xl bg-gray-800/50 border-2 border-gray-700 text-white placeholder:text-gray-400 focus:outline-none focus:border-purple-500 transition-colors"
+                className="p-2 pl-3 pr-10 w-full rounded-xl bg-gray-900/40 backdrop-blur-2xl border border-white/10 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500/50 transition-all duration-300"
               />
               <Search 
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-purple-500" 
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-purple-500/70 hover:text-purple-500 transition-colors" 
                 strokeWidth={2}
               />
             </div>
@@ -169,7 +168,7 @@ const Nav = ({ className, children, id }: NavProps) => {
             <div className="speech-bubble font-semibold mb-2">
               <p>I&apos;m Jess! My mission is to find the best AI Girlfriends of 2025.</p>
             </div>
-            {/* Social Icons */}
+            {/* Social Icons with updated styling */}
             <div className="flex space-x-3">
               <SocialIcon
                 icon={TwitterIcon}

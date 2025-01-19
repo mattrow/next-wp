@@ -1,13 +1,46 @@
 .mainWrapper {
-  @apply bg-gray-800/50 backdrop-blur-xl border-2 border-gray-700 rounded-xl p-4 sm:p-8 shadow-2xl relative overflow-hidden;
+  @apply bg-gray-900/40 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.mainWrapper::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 opacity-50;
+  filter: blur(100px);
+  z-index: -1;
 }
 
 .gradientOverlayPurple {
-  @apply fixed top-0 left-0 w-screen h-screen bg-gradient-to-br from-purple-500/20 via-purple-400/5 to-transparent opacity-0 pointer-events-none transition-opacity duration-700;
+  @apply fixed top-0 left-0 w-screen h-screen opacity-30 pointer-events-none transition-all duration-1000;
+  background: radial-gradient(circle at 0% 0%, rgba(147, 51, 234, 0.15), transparent 60%);
   z-index: -1;
+  animation: pulse 8s ease-in-out infinite alternate;
 }
 
 .gradientOverlayWhite {
-  @apply fixed top-0 right-0 w-screen h-screen bg-gradient-to-bl from-white/10 via-white/5 to-transparent opacity-0 pointer-events-none transition-opacity duration-700;
+  @apply fixed top-0 right-0 w-screen h-screen opacity-30 pointer-events-none transition-all duration-1000;
+  background: radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.1), transparent 60%);
   z-index: -1;
+  animation: pulse 8s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(1.1);
+  }
+}
+
+/* Add hover effect to cards if they exist in the layout */
+.mainWrapper :global(.card) {
+  @apply transition-all duration-300;
+}
+
+.mainWrapper :global(.card:hover) {
+  @apply transform -translate-y-1 shadow-lg;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 } 

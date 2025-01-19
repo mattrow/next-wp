@@ -32,7 +32,7 @@ const Slider = ({ children }: SliderProps) => {
     <div className="relative">
       <button
         onClick={scrollLeft}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-700/50 p-2 rounded-full z-10"
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-900/40 backdrop-blur-2xl border border-white/10 p-2 rounded-full z-10 hover:bg-gray-900/60 transition-all duration-300"
       >
         <ChevronLeft className="w-6 h-6 text-white" />
       </button>
@@ -44,7 +44,7 @@ const Slider = ({ children }: SliderProps) => {
       </div>
       <button
         onClick={scrollRight}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-700/50 p-2 rounded-full z-10"
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-900/40 backdrop-blur-2xl border border-white/10 p-2 rounded-full z-10 hover:bg-gray-900/60 transition-all duration-300"
       >
         <ChevronRight className="w-6 h-6 text-white" />
       </button>
