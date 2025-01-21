@@ -3,18 +3,17 @@
 import { useEffect, useRef, useState } from 'react';
 
 export function useScrollAnimation() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const elementRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    // Immediately show content on mobile devices
-    if (typeof window !== 'undefined' && window.innerWidth < 640) {
-      setIsVisible(true);
-      return;
-    }
+    console.log('ScrollAnimation initialized, isVisible:', isVisible);
+
+    setIsVisible(true);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        console.log('Intersection observed:', entry.isIntersecting);
         if (entry.isIntersecting) {
           setIsVisible(true);
           observer.unobserve(entry.target);

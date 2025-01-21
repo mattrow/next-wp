@@ -34,6 +34,10 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import FAQ from '@/components/FAQ';
 import ReviewTopSection from '@/components/ReviewTopSection';
 
+// Add debugging logs
+const debug = (msg: string, data: any) => {
+  console.log('DEBUG:', msg, JSON.stringify(data, null, 2));
+};
 
 async function getPost(slug: string): Promise<Post> {
   const res = await fetch(
@@ -58,6 +62,15 @@ async function getPost(slug: string): Promise<Post> {
 export default async function Page({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
   
+  // Add debug logs
+  debug('Post Content Length', post.content.rendered.length);
+  debug('Post Title', post.title.rendered);
+  debug('Post Scores', {
+    girls: post.acf.score_girls,
+    chat: post.acf.score_chat,
+    features: post.acf.score_features
+  });
+
   // Fetch all reviews
   const allReviews: Review[] = await getAllReviews();
 
