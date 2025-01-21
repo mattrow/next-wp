@@ -75,7 +75,7 @@ export default async function AlternativePage({ params }: { params: { slug: stri
             <ReviewTopSection review={review} slug={params.slug} />
 
             {/* Alternatives Section */}
-            <div className="mt-12">
+            <div className="mt-12 not-prose">
               <h2 className="text-3xl font-bold text-white text-cente not-prose mb-6">
                 Top Alternatives to {review.acf.website_name}
               </h2>
