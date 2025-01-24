@@ -1,21 +1,18 @@
 import { Metadata } from "next";
-import { AnimatedSection } from '@/components/AnimatedSection';
-import { GradientButton } from '@/components/GradientButton';
-import styles from './styles.module.css';
-import { TableOfContents } from '@/components/TableOfContents';
-
-export const dynamic = 'force-dynamic';
-export const revalidate = 3600;
-export const runtime = 'edge';
-
+import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Section, Container } from "@/components/craft";
 import { notFound } from 'next/navigation';
+
+import { AnimatedSection } from '@/components/AnimatedSection';
+import { GradientButton } from '@/components/GradientButton';
+import { TableOfContents } from '@/components/TableOfContents';
+import { Section, Container } from "@/components/craft";
+import styles from './styles.module.css';
+
 import { ArrowRight, Plus, Minus, ExternalLink } from 'lucide-react';
 import { FaYoutube } from 'react-icons/fa';
-
-// Import solid icons from Heroicons
 import {
   HeartIcon,
   ChatBubbleLeftRightIcon,
@@ -41,11 +38,30 @@ import {
   ReviewPricing,
   ReviewSecurity,
   ReviewUserFeedback,
-  ReviewYouTube,
   ReviewConclusion,
   ReviewCTA
 } from '@/components/review';
 import { mapReviewFields } from '@/lib/mapReviewFields';
+
+export const dynamicConfig = 'force-dynamic' as const;
+export const revalidate = 3600;
+export const runtime = 'edge';
+
+// Dynamically import ReviewYouTube
+const ReviewYouTube = dynamic(() => import('@/components/review/ReviewYouTube'), {
+  ssr: false,
+  loading: () => (
+    <div className="review-youtube py-12">
+      <div className="flex items-center gap-3 mb-8">
+        <FaYoutube className="w-8 h-8 text-purple-500" />
+        <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+          Video Review
+        </h2>
+      </div>
+      <div className="aspect-video w-full bg-gray-900 rounded-2xl animate-pulse" />
+    </div>
+  )
+});
 
 // Add debugging logs
 const debug = (msg: string, data: any) => {
@@ -382,10 +398,22 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     />
 
                     {videoId && (
-                      <ReviewYouTube
-                        websiteName={post.acf.website_name}
-                        videoId={videoId}
-                      />
+                      <Suspense fallback={
+                        <div className="review-youtube py-12">
+                          <div className="flex items-center gap-3 mb-8">
+                            <FaYoutube className="w-8 h-8 text-purple-500" />
+                            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+                              Video Review
+                            </h2>
+                          </div>
+                          <div className="aspect-video w-full bg-gray-900 rounded-2xl animate-pulse" />
+                        </div>
+                      }>
+                        <ReviewYouTube
+                          websiteName={post.acf.website_name}
+                          videoId={videoId}
+                        />
+                      </Suspense>
                     )}
 
                     <ReviewConclusion
