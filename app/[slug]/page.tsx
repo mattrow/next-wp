@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Suspense } from 'react';
-import dynamic from 'next/dynamic';
+import { default as NextDynamic } from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -43,12 +43,13 @@ import {
 } from '@/components/review';
 import { mapReviewFields } from '@/lib/mapReviewFields';
 
-export const dynamicConfig = 'force-dynamic' as const;
+// Page configuration
+export const dynamic = 'force-dynamic';
 export const revalidate = 3600;
 export const runtime = 'edge';
 
-// Dynamically import ReviewYouTube
-const ReviewYouTube = dynamic(() => import('@/components/review/ReviewYouTube'), {
+// Dynamically import ReviewYouTube with a different name to avoid conflict
+const DynamicReviewYouTube = NextDynamic(() => import('@/components/review/ReviewYouTube'), {
   ssr: false,
   loading: () => (
     <div className="review-youtube py-12">
@@ -409,7 +410,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                           <div className="aspect-video w-full bg-gray-900 rounded-2xl animate-pulse" />
                         </div>
                       }>
-                        <ReviewYouTube
+                        <DynamicReviewYouTube
                           websiteName={post.acf.website_name}
                           videoId={videoId}
                         />
