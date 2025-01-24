@@ -181,14 +181,14 @@
              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                {/* Pros */}
                {review.acf.pros && review.acf.pros.length > 0 && 
-                 review.acf.pros.map((proItem, index) => (
+                 review.acf.pros.map((proItem: { title: string }, index: number) => (
                    <div
                      key={`pro-${index}`}
                      className="border border-green-500 bg-green-500/20 rounded-lg p-2 flex items-center"
                    >
                      <Plus className="text-green-500 mr-2 flex-shrink-0" />
                      <span className="text-gray-300 font-semibold text-sm">
-                       {proItem.pros}
+                       {proItem.title}
                      </span>
                    </div>
                  ))
@@ -196,14 +196,14 @@
 
                {/* Cons */}
                {review.acf.cons && review.acf.cons.length > 0 && 
-                 review.acf.cons.map((conItem, index) => (
+                 review.acf.cons.map((conItem: { title: string }, index: number) => (
                    <div
                      key={`con-${index}`}
                      className="border border-red-500 bg-red-500/20 rounded-lg p-2 flex items-center"
                    >
                      <Minus className="text-red-500 mr-2 flex-shrink-0" />
                      <span className="text-gray-300 font-semibold text-sm">
-                       {conItem.cons}
+                       {conItem.title}
                      </span>
                    </div>
                  ))

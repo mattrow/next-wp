@@ -1,4 +1,4 @@
-export type Post = {
+export interface Post {
   id: number;
   date: string;
   date_gmt: string;
@@ -53,24 +53,94 @@ export type Post = {
     short_description: string;
     website_screenshot: {
       url: string;
+      alt: string;
+      width: number;
+      height: number;
+    };
+    character_library_interface: {
+      url: string;
+      alt: string;
+      width: number;
+      height: number;
     };
     website_favicon: {
       url: string;
+      alt: string;
+      width: number;
+      height: number;
     };
     website_name: string;
-    pros: { pros: string }[]; // Array of objects with 'pros' property
-    cons: { cons: string }[]; // Array of objects with 'cons' property
-    faqs: {
-      question: string;
-      answer: string;
-    }[] | {
-      faqs: {
-        question: string;
-        answer: string;
-      }[];
+    faqs: { question: string; answer: string; }[] | { faqs: { question: string; answer: string; }[] };
+    hero_image: {
+      url: string;
+      alt: string;
+      width: number;
+      height: number;
     };
+    introduction_text: string;
+    what_is_section: string;
+    photo_generation_overview: string;
+    photo_examples: Array<{
+      image: {
+        url: string;
+        alt: string;
+        width: number;
+        height: number;
+      };
+      prompt: string;
+      description: string;
+    }>;
+    character_library_overview: string;
+    character_examples: Array<{
+      name: string;
+      title: string;
+      image: {
+        url: string;
+        alt: string;
+        width: number;
+        height: number;
+      };
+      description: string;
+    }>;
+    pricing_overview: string;
+    free_plan_features: Array<{
+      feature: string;
+    }>;
+    premium_plan_features: Array<{
+      feature: string;
+    }>;
+    premium_price_monthly: number;
+    premium_price_yearly: number;
+    security_overview: string;
+    platform_security: string;
+    privacy_considerations: Array<{
+      title: string;
+      description: string;
+    }>;
+    security_recommendations: Array<{
+      recommendation: string;
+    }>;
+    user_reviews: Array<{
+      name: string;
+      duration: string;
+      rating: number;
+      review_text: string;
+    }>;
+    conclusion_text: string;
+    score_notes: Array<{
+      category: string;
+      note: string;
+    }>;
+    pros: Array<{
+      title: string;
+      description: string;
+    }>;
+    cons: Array<{
+      title: string;
+      description: string;
+    }>;
   };
-};
+}
 
 export type Category = {
   id: number;

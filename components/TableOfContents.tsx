@@ -1,118 +1,134 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from 'react';
-import { Link } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-interface Heading {
-  id: string;
-  text: string;
-  level: number;
-  isActive: boolean;
+interface TableOfContentsProps {
+  reviewSlug: string;
 }
 
-export default function TableOfContents() {
-  const [headings, setHeadings] = useState<Heading[]>([]);
-  const [activeId, setActiveId] = useState<string>('');
+interface Section {
+  id: string;
+  title: string;
+}
 
+export const TableOfContents = ({ reviewSlug }: TableOfContentsProps) => {
+  const [activeSection, setActiveSection] = useState<string>('');
+  const [sections, setSections] = useState<Section[]>([]);
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  // Get only h2 sections on mount and ensure they have IDs
   useEffect(() => {
-    // Get all headings and ensure they have IDs
-    const elements = document.querySelectorAll('h2, h3, h4');
-    const articleHeadings = Array.from(elements).map(heading => {
-      // Generate an ID if one doesn't exist
-      if (!heading.id) {
-        const id = heading.textContent?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || '';
-        heading.id = id;
-      }
-      return {
-        id: heading.id,
-        text: heading.textContent || '',
-        level: parseInt(heading.tagName[1]),
-        isActive: false
-      };
-    });
-
-    setHeadings(articleHeadings);
-
-    // Add scroll event listener for active heading tracking
-    const handleScroll = () => {
-      const headingElements = document.querySelectorAll('h2, h3, h4');
-      const headerHeight = 80;
-      
-      // Find the heading that's currently in view
-      for (const heading of Array.from(headingElements)) {
-        const rect = heading.getBoundingClientRect();
-        if (rect.top >= headerHeight && rect.top <= window.innerHeight / 2) {
-          setActiveId(heading.id);
-          break;
+    const articleSections = Array.from(document.querySelectorAll('article h2'))
+      .map((heading) => {
+        // Create an ID from the heading text if none exists
+        if (!heading.id) {
+          heading.id = heading.textContent?.toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, '') || '';
         }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
-
-    return () => window.removeEventListener('scroll', handleScroll);
+        return {
+          id: heading.id,
+          title: heading.textContent || '',
+        };
+      })
+      .filter(section => section.id); // Only include sections with valid IDs
+    setSections(articleSections);
   }, []);
 
-  const scrollToHeading = (id: string) => {
+  // Track active section based on scroll position
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-20% 0px -80% 0px',
+      }
+    );
+
+    document.querySelectorAll('article h2').forEach((heading) => {
+      observer.observe(heading);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const headerHeight = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+      const yOffset = -100;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
-  if (headings.length === 0) return null;
+  const scroll = (direction: 'left' | 'right') => {
+    const container = document.getElementById('toc-container');
+    if (container) {
+      const scrollAmount = direction === 'left' ? -200 : 200;
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      setScrollPosition(container.scrollLeft + scrollAmount);
+    }
+  };
+
+  if (sections.length === 0) return null;
 
   return (
-    <div className="bg-gray-900/40 backdrop-blur-2xl border border-white/10 rounded-xl p-6 mb-6 transition-all duration-300 hover:bg-gray-900/50">
-      <div className="flex items-center gap-2 mb-6">
-        <Link className="w-4 h-4 text-purple-500" />
-        <h2 className="text-lg font-bold text-white m-0 not-prose">Quick Navigation</h2>
-      </div>
-      <nav className="overflow-x-auto">
-        <div className="flex flex-wrap gap-2">
-          {headings.map((heading) => (
-            <button
-              key={heading.id}
-              onClick={() => scrollToHeading(heading.id)}
-              className={`
-                relative px-4 py-2 rounded-xl text-sm font-medium
-                transition-all duration-300 group
-                ${heading.id === activeId 
-                  ? 'bg-purple-500/80 backdrop-blur-xl text-white border border-purple-500/50' 
-                  : 'bg-gray-900/40 backdrop-blur-xl border border-white/10 text-white/70 hover:text-white hover:bg-gray-900/60'}
-              `}
-            >
-              {/* Button content */}
-              <div className="relative flex items-center gap-2">
-                <span className="relative z-10">{heading.text}</span>
-                {/* Level indicator - more indentation for deeper levels */}
-                <div 
-                  className={`absolute left-0 w-[2px] h-full bg-purple-500/30
-                    ${heading.level === 2 ? 'opacity-0' : 
-                      heading.level === 3 ? 'opacity-30' : 'opacity-60'}`
-                  }
-                />
-              </div>
-              
-              {/* Hover effect */}
-              <div className={`
-                absolute inset-0 rounded-xl transition-opacity duration-300
-                ${heading.id === activeId
-                  ? 'bg-gradient-to-r from-purple-500/20 via-purple-500/10 to-transparent'
-                  : 'bg-gradient-to-r from-white/5 via-white/2 to-transparent opacity-0 group-hover:opacity-100'}
-              `} />
-            </button>
-          ))}
+    <nav 
+      aria-label="Table of contents"
+      className="relative z-20 mb-8 print:hidden"
+    >
+      <div className="relative">
+        {/* Gradient borders */}
+        <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500/20 via-purple-600/20 to-purple-700/20 p-[1px]">
+          <div className="h-full w-full rounded-lg bg-gray-900/90 backdrop-blur-xl" />
         </div>
-      </nav>
-    </div>
+
+        {/* Content */}
+        <div className="relative flex items-center px-4 py-3">
+          <button
+            onClick={() => scroll('left')}
+            className="mr-2 flex-none text-gray-400 hover:text-purple-400 transition-colors"
+            aria-label="Scroll left"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          
+          <div 
+            id="toc-container"
+            className="flex-1 overflow-x-auto scrollbar-hide"
+          >
+            <div className="flex space-x-6 whitespace-nowrap">
+              {sections.map((section) => (
+                <button
+                  key={section.id}
+                  onClick={() => scrollToSection(section.id)}
+                  className={`text-sm font-medium transition-colors ${
+                    activeSection === section.id
+                      ? 'text-purple-400'
+                      : 'text-gray-400 hover:text-purple-400'
+                  }`}
+                >
+                  {section.title}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <button
+            onClick={() => scroll('right')}
+            className="ml-2 flex-none text-gray-400 hover:text-purple-400 transition-colors"
+            aria-label="Scroll right"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
+      </div>
+    </nav>
   );
-} 
+};

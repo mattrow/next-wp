@@ -2,9 +2,10 @@ import { Metadata } from "next";
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { GradientButton } from '@/components/GradientButton';
 import styles from './styles.module.css';
+import { TableOfContents } from '@/components/TableOfContents';
 
 export const dynamic = 'force-dynamic';
-export const revalidate = false;
+export const revalidate = 3600;
 export const runtime = 'edge';
 
 import Image from 'next/image';
@@ -28,11 +29,23 @@ import { Post } from '@/lib/wordpress.d';
 import AiGirlfriendGrid from '@/components/AiGirlfriendGrid';
 import { getAllReviews } from '@/lib/wordpress';
 import { Review } from '@/lib/wordpress.d';
-import TableOfContents from '@/components/TableOfContents';
 import { JsonLd } from '@/components/JsonLd';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import FAQ from '@/components/FAQ';
 import ReviewTopSection from '@/components/ReviewTopSection';
+import { 
+  ReviewHeader,
+  ReviewProsAndCons,
+  ReviewPhotoGeneration,
+  ReviewCharacterLibrary,
+  ReviewPricing,
+  ReviewSecurity,
+  ReviewUserFeedback,
+  ReviewYouTube,
+  ReviewConclusion,
+  ReviewCTA
+} from '@/components/review';
+import { mapReviewFields } from '@/lib/mapReviewFields';
 
 // Add debugging logs
 const debug = (msg: string, data: any) => {
@@ -41,7 +54,10 @@ const debug = (msg: string, data: any) => {
 
 async function getPost(slug: string): Promise<Post> {
   const res = await fetch(
-    `${process.env.WORDPRESS_API_URL}/wp/v2/review?slug=${slug}&_embed`
+    `${process.env.WORDPRESS_API_URL}/wp/v2/review?slug=${slug}&_embed&cache_bust=${Date.now()}`,
+    {
+      next: { revalidate: 0 }
+    }
   );
 
   if (!res.ok) {
@@ -62,6 +78,9 @@ async function getPost(slug: string): Promise<Post> {
 export default async function Page({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
   
+  // Map the ACF fields to our component props
+  const reviewContent = mapReviewFields(post);
+
   // Add debug logs
   debug('Post Content Length', post.content.rendered.length);
   debug('Post Title', post.title.rendered);
@@ -237,14 +256,15 @@ export default async function Page({ params }: { params: { slug: string } }) {
               {/* Main Content Section */}
               <div className="mt-8">
                 {/* Table of Contents */}
-                <TableOfContents />
+                <TableOfContents reviewSlug={params.slug} />
 
                 {/* Review Article */}
                 <article 
                   itemScope 
                   itemType="http://schema.org/Review"
-                  className="review-content"
+                  className="review-content prose dark:prose-invert max-w-none"
                 >
+                  {/* Schema.org metadata */}
                   <div itemProp="itemReviewed" itemScope itemType="http://schema.org/SoftwareApplication">
                     <meta itemProp="name" content={post.acf.website_name} />
                     <meta itemProp="applicationCategory" content="ChatApplication" />
@@ -276,11 +296,119 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   <meta itemProp="datePublished" content={post.date} />
                   <meta itemProp="dateModified" content={post.modified} />
                   
-                  <div
-                    className="prose dark:prose-invert max-w-none"
-                    itemProp="reviewBody"
-                    dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-                  />
+                  <div itemProp="reviewBody">
+                    <ReviewHeader
+                      websiteName={post.acf.website_name}
+                      heroImage={post.acf.hero_image}
+                      introductionText={reviewContent.introduction_text}
+                      updatedDate={post.modified}
+                    />
+
+                    <div className="what-is-section grid md:grid-cols-2 gap-8 items-center">
+                      <div className="prose dark:prose-invert max-w-none">
+                        <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+                          What is {post.acf.website_name}?
+                        </h2>
+                        <div dangerouslySetInnerHTML={{ __html: post.acf.what_is_section }} />
+                      </div>
+                      <Image
+                        src={post.acf.website_screenshot.url}
+                        alt={`${post.acf.website_name} Interface Screenshot`}
+                        width={800}
+                        height={600}
+                        className="rounded-2xl border border-purple-500/20"
+                      />
+                    </div>
+
+                    <ReviewProsAndCons
+                      websiteName={post.acf.website_name}
+                      pros={reviewContent.pros}
+                      cons={reviewContent.cons}
+                    />
+
+                    {/* First CTA after pros and cons */}
+                    <div className="my-8">
+                      <ReviewCTA
+                        websiteName={post.acf.website_name}
+                        websiteFavicon={post.acf.website_favicon}
+                        reviewSlug={params.slug}
+                      />
+                    </div>
+
+                    <ReviewCharacterLibrary
+                      websiteName={post.acf.website_name}
+                      overview={reviewContent.character_library_overview}
+                      characterExamples={reviewContent.character_examples}
+                      interfaceImage={post.acf.character_library_interface}
+                    />
+
+                    <ReviewPhotoGeneration
+                      websiteName={post.acf.website_name}
+                      overview={reviewContent.photo_generation_overview}
+                      photoExamples={reviewContent.photo_examples}
+                    />
+
+                    
+
+                    <ReviewPricing
+                      websiteName={post.acf.website_name}
+                      overview={reviewContent.pricing_overview}
+                      freePlanFeatures={reviewContent.free_plan_features}
+                      premiumPlanFeatures={reviewContent.premium_plan_features}
+                      premiumPriceMonthly={reviewContent.premium_price_monthly}
+                      premiumPriceYearly={reviewContent.premium_price_yearly}
+                    />
+
+                    {/* Second CTA after pricing */}
+                    <div className="my-8">
+                      <ReviewCTA
+                        websiteName={post.acf.website_name}
+                        websiteFavicon={post.acf.website_favicon}
+                        reviewSlug={params.slug}
+                      />
+                    </div>
+
+                    <ReviewSecurity
+                      websiteName={post.acf.website_name}
+                      overview={reviewContent.security_overview}
+                      platformSecurity={reviewContent.platform_security}
+                      privacyConsiderations={reviewContent.privacy_considerations}
+                      securityRecommendations={reviewContent.security_recommendations}
+                    />
+
+                    <ReviewUserFeedback
+                      websiteName={post.acf.website_name}
+                      userReviews={reviewContent.user_reviews}
+                    />
+
+                    {videoId && (
+                      <ReviewYouTube
+                        websiteName={post.acf.website_name}
+                        videoId={videoId}
+                      />
+                    )}
+
+                    <ReviewConclusion
+                      websiteName={post.acf.website_name}
+                      conclusionText={reviewContent.conclusion_text}
+                      scoreNotes={reviewContent.score_notes}
+                      scores={{
+                        characters: scoreGirls,
+                        chat: scoreChat,
+                        features: scoreFeatures
+                      }}
+                      reviewSlug={params.slug}
+                    />
+
+                    {/* Final CTA at the end of the article */}
+                    <div className="mt-12 mb-8">
+                      <ReviewCTA
+                        websiteName={post.acf.website_name}
+                        websiteFavicon={post.acf.website_favicon}
+                        reviewSlug={params.slug}
+                      />
+                    </div>
+                  </div>
                 </article>
 
                 {/* Free Trial CTA */}

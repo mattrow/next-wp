@@ -16,6 +16,7 @@ import Balancer from "react-wrap-balancer";
 import { notFound } from 'next/navigation';
 import { Post, Review } from '@/lib/wordpress.d';
 import AiGirlfriendGrid from "@/components/AiGirlfriendGrid";
+import Image from 'next/image';
 
 export async function generateMetadata({
   params,
@@ -96,10 +97,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
               </div>
 
               {featuredMedia && (
-                <img
+                <Image
                   className="w-full rounded-lg shadow-lg my-8"
                   src={featuredMedia.source_url}
                   alt={post.title.rendered}
+                  width={1200}
+                  height={630}
                 />
               )}
 

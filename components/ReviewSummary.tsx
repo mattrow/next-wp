@@ -160,7 +160,7 @@ const ReviewSummary: React.FC<ReviewSummaryProps> = ({ review }) => {
                 >
                   <Plus className="text-green-500 mr-2 flex-shrink-0" />
                   <span className="text-gray-300 font-semibold text-sm">
-                    {proItem.pros}
+                    {proItem.title}
                   </span>
                 </div>
               ))
@@ -182,15 +182,15 @@ const ReviewSummary: React.FC<ReviewSummaryProps> = ({ review }) => {
                   key={index}
                   className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-center mb-2"
                 >
-                  <Minus className="text-red-500 mr-2 flex-shrink-0" />
+                  <Minus className="text-rose-500 mr-2 flex-shrink-0" />
                   <span className="text-gray-300 font-semibold text-sm">
-                    {conItem.cons}
+                    {conItem.title}
                   </span>
                 </div>
               ))
             ) : (
               <div className="border border-red-500 bg-red-500/20 rounded-2xl p-2 flex items-center mb-2">
-                <Minus className="text-red-500 mr-2 flex-shrink-0" />
+                <Minus className="text-rose-500 mr-2 flex-shrink-0" />
                 <span className="text-gray-300 font-semibold text-sm">
                   No cons available.
                 </span>

@@ -314,3 +314,23 @@ export async function getReviewBySlug(slug: string): Promise<Review | null> {
   const reviews = await response.json();
   return reviews.length > 0 ? reviews[0] : null;
 }
+
+export async function getPost(slug: string): Promise<Post> {
+  const res = await fetch(
+    `${process.env.WORDPRESS_API_URL}/wp/v2/review?slug=${slug}&_embed`
+  );
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error('Failed to fetch post:', errorText);
+    throw new Error('Failed to fetch post');
+  }
+
+  const posts = await res.json();
+
+  if (!posts.length) {
+    throw new Error('Post not found');
+  }
+
+  return posts[0];
+}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Post } from "@/lib/wordpress.d";
 import { cn } from "@/lib/utils";
 import { getFeaturedMediaById } from "@/lib/wordpress";
+import Image from 'next/image';
 
 interface PostCardProps {
   post: Post;
@@ -58,10 +59,12 @@ const PostCard = ({ post, variant = "default" }: PostCardProps) => {
       {/* Thumbnail */}
       <div className="h-32 w-full overflow-hidden rounded-xl mb-4 bg-gray-800/50 border border-white/5">
         {media ? (
-          <img
+          <Image
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
             src={media.source_url}
             alt={`${post.title.rendered} - AI Girlfriend Blog Post`}
+            width={400}
+            height={225}
           />
         ) : (
           <div className="h-full w-full flex items-center justify-center text-gray-400 text-xs">
