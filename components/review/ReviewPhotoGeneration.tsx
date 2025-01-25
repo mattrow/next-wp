@@ -19,6 +19,11 @@ interface ReviewPhotoGenerationProps {
   photoExamples: PhotoExample[];
 }
 
+// Simple regex-based HTML tag stripping that works on both server and client
+const stripHtmlTags = (html: string) => {
+  return html.replace(/<[^>]*>/g, '').trim();
+};
+
 const ReviewPhotoGeneration: React.FC<ReviewPhotoGenerationProps> = ({
   websiteName,
   overview,
@@ -63,7 +68,7 @@ const ReviewPhotoGeneration: React.FC<ReviewPhotoGenerationProps> = ({
                 <div>
                   <h3 className="text-xl font-bold text-purple-400 mb-2">Example {index + 1}</h3>
                   <p className="text-sm text-gray-400 italic">
-                    &ldquo;{example.prompt}&rdquo;
+                    &ldquo;{stripHtmlTags(example.prompt)}&rdquo;
                   </p>
                 </div>
                 <div className="prose dark:prose-invert">
