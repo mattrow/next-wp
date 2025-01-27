@@ -26,7 +26,7 @@ const Nav = ({ className, children, id }: NavProps) => {
       )}
       id={id}
     >
-      <div id="nav-container" className="mx-auto max-w-6xl py-4">
+      <div id="nav-container" className="mx-auto max-w-6xl py-2">
         {/* Main container with 3 columns */}
         <div className="flex flex-row justify-between items-stretch">
           {/* Left Column - Left aligned content */}
@@ -45,10 +45,10 @@ const Nav = ({ className, children, id }: NavProps) => {
                 alt="Best AI Girlfriends"
                 width={400}
                 height={40}
-                className="h-auto w-[250px] sm:w-[400px]"
+                className="h-auto w-[200px] sm:w-[400px]"
                 priority
                 loading="eager"
-                sizes="(max-width: 640px) 250px, 400px"
+                sizes="(max-width: 640px) 200px, 400px"
               />
             </Link>
           </div>

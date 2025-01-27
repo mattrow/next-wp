@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Add this at the top to ensure consistent scrollbar width */
+:root {
+  --removed-body-scroll-bar-size: 0px;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html.no-scroll {
+  padding-right: var(--removed-body-scroll-bar-size);
+}
+
 @layer base {
   :root {
     --background: 216 12% 8%;

@@ -116,7 +116,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="sticky top-0 z-50 sm:hidden bg-gray-900/60 backdrop-blur-xl border-b border-white/10">
+          <div className="sticky top-0 z-50 sm:hidden bg-gray-900/60 backdrop-blur-xl border-b border-white/10 mb-6">
             <NavMobile className="mx-4"/>
           </div>
           <div className="hidden sm:block">

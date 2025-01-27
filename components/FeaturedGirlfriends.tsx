@@ -30,7 +30,7 @@ const ActionButtons = ({ slug }: { slug: string }) => {
         className="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25 border border-purple-400/30 w-full sm:w-auto"
         onClick={handleClick}
       >
-        <span>Try For Free</span>
+        <span className="not-prose">Try For Free</span>
         <ExternalLink className="w-4 h-4" />
       </a>
       <a
@@ -38,7 +38,7 @@ const ActionButtons = ({ slug }: { slug: string }) => {
         className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 hover:scale-105 group border border-white/10 hover:border-purple-500/30 w-full sm:w-auto"
         onClick={handleClick}
       >
-        <span>Read Review</span>
+        <span className="not-prose">Read Review</span>
         <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
       </a>
     </div>
@@ -99,19 +99,19 @@ export default function FeaturedGirlfriends({ reviews }: FeaturedGirlfriendsProp
                         />
                       </div>
                       <div className="min-w-0">
-                        <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors truncate">
+                        <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors truncate not-prose">
                           {review.acf.website_name}
                         </h3>
-                        <span className="text-xs text-purple-300">{rankingIcons[index].label}</span>
+                        <span className="text-xs text-purple-300 not-prose">{rankingIcons[index].label}</span>
                       </div>
                     </div>
                     {/* Score Badge */}
                     <div className="flex items-center gap-1.5 bg-green-500 rounded-lg px-3 py-1.5 shadow-lg shadow-green-500/20">
                       <StarIcon className="w-4 h-4 text-white" />
-                      <span className="font-bold text-white">{overallScore}</span>
+                      <span className="font-bold text-white not-prose">{overallScore}</span>
                     </div>
                   </div>
-                  <p className="text-gray-300 mb-4 line-clamp-2 text-sm">
+                  <p className="text-gray-300 mb-4 line-clamp-2 text-sm not-prose">
                     {review.acf.short_description || review.excerpt?.rendered?.replace(/<[^>]+>/g, '').trim()}
                   </p>
                 </div>
