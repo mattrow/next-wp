@@ -56,7 +56,7 @@ export default async function BestAIGirlfriends2025() {
                   Best AI Girlfriends of 2025
                 </h1>
                 <p className="text-gray-400 text-sm sm:text-base not-prose">
-                  We've tested and ranked the top AI chat companions to help you find your perfect match. Our comprehensive reviews consider personality variety, chat quality, and features to ensure you find the best experience.
+                  We&apos;ve tested and ranked the top AI chat companions to help you find your perfect match. Our comprehensive reviews consider personality variety, chat quality, and features to ensure you find the best experience.
                 </p>
               </div>
             </div>
