@@ -46,131 +46,108 @@ export async function GET(
 
     return new ImageResponse(
       (
-        <div
-          style={{
-            height: '100%',
-            width: '100%',
+        <div style={{
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 20px',
+          background: v.background,
+          boxShadow: theme === 'white' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
+          fontFamily: 'system-ui, -apple-system, sans-serif'
+        }}>
+          {/* Background Effects */}
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: `radial-gradient(circle at 50% 50%, ${v.glow}, transparent 80%)`,
+          }} />
+
+          <div style={{
             display: 'flex',
             alignItems: 'center',
-            padding: '0 20px',
-            background: v.background,
-            boxShadow: theme === 'white' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
-          }}
-        >
-          {/* Background Effects */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: `radial-gradient(circle at 50% 50%, ${v.glow}, transparent 80%)`,
-            }}
-          />
-
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '16px',
-              width: '100%',
-              position: 'relative',
-            }}
-          >
+            gap: '16px',
+            width: '100%',
+            position: 'relative',
+          }}>
             {/* Avatar Section */}
-            <div style={{ position: 'relative', width: '56px', height: '56px' }}>
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                  borderRadius: '100%',
-                  opacity: 0.8,
-                  animation: 'spin 8s linear infinite',
-                }}
-              />
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: '2px',
-                  background: v.innerBg,
-                  borderRadius: '100%',
-                }}
-              />
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: '3px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: '100%',
-                  background: theme === 'white' ? '#f9fafb' : 'rgba(0,0,0,0.1)',
-                }}
-              >
+            <div style={{ 
+              position: 'relative', 
+              width: '56px', 
+              height: '56px',
+              flexShrink: 0
+            }}>
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                borderRadius: '100%',
+                opacity: 0.8,
+              }} />
+              <div style={{
+                position: 'absolute',
+                inset: '2px',
+                background: v.innerBg,
+                borderRadius: '100%',
+              }} />
+              <div style={{
+                position: 'absolute',
+                inset: '3px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '100%',
+                background: theme === 'white' ? '#f9fafb' : 'rgba(0,0,0,0.1)',
+                overflow: 'hidden'
+              }}>
                 <img
-                  src={`${process.env.NEXT_PUBLIC_SITE_URL}/jesssmilingsmall.webp`}
+                  src={`${process.env.NEXT_PUBLIC_SITE_URL}/thumbsuprounded.webp`}
                   alt="BestAIGirlfriends"
                   width="50"
                   height="50"
                   style={{
-                    borderRadius: '100%',
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
                   }}
                 />
-              </div>
-              {/* Award Icon */}
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '-4px',
-                  right: '-4px',
-                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                  padding: '6px',
-                  borderRadius: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M12 2l3 7h7l-6 4 3 7-7-4-7 4 3-7-6-4h7z"/>
-                </svg>
               </div>
             </div>
 
             {/* Text Content */}
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <div
-                  style={{
-                    color: v.text,
-                    fontSize: '16px',
-                    fontWeight: 'bold',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
+            <div style={{ 
+              flex: 1,
+              minWidth: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '4px'
+            }}>
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '8px',
+                width: '100%'
+              }}>
+                <div style={{
+                  color: v.text,
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  maxWidth: '100%'
+                }}>
                   {post.acf.website_name}
                 </div>
                 {post.acf.website_favicon?.url && (
-                  <div
-                    style={{
-                      width: '20px',
-                      height: '20px',
-                      borderRadius: '100%',
-                      overflow: 'hidden',
-                      flexShrink: 0,
-                      boxShadow: theme === 'white' ? '0 1px 2px rgba(0,0,0,0.1)' : '0 1px 3px rgba(0,0,0,0.2)',
-                    }}
-                  >
+                  <div style={{
+                    width: '20px',
+                    height: '20px',
+                    borderRadius: '100%',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    boxShadow: theme === 'white' ? '0 1px 2px rgba(0,0,0,0.1)' : '0 1px 3px rgba(0,0,0,0.2)',
+                  }}>
                     <img
                       src={post.acf.website_favicon.url}
                       alt=""
@@ -185,67 +162,60 @@ export async function GET(
                   </div>
                 )}
               </div>
-              <div
-                style={{
-                  color: v.subtext,
-                  fontSize: '12px',
-                  fontWeight: 500,
-                }}
-              >
+              <div style={{
+                color: v.subtext,
+                fontSize: '12px',
+                fontWeight: 500,
+              }}>
                 BestAIGirlfriends.com
               </div>
             </div>
 
             {/* Score */}
-            <div style={{ position: 'relative' }}>
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: '-4px',
-                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                  borderRadius: '8px',
-                  filter: 'blur(8px)',
-                  opacity: 0.4,
-                }}
-              />
-              <div
-                style={{
-                  position: 'relative',
-                  background: theme === 'white' ? '#111827' : 'linear-gradient(135deg, #f59e0b, #d97706)',
-                  padding: '8px 14px',
-                  borderRadius: '8px',
-                  border: theme === 'white' 
-                    ? '1px solid rgba(17, 24, 39, 0.8)'
-                    : '1px solid rgba(251, 191, 36, 0.5)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '2px',
-                }}
-              >
-                <div
-                  style={{
-                    color: theme === 'white' ? 'transparent' : 'white',
-                    background: theme === 'white' 
-                      ? 'linear-gradient(135deg, #f59e0b, #d97706)'
-                      : 'none',
-                    backgroundClip: theme === 'white' ? 'text' : 'none',
-                    fontSize: '24px',
-                    fontWeight: 800,
-                    lineHeight: 1,
-                    textShadow: theme === 'white' ? 'none' : '0 2px 2px rgba(0,0,0,0.3)',
-                  }}
-                >
+            <div style={{ 
+              position: 'relative',
+              flexShrink: 0
+            }}>
+              <div style={{
+                position: 'absolute',
+                inset: '-4px',
+                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                borderRadius: '8px',
+                filter: 'blur(8px)',
+                opacity: 0.4,
+              }} />
+              <div style={{
+                position: 'relative',
+                background: theme === 'white' ? '#111827' : 'linear-gradient(135deg, #f59e0b, #d97706)',
+                padding: '8px 14px',
+                borderRadius: '8px',
+                border: theme === 'white' 
+                  ? '1px solid rgba(17, 24, 39, 0.8)'
+                  : '1px solid rgba(251, 191, 36, 0.5)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '2px',
+              }}>
+                <div style={{
+                  color: theme === 'white' ? 'transparent' : 'white',
+                  background: theme === 'white' 
+                    ? 'linear-gradient(135deg, #f59e0b, #d97706)'
+                    : 'none',
+                  backgroundClip: theme === 'white' ? 'text' : 'none',
+                  fontSize: '24px',
+                  fontWeight: 800,
+                  lineHeight: 1,
+                  textShadow: theme === 'white' ? 'none' : '0 2px 2px rgba(0,0,0,0.3)',
+                }}>
                   {averageScore}
                 </div>
-                <div
-                  style={{
-                    color: theme === 'white' ? '#f59e0b' : 'rgba(255,255,255,0.9)',
-                    fontSize: '11px',
-                    fontWeight: 600,
-                    alignSelf: 'flex-end',
-                    marginBottom: '2px',
-                  }}
-                >
+                <div style={{
+                  color: theme === 'white' ? '#f59e0b' : 'rgba(255,255,255,0.9)',
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  alignSelf: 'flex-end',
+                  marginBottom: '2px',
+                }}>
                   /10
                 </div>
               </div>

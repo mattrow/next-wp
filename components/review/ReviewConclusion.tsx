@@ -37,7 +37,20 @@ const ReviewConclusion: React.FC<ReviewConclusionProps> = ({
   const averageScore = ((scores.characters + scores.chat + scores.features) / 3).toFixed(1);
 
   const getEmbedCode = (variant: BadgeVariant) => {
-    return `<a href="https://bestaigirlfriends.com/${reviewSlug}?ref=badge" target="_blank"><img src="https://bestaigirlfriends.com/api/badge/${reviewSlug}?theme=${variant}" alt="${websiteName} Review | BestAIGirlfriends" style="width: 340px; height: 56px;" width="340" height="56" /></a>`;
+    const badgeUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://bestaigirlfriends.com'}/api/badge/${reviewSlug}?theme=${variant}`;
+    const linkUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://bestaigirlfriends.com'}/${reviewSlug}?ref=badge`;
+    
+    return `<div style="width: 340px; max-width: 100%; margin: 0 auto;">
+  <a href="${linkUrl}" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; text-decoration: none;">
+    <img 
+      src="${badgeUrl}" 
+      alt="${websiteName} Review | BestAIGirlfriends" 
+      width="340"
+      height="56"
+      style="display: block; width: 100%; height: auto; border-radius: 12px;" 
+    />
+  </a>
+</div>`;
   };
 
   const handleCopyClick = () => {
@@ -62,9 +75,10 @@ const ReviewConclusion: React.FC<ReviewConclusionProps> = ({
       </div>
 
       {/* Overall Score Card */}
-      <div className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 rounded-2xl p-8 border border-purple-500/20 mb-8">
-        <div className="grid md:grid-cols-2 gap-8">
-          <div>
+      <div className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 rounded-2xl p-4 sm:p-8 border border-purple-500/20 mb-8 overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+          {/* Left Column - Final Verdict */}
+          <div className="w-full">
             <h3 className="text-xl font-bold text-purple-400 mb-4">Final Verdict</h3>
             <div className="prose dark:prose-invert max-w-none">
               <div dangerouslySetInnerHTML={{ __html: conclusionText }} />
@@ -82,37 +96,41 @@ const ReviewConclusion: React.FC<ReviewConclusionProps> = ({
             </div>
           </div>
 
-          {/* Badge Section - Hidden on Mobile */}
-          <div className="hidden md:flex flex-col justify-center items-center gap-6">
-            {/* Style Selector */}
-            <div className="flex items-center justify-between gap-2 p-1 bg-purple-900/20 rounded-lg w-full max-w-[340px]">
-              {variants.map(({ label, value }) => (
-                <button
-                  key={value}
-                  onClick={() => setSelectedVariant(value)}
-                  className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                    selectedVariant === value
-                      ? 'bg-purple-500 text-white shadow-sm'
-                      : 'text-purple-300 hover:text-purple-200'
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
+          {/* Right Column - Badge Section */}
+          <div className="w-full min-w-0">
+            <div className="flex flex-col items-center gap-6 mt-8 md:mt-0 w-full max-w-[min(340px,100%)] mx-auto">
+              {/* Style Selector */}
+              <div className="flex items-center justify-between gap-2 p-1 bg-purple-900/20 rounded-lg w-full">
+                {variants.map(({ label, value }) => (
+                  <button
+                    key={value}
+                    onClick={() => setSelectedVariant(value)}
+                    className={`flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                      selectedVariant === value
+                        ? 'bg-purple-500 text-white shadow-sm'
+                        : 'text-purple-300 hover:text-purple-200'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
 
-            {/* Badge Display */}
-            <div className="flex items-start gap-4">
-              <ReviewBadge 
-                websiteName={websiteName}
-                score={Number(averageScore)}
-                reviewSlug={reviewSlug}
-                variant={selectedVariant}
-                websiteFavicon={websiteFavicon}
-              />
+              {/* Badge Display */}
+              <div className="w-full min-w-0">
+                <ReviewBadge 
+                  websiteName={websiteName}
+                  score={Number(averageScore)}
+                  reviewSlug={reviewSlug}
+                  variant={selectedVariant}
+                  websiteFavicon={websiteFavicon}
+                />
+              </div>
+
+              {/* Copy Button */}
               <button
                 onClick={handleCopyClick}
-                className={`flex items-center gap-2 mt-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                className={`w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   copied 
                     ? 'bg-green-500/10 text-green-400' 
                     : 'bg-purple-500/10 text-purple-400 hover:bg-purple-500/20'
